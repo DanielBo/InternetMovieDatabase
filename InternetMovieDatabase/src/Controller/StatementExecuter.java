@@ -29,8 +29,6 @@ public class StatementExecuter {
 
 		constraintStatement = " Where ";
 
-		//		preparing();
-
 		// 3 different searchmodes (Titel, Company, Person)
 		switch (mode) {
 		case 0:
@@ -83,14 +81,14 @@ public class StatementExecuter {
 						}
 					}
 				}
-				// Hängt den Where-Teil an die Abfrage
+				// H‰ngt den Where-Teil an die Abfrage
 				constraintStatement += c.getStatement() + " AND ";
 			}
 		}
 	}
 
 
-	// Methode, um die passenden Statements auszuwählen
+	// Methode, um die passenden Statements auszuw‰hlen
 	private String getAppendStatement(String tableName) {
 		String appendStatement = "";
 		for (Map.Entry<String[], String> e : map.entrySet()) {
@@ -105,22 +103,9 @@ public class StatementExecuter {
 
 
 
-	private void preparing(){
-		try {
-			Statement stmt = con.createStatement();
-			String query = "CREATE TABLE IF NOT EXISTS `merkliste` ( "+
-					"`ID` tinyint(4) NOT NULL auto_increment, "+
-					"`movieID` tinyint(4) NOT NULL, "+
-					"PRIMARY KEY  (`ID`)"+
-					" )";
-			stmt.executeQuery(query);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
-	// Methode, die die fertige Abfrage ausführt und das ResultSet zurückgibt.
+
+	// Methode, die die fertige Abfrage ausf¸hrt und das ResultSet zur¸ckgibt.
 	public ResultSet executeStatement()throws SQLException{
 		appendBasicStatement();
 		ResultSet result = null;
