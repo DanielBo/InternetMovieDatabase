@@ -110,7 +110,7 @@ public class Connector {
 		});
 	}
 	
-	// Erzeugt eine Tabelle namens Merliste, falls sie noch nicht vorhanden ist.
+	// Erzeugt eine Tabelle namens Merkliste, falls sie noch nicht vorhanden ist.
 	private void preparing(){
 		try {
 			String existenceTest = "SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesListName + "'";

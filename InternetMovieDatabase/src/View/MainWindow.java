@@ -86,6 +86,7 @@ public class MainWindow extends JFrame {
 		
 		tabPane.addTab("Suchansicht" , contentPane);
 		tabPane.addTab("DetailAnsicht", getDetailPanel());
+		tabPane.addTab("Merkliste", getFavouriteListPanel());
 		setContentPane(tabPane);
 		
 		
@@ -226,6 +227,21 @@ public class MainWindow extends JFrame {
 		mainPanel.add(detailTableTitle);
 
 		return mainPanel;
+	}
+	
+	/**
+	 * building the 2nd Tab for the JTabbedPane <p>
+	 * @return
+	 * mainPanel - JPanel
+	 */
+	private JPanel getFavouriteListPanel() {
+		JPanel favouriteListPanel = new JPanel();
+		favouriteListPanel.setLayout(null);
+		
+		detailTable = new JTable();
+		
+
+		return favouriteListPanel;
 	}
 
 	public JTextField getTextFieldConstraint1() {
