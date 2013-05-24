@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 import controller.Connector;
 
 
+
 public class Main{
 	
 	public static final boolean isDebug = true;
