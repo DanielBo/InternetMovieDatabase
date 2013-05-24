@@ -223,7 +223,6 @@ public class MainWindow extends JFrame {
 		option1Label.setBounds(77, 58, 777, 22);
 		detailPanel.add(option1Label);
 
-
 		option2Label = new JLabel("");
 		option2Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option2Label.setBounds(77, 92, 777, 22);
@@ -261,17 +260,18 @@ public class MainWindow extends JFrame {
 		scrollPane_2 = new JScrollPane(favouriteTable);
 		scrollPane_2.setBounds(24, 93, 896, 317);
 		favouriteListPanel.add(scrollPane_2);
-
+		
 		setFavListSelector(new JComboBox<String>());
 		getFavListSelector().setBounds(203, 16, 181, 18);
 		favouriteListPanel.add(getFavListSelector());
-
+		
 		JLabel lblNewLabel_2 = new JLabel("MerkListe asuw\u00E4hlen:");
 		lblNewLabel_2.setBounds(24, 16, 167, 16);
 		favouriteListPanel.add(lblNewLabel_2);
-
+		
 		setBtnVonListeEntfernen(new JButton("Von Liste entfernen"));
 		getBtnVonListeEntfernen().setBounds(753, 55, 167, 29);
+
 		favouriteListPanel.add(getBtnVonListeEntfernen());
 
 		return favouriteListPanel;
@@ -497,6 +497,7 @@ public class MainWindow extends JFrame {
 	}
 
 	public void setLblEinschrnkungen_1(JLabel lblEinschrnkungen_1) {
+
 		this.lblEinschrnkungen_1 = lblEinschrnkungen_1;
 	}
 
@@ -507,4 +508,5 @@ public class MainWindow extends JFrame {
 	public void setAddToFavList(JButton addToFavList) {
 		this.addToFavList = addToFavList;
 	}
+
 }

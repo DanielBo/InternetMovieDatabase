@@ -93,6 +93,7 @@ public class DetailStatementBuilder {
 		tableTitle = "Beteiligte Filmproduktionen:";
 	}
 	
+	// Führt die beiden notwendigen Abfragen für die Detailansicht aus.
 	public void executeStatement() throws SQLException{
 		mainWindow.getDetailTableTitle().setText(tableTitle);
 		mainWindow.getOption1Label().setText("");

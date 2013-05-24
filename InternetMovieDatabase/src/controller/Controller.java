@@ -191,6 +191,7 @@ public class Controller {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
+
 				}
 			}
 		});
@@ -339,19 +340,20 @@ public class Controller {
 				case 0:
 					//Titel
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
-					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, f�r die gilt:");
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, für die gilt:");
+
 					enableConstraintType2(true);
 					break;
 				case 1:
 					// Company
 					choice = new String[]{"Titel", "TitelType", "CompanyType", "ProductionYear"};
-					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, f�r die gilt:");
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, für die gilt:");
 					enableConstraintType2(true);
 					break;
 				case 2:
 					//Person
 					choice = new String[]{"RollenName", "RollenType", "Titel", "TitelType"};
-					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, f�r die gilt:");
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, für die gilt:");
 					enableConstraintType2(false);
 					break;
 				default:
