@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +27,7 @@ import model.Constraint;
 import controller.builder.ConstraintBuilder;
 import controller.builder.DetailStatementBuilder;
 import controller.builder.QueryBuilder;
+import controller.favourites.Favorites;
 
 public class Controller {
 	private int selectedMode = 0; // currently set searchmode
@@ -143,6 +147,71 @@ public class Controller {
 						}
 					}
 				});
+			}
+		});
+
+		final Favorites favs = new Favorites(con);
+		final JTable favTable = mainWindow.getFavouriteTable(); // FavTable
+		JComboBox<String> favListSelector = mainWindow.getFavListSelector(); // Selected Favorite Category
+
+		favListSelector.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				System.out.println(e.getItem() + " " + e.getStateChange());
+			}
+		});
+
+
+		mainWindow.getBtnVonListeEntfernen().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (favTable.getSelectedRow() != -1)
+					favs.removeIdFromFavorites((String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0));
+			}
+		});// remove selected from table
+
+
+
+
+		favTable.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				//do nothing
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//do nothing
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				//do nothing									
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				//do nothing
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2){
+					System.out.println("Doubleclick noticed on Row: " + favTable.getSelectedRow());
+					System.out.println("The ID for " + favTable.getModel().getValueAt(favTable.getSelectedRow(), 1) + " is " + favTable.getModel().getValueAt(favTable.getSelectedRow(), 0)); // Selected MovieID
+					mainWindow.getTabPane().setSelectedIndex(1);
+
+					selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
+
+					DetailStatementBuilder dtBuilder = new DetailStatementBuilder((selectedMode+1), Integer.valueOf(favTable.getModel().getValueAt(favTable.getSelectedRow(), 0).toString()), con, mainWindow);
+					try {
+						dtBuilder.executeStatement();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+
+				}
 			}
 		});
 

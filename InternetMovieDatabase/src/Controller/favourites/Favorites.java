@@ -1,5 +1,7 @@
 package controller.favourites;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,16 +11,25 @@ public class Favorites {
 
 	private Connection con;
 
-	public Favorites() {
+	public Favorites(Connection con) {
+		this.con = con;
 		intializeTables();
 	}
 
 	private void intializeTables() {
-		String createTableFavorites = "CREATE TABLE favourites ( ID INTEGER(10) NOT NULL, CATEGORY  VARCHAR(255)  NOT NULL);";
+		System.out.println("creating favourites table");
+		String createTableFavorites = "CREATE TABLE favourites (ID number(10) NOT NULL, CATEGORY  VARCHAR(255) NOT NULL)";
 		try {
 			con.createStatement().executeQuery(createTableFavorites);
 		} catch (SQLException e) {
-			e.getStackTrace();
+			if (e.getErrorCode() == 955){
+				//do nothing
+			} else {
+				StringWriter sw = new StringWriter();
+				PrintWriter pw = new PrintWriter(sw);
+				e.printStackTrace(pw);
+				System.out.println(sw.toString());
+			}
 		}
 	}
 
@@ -34,6 +45,12 @@ public class Favorites {
 		return cats;
 	}
 
+	/**
+	 * Will return all ID's associated with the Category given.
+	 * @param cat
+	 * @return
+	 * @throws SQLException
+	 */
 	public ResultSet getFavByCategory(String cat) throws SQLException {
 		ResultSet result = null;
 		String getFavByCategory = "Select id from favourites where Category = '" + cat + "'";
@@ -44,6 +61,17 @@ public class Favorites {
 	public void addIdToFavorites(String id, String category) throws SQLException{
 		String inputStatement = "INSERT INTO favourites VALUES (" + id + ", '" + category + "')";
 		con.createStatement().executeQuery(inputStatement);
+	}
+
+	public boolean removeIdFromFavorites(String id){
+		try{
+			String removeIdStatement = "DELETE FROM favourites Where id = '" + id + "'";
+			con.createStatement().execute(removeIdStatement);
+		} catch (SQLException e){
+			e.getStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }

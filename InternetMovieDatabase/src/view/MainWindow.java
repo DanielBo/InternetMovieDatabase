@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Font;
 import java.sql.Connection;
 
 import javax.swing.DefaultComboBoxModel;
@@ -10,21 +11,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ListSelectionModel;
-import javax.swing.Box;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Font;
 
 public class MainWindow extends JFrame {
 	
@@ -72,6 +65,10 @@ public class MainWindow extends JFrame {
 	private DefaultTableModel favouriteTablemodel;
 
 	private JComboBox<String> constraint2AndOr;
+
+	private JComboBox<String> favListSelector;
+
+	private JButton btnVonListeEntfernen;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -123,7 +120,7 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblEinschrnkungen);
 		
 		constraintComboBox1 = new JComboBox<String>();
-		constraintComboBox1.setModel(new DefaultComboBoxModel(new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"}));
+		constraintComboBox1.setModel(new DefaultComboBoxModel<String>(new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"}));
 		constraintComboBox1.setBounds(250, 46, 160, 22);
 		contentPane.add(constraintComboBox1);
 		
@@ -190,12 +187,12 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblEinschrnkungen_1);
 		
 		constraint1AndOr = new JComboBox<String>();
-		constraint1AndOr.setModel(new DefaultComboBoxModel(new String[] {"AND"}));
+		constraint1AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
 		constraint1AndOr.setBounds(736, 46, 77, 22);
 		contentPane.add(constraint1AndOr);
 		
 		constraint2AndOr = new JComboBox<String>();
-		constraint2AndOr.setModel(new DefaultComboBoxModel(new String[] {"AND"}));
+		constraint2AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
 		constraint2AndOr.setBounds(736, 99, 77, 22);
 		contentPane.add(constraint2AndOr);
 	}
@@ -240,7 +237,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	/**
-	 * building the 3nd Tab for the JTabbedPane <p>
+	 * building the 3rd Tab for the JTabbedPane <p>
 	 * @return
 	 * favouriteListPanel - JPanel
 	 */
@@ -252,8 +249,20 @@ public class MainWindow extends JFrame {
 		favouriteTable = new JTable(favouriteTablemodel);
 		
 		scrollPane_2 = new JScrollPane(favouriteTable);
-		scrollPane_2.setBounds(29, 30, 896, 317);
+		scrollPane_2.setBounds(24, 93, 896, 317);
 		favouriteListPanel.add(scrollPane_2);
+		
+		setFavListSelector(new JComboBox<String>());
+		getFavListSelector().setBounds(203, 16, 181, 18);
+		favouriteListPanel.add(getFavListSelector());
+		
+		JLabel lblNewLabel_2 = new JLabel("MerkListe asuw\u00E4hlen:");
+		lblNewLabel_2.setBounds(24, 16, 167, 16);
+		favouriteListPanel.add(lblNewLabel_2);
+		
+		setBtnVonListeEntfernen(new JButton("Von Liste entfernen"));
+		getBtnVonListeEntfernen().setBounds(753, 55, 167, 29);
+		favouriteListPanel.add(getBtnVonListeEntfernen());
 		
 		return favouriteListPanel;
 	}
@@ -454,5 +463,22 @@ public class MainWindow extends JFrame {
 
 	public void setConstraint2AndOr(JComboBox<String> constraint2AndOr) {
 		this.constraint2AndOr = constraint2AndOr;
+	}
+
+	public JComboBox<String> getFavListSelector() {
+		return favListSelector;
+	}
+
+	public void setFavListSelector(JComboBox<String> favListSelector) {
+		this.favListSelector = favListSelector;
+		favListSelector.setModel(new DefaultComboBoxModel(new String[] {"Test1", "Test2", "Test3"}));
+	}
+
+	public JButton getBtnVonListeEntfernen() {
+		return btnVonListeEntfernen;
+	}
+
+	public void setBtnVonListeEntfernen(JButton btnVonListeEntfernen) {
+		this.btnVonListeEntfernen = btnVonListeEntfernen;
 	}
 }
