@@ -70,6 +70,8 @@ public class MainWindow extends JFrame {
 	private JTable favouriteTable;
 
 	private DefaultTableModel favouriteTablemodel;
+
+	private JComboBox<String> constraint2AndOr;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -192,9 +194,10 @@ public class MainWindow extends JFrame {
 		constraint1AndOr.setBounds(736, 46, 77, 22);
 		contentPane.add(constraint1AndOr);
 		
-		JLabel lblAnd = new JLabel("AND");
-		lblAnd.setBounds(742, 102, 71, 16);
-		contentPane.add(lblAnd);
+		constraint2AndOr = new JComboBox<String>();
+		constraint2AndOr.setModel(new DefaultComboBoxModel(new String[] {"AND"}));
+		constraint2AndOr.setBounds(736, 99, 77, 22);
+		contentPane.add(constraint2AndOr);
 	}
 	
 	/**
@@ -445,5 +448,13 @@ public class MainWindow extends JFrame {
 
 	public void setFavouriteTable(JTable favouriteTable) {
 		this.favouriteTable = favouriteTable;
+	}
+
+	public JComboBox<String> getConstraint2AndOr() {
+		return constraint2AndOr;
+	}
+
+	public void setConstraint2AndOr(JComboBox<String> constraint2AndOr) {
+		this.constraint2AndOr = constraint2AndOr;
 	}
 }

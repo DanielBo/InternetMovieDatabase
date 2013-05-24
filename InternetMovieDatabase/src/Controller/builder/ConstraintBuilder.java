@@ -41,6 +41,13 @@ public class ConstraintBuilder {
 		return lastConstraint;
 	}
 	
+	// Fügt an ein bereits bestehendes Constraint ein Weiteres, das mit OR verbunden wird, hinzu.
+	public Constraint createORConstraintType2(JTextField textFieldConstraint2, JComboBox<String> comparisonCombobox2, JComboBox<String> constraintComboBox2, Constraint lastConstraint){
+		Constraint constraint = createConstraintType2(textFieldConstraint2, comparisonCombobox2, constraintComboBox2);
+		lastConstraint.addOrConstraint(constraint);
+		return lastConstraint;
+	}
+	
 	// Erzeugt ein Constraint vom Typ 1
 	public Constraint createConstraintType1(JComboBox<String> constraintComboBox1, JComboBox<String> comparisonCombobox1, JTextField textFieldConstraint1){
 		String columnName = constraintComboBox1.getSelectedItem().toString();
