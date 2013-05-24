@@ -23,8 +23,6 @@ public class Connector {
 	private String passwort;
 	private LoginWindow logWin;
 	private ActionListener actionListener;
-	private String favouritesListName = "IMDBMERKLISTE"; // darf nur aus Gro§buchstaben bestehen!
-	private String favouritesKategories = "IMDBKATEGORIES"; // darf nur aus Gro§buchstaben bestehen!
 
 	public Connector(){
 		this.url = "jdbc:oracle:thin:@dbvm07.iai.uni-bonn.de:1521:lehre";
@@ -98,7 +96,6 @@ public class Connector {
 				try {
 					createConnection();
 					System.out.println("Die Verbindung wurde hergestellt.");
-					preparing();
 					Controller controller = new Controller(con);
 					logWin.dispose();
 				} catch (SQLException e) {
@@ -109,33 +106,6 @@ public class Connector {
 				}
 			}
 		});
-	}
-	
-	// Erzeugt eine Tabelle namens Merkliste, falls sie noch nicht vorhanden ist.
-	private void preparing(){
-		try {
-			String existenceTest = "SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesListName + "'";
-			Statement testStmt;
-			testStmt = con.createStatement();
-			ResultSet result = testStmt.executeQuery(existenceTest);
-			result.next();
-			if(result.getInt(1) == 0){
-				System.out.println("Merkliste wird erstellt!");
-				con.createStatement().executeUpdate("CREATE TABLE " + favouritesListName + " (titleid Number(4) Not Null, kategorieid Number(4) Not Null)");
-			}
-			result.close();
-			
-			testStmt = con.createStatement();
-			ResultSet result2 = testStmt.executeQuery("SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesKategories + "'");
-			result2.next();
-			if(result2.getInt(1) == 0){
-				System.out.println("Katgegorieliste wird erstellt.");
-				con.createStatement().executeUpdate("CREATE TABLE " + favouritesKategories + " (titleid Varchar(30) Not Null)");
-			}
-			result2.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public Connection getConnection(){
