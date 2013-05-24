@@ -18,7 +18,7 @@ public class ConstraintBuilder {
 	public ConstraintBuilder(Connection con){
 		this.con = con;
 		
-		// map gibt an, für welche Spalte, die ausgeählt wird, welche Spalte in SQL verwendet wird.
+		// map gibt an, für welche Spalte, die ausgewählt wird, welche Spalte in SQL verwendet wird.
 		map.put("TitelType", "imdb.kind_type.kind");
 		map.put("Titel", "imdb.title.title");
 		map.put("ProductionYear", "imdb.title.production_year");

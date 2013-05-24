@@ -81,14 +81,14 @@ public class StatementExecuter {
 						}
 					}
 				}
-				// H‰ngt den Where-Teil an die Abfrage
+				// Hängt den Where-Teil an die Abfrage
 				constraintStatement += c.getStatement() + " AND ";
 			}
 		}
 	}
 
 
-	// Methode, um die passenden Statements auszuw‰hlen
+	// Methode, um die passenden Statements auszuwählen
 	private String getAppendStatement(String tableName) {
 		String appendStatement = "";
 		for (Map.Entry<String[], String> e : map.entrySet()) {
@@ -105,7 +105,7 @@ public class StatementExecuter {
 
 
 
-	// Methode, die die fertige Abfrage ausf¸hrt und das ResultSet zur¸ckgibt.
+	// Methode, die die fertige Abfrage ausführt und das ResultSet zurückgibt.
 	public ResultSet executeStatement()throws SQLException{
 		appendBasicStatement();
 		ResultSet result = null;
