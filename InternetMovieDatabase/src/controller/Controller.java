@@ -37,6 +37,8 @@ public class Controller {
 	private ArrayList<Constraint> constraints = new ArrayList<Constraint>();
 	Constraint lastConstraintType1 = null;
 	Constraint lastConstraintType2 = null;
+	private Favorites favs;
+	private JTable favTable;
 
 	public Controller(Connection connection){
 		this.con = connection;
@@ -45,6 +47,9 @@ public class Controller {
 
 		if(consBuilder == null)
 			this.consBuilder = new ConstraintBuilder();
+		
+		if (favs == null)
+			this.favs = new Favorites(con);
 		connectActions();
 	}
 
@@ -149,15 +154,22 @@ public class Controller {
 				});
 			}
 		});
-
-		final Favorites favs = new Favorites(con);
-		final JTable favTable = mainWindow.getFavouriteTable(); // FavTable
+		
+		favTable = mainWindow.getFavouriteTable();
 		JComboBox<String> favListSelector = mainWindow.getFavListSelector(); // Selected Favorite Category
 
 		favListSelector.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				System.out.println(e.getItem() + " " + e.getStateChange());
+				if (e.getStateChange() == ItemEvent.SELECTED){
+					System.out.println(e.getItem() + " ");
+					try {
+						reloadTableContents((String)e.getItem());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 
@@ -240,6 +252,7 @@ public class Controller {
 				constraints.add(constraint);
 				lastConstraintType1 = constraint;
 				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel<String>(new String[] {"AND", "OR"}));
+				mainWindow.getConstraint2AndOr().setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
 			}
 		});
 
@@ -305,13 +318,22 @@ public class Controller {
 				// Auswahlm�glichkeiten f�r die erste Combobox der Einschr�nkung vom Typ 1
 				switch (selectedMode){
 				case 0:
+					//Titel
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, f�r die gilt:");
+					enableConstraintType2(true);
 					break;
 				case 1:
+					// Company
 					choice = new String[]{"Titel", "TitelType", "CompanyType", "ProductionYear"};
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, f�r die gilt:");
+					enableConstraintType2(true);
 					break;
 				case 2:
+					//Person
 					choice = new String[]{"RollenName", "RollenType", "Titel", "TitelType"};
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, f�r die gilt:");
+					enableConstraintType2(false);
 					break;
 				default:
 					throw new RuntimeException("Wrong mode");
@@ -329,6 +351,19 @@ public class Controller {
 				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
 			}
 		});
+	}
+	
+	private void enableConstraintType2(boolean value){
+		mainWindow.getTextFieldConstraint2().setEnabled(value);
+		mainWindow.getComparisonCombobox2().setEnabled(value);
+		mainWindow.getConstraintComboBox2().setEnabled(value);
+		mainWindow.getConstraint2AndOr().setEnabled(value);
+		mainWindow.getBtnAddConstraint2().setEnabled(value);
+	}
+
+	protected void reloadTableContents(String category) throws SQLException{
+		ResultSet result = favs.getFavByCategory(category);
+		
 	}
 
 }

@@ -65,10 +65,10 @@ public class DetailStatementBuilder {
 						" join imdb.movie_companies on imdb.movie_companies.company_id = imdb.company_name.id" +
 						" join imdb.company_type on imdb.company_type.id = imdb.movie_companies.company_type_id" +
 						" Where imdb.company_name.id = ";
-		query2 = "Select Distinct imdb.title.title, imdb.kind_type.kind, imdb.title.production_year From imdb.title" +
+		query2 = "Select Distinct imdb.title.title, imdb.kind_type.kind Typ, imdb.title.production_year From imdb.title" +
 				" join imdb.kind_type on imdb.kind_type.id = imdb.title.kind_id" +
 				" join imdb.movie_companies on imdb.movie_companies.movie_id = imdb.title.id" +
-				" join imdb.company_name on imdb.company_name.id = imdb.movie_companies.movie_id" +
+				" join imdb.company_name on imdb.company_name.id = imdb.movie_companies.company_id" +
 				" join imdb.company_type on imdb.company_type.id = imdb.movie_companies.company_type_id Where imdb.company_name.id = ";
 		
 		option1LabelValue = "Companyname: ";
@@ -93,6 +93,7 @@ public class DetailStatementBuilder {
 		tableTitle = "Beteiligte Filmproduktionen:";
 	}
 	
+	// Führt die beiden notwendigen Abfragen für die Detailansicht aus.
 	public void executeStatement() throws SQLException{
 		mainWindow.getDetailTableTitle().setText(tableTitle);
 		mainWindow.getOption1Label().setText("");
@@ -148,6 +149,7 @@ public class DetailStatementBuilder {
 			tModel.addRow(objects);
 		}
 		result2.close();
+		System.out.println("Fertig");
 		
 	}
 	
