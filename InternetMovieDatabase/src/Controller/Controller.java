@@ -37,22 +37,6 @@ public class Controller {
 		if(consBuilder == null)
 			this.consBuilder = new ConstraintBuilder(con);
 		connectActions();
-		prepairFavTable();
-	}
-
-	private void prepairFavTable(){
-		try {
-			Statement stmt = con.createStatement();
-			String query = "CREATE TABLE merkliste ( "+
-					"id INT primary key not null,"+
-					"movieID INT not null "+
-					" )";
-			System.out.println(query);
-			stmt.executeQuery(query);
-		} catch (SQLException e) {
-			if (e.getErrorCode() == 955)
-				return;
-		}
 	}
 
 	private void connectActions(){

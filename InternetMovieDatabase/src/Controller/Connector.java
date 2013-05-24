@@ -23,7 +23,8 @@ public class Connector {
 	private String passwort;
 	private LoginWindow logWin;
 	private ActionListener actionListener;
-	private String favouritesListName = "MERKLISTE"; // darf nur aus Groﬂbuchstaben bestehen!
+	private String favouritesListName = "IMDBMERKLISTE"; // darf nur aus Groﬂbuchstaben bestehen!
+	private String favouritesKategories = "IMDBKATEGORIES"; // darf nur aus Groﬂbuchstaben bestehen!
 
 	public Connector(){
 		this.url = "jdbc:oracle:thin:@dbvm07.iai.uni-bonn.de:1521:lehre";
@@ -115,15 +116,29 @@ public class Connector {
 		try {
 			String existenceTest = "SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesListName + "'";
 			Statement testStmt;
-				testStmt = con.createStatement();
+			testStmt = con.createStatement();
 			ResultSet result = testStmt.executeQuery(existenceTest);
 			result.next();
 			if(result.getInt(1) == 0){
-				String newFavoutiteListStatement = "CREATE TABLE " + favouritesListName + " (title_id Number(4) Not Null)";
+				System.out.println("Merkliste wird erstellt!");
+				String newFavoutiteListStatement = "CREATE TABLE " + favouritesListName + " (titleid Number(4) Not Null, kategorieid Number(4) Not Null)";
 				Statement newListStmt = con.createStatement();
 				newListStmt.executeUpdate(newFavoutiteListStatement);
 			}
 			result.close();
+			
+			String existenceTest2 = "SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesKategories + "'";
+			Statement testStmt2;
+			testStmt = con.createStatement();
+			ResultSet result2 = testStmt.executeQuery(existenceTest2);
+			result2.next();
+			if(result2.getInt(1) == 0){
+				System.out.println("Katgegrieliste wird erstellt.");
+				String newFavoutiteListStatement2 = "CREATE TABLE " + favouritesKategories + " (titleid Varchar(30) Not Null)";
+				Statement newListStmt2 = con.createStatement();
+				newListStmt2.executeUpdate(newFavoutiteListStatement2);
+			}
+			result2.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
