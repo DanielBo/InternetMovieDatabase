@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -64,6 +65,11 @@ public class MainWindow extends JFrame {
 
 	private JTabbedPane tabPane;
 	private JLabel detailTableTitle;
+	private JScrollPane scrollPane_2;
+
+	private JTable favouriteTable;
+
+	private DefaultTableModel favouriteTablemodel;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -230,13 +236,20 @@ public class MainWindow extends JFrame {
 	}
 	
 	/**
-	 * building the 2nd Tab for the JTabbedPane <p>
+	 * building the 3nd Tab for the JTabbedPane <p>
 	 * @return
-	 * mainPanel - JPanel
+	 * favouriteListPanel - JPanel
 	 */
 	private JPanel getFavouriteListPanel() {
 		JPanel favouriteListPanel = new JPanel();
 		favouriteListPanel.setLayout(null);
+		
+		favouriteTablemodel = new DefaultTableModel();
+		favouriteTable = new JTable(favouriteTablemodel);
+		
+		scrollPane_2 = new JScrollPane(favouriteTable);
+		scrollPane_2.setBounds(29, 30, 896, 317);
+		favouriteListPanel.add(scrollPane_2);
 		
 		detailTable = new JTable();
 		
@@ -416,5 +429,21 @@ public class MainWindow extends JFrame {
 
 	public void setDetailTableTitle(JLabel detailTableTitle) {
 		this.detailTableTitle = detailTableTitle;
+	}
+
+	public DefaultTableModel getFavouriteTablemodel() {
+		return favouriteTablemodel;
+	}
+
+	public void setFavouriteTablemodel(DefaultTableModel favouriteTablemodel) {
+		this.favouriteTablemodel = favouriteTablemodel;
+	}
+
+	public JTable getFavouriteTable() {
+		return favouriteTable;
+	}
+
+	public void setFavouriteTable(JTable favouriteTable) {
+		this.favouriteTable = favouriteTable;
 	}
 }
