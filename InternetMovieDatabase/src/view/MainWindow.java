@@ -490,9 +490,6 @@ public class MainWindow extends JFrame {
 
 	public void setLblEinschrnkungen_1(JLabel lblEinschrnkungen_1) {
 		this.lblEinschrnkungen_1 = lblEinschrnkungen_1;
-<<<<<<< HEAD
 	}
-=======
-	}
->>>>>>> 454b9ef7cc6adfb09daecb5f74824f4bebf084c2
+
 }
