@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +18,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import controller.builder.ConstraintBuilder;
+import controller.builder.DetailStatementBuilder;
+import controller.builder.QueryBuilder;
+
 import Model.Constraint;
 import View.MainWindow;
 
@@ -35,7 +39,7 @@ public class Controller {
 			this.mainWindow = new MainWindow(con);
 
 		if(consBuilder == null)
-			this.consBuilder = new ConstraintBuilder(con);
+			this.consBuilder = new ConstraintBuilder();
 		connectActions();
 	}
 
@@ -46,7 +50,8 @@ public class Controller {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						StatementExecuter stmtExe = new StatementExecuter(con, selectedMode, constraints, mainWindow.getSearchField().getText());
+						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchField().getText()).getStatement();
+						StatementExecuter stmtExe = new StatementExecuter(con, query);
 						try {
 							System.out.println("Führe Anfrage aus.");
 							ResultSet result = stmtExe.executeStatement();

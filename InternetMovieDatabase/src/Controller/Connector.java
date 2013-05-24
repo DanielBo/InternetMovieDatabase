@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,8 +23,8 @@ public class Connector {
 	private String passwort;
 	private LoginWindow logWin;
 	private ActionListener actionListener;
-	private String favouritesListName = "IMDBMERKLISTE"; // darf nur aus Groﬂbuchstaben bestehen!
-	private String favouritesKategories = "IMDBKATEGORIES"; // darf nur aus Groﬂbuchstaben bestehen!
+	private String favouritesListName = "IMDBMERKLISTE"; // darf nur aus Großbuchstaben bestehen!
+	private String favouritesKategories = "IMDBKATEGORIES"; // darf nur aus Großbuchstaben bestehen!
 
 	public Connector(){
 		this.url = "jdbc:oracle:thin:@dbvm07.iai.uni-bonn.de:1521:lehre";
@@ -121,26 +121,19 @@ public class Connector {
 			result.next();
 			if(result.getInt(1) == 0){
 				System.out.println("Merkliste wird erstellt!");
-				String newFavoutiteListStatement = "CREATE TABLE " + favouritesListName + " (titleid Number(4) Not Null, kategorieid Number(4) Not Null)";
-				Statement newListStmt = con.createStatement();
-				newListStmt.executeUpdate(newFavoutiteListStatement);
+				con.createStatement().executeUpdate("CREATE TABLE " + favouritesListName + " (titleid Number(4) Not Null, kategorieid Number(4) Not Null)");
 			}
 			result.close();
 			
-			String existenceTest2 = "SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesKategories + "'";
-			Statement testStmt2;
 			testStmt = con.createStatement();
-			ResultSet result2 = testStmt.executeQuery(existenceTest2);
+			ResultSet result2 = testStmt.executeQuery("SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesKategories + "'");
 			result2.next();
 			if(result2.getInt(1) == 0){
-				System.out.println("Katgegrieliste wird erstellt.");
-				String newFavoutiteListStatement2 = "CREATE TABLE " + favouritesKategories + " (titleid Varchar(30) Not Null)";
-				Statement newListStmt2 = con.createStatement();
-				newListStmt2.executeUpdate(newFavoutiteListStatement2);
+				System.out.println("Katgegorieliste wird erstellt.");
+				con.createStatement().executeUpdate("CREATE TABLE " + favouritesKategories + " (titleid Varchar(30) Not Null)");
 			}
 			result2.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

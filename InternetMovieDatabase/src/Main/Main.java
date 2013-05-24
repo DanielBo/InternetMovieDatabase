@@ -3,9 +3,13 @@ package Main;
 
 import javax.swing.SwingUtilities;
 
-import Controller.Connector;
+import controller.Connector;
+
 
 public class Main{
+	
+	public static final boolean isDebug = true;
+	
     public static void main(String[] args) {           
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -15,4 +19,8 @@ public class Main{
             }
         });  
     }
+
+	public static boolean isDebug() {
+		return isDebug;
+	}
 }
