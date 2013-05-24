@@ -1,9 +1,10 @@
-package Main;
+package main;
 
 
 import javax.swing.SwingUtilities;
 
 import controller.Connector;
+
 
 
 public class Main{
