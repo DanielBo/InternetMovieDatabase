@@ -102,6 +102,7 @@ public class DetailStatementBuilder {
 		ResultSet result1 = stmt1.executeQuery(query1 + " " + id);
 		ResultSetMetaData resultMetaData = result1.getMetaData();
 		int columnNumber = resultMetaData.getColumnCount();
+		
 		result1.next();
 		if(columnNumber >= 1)
 			mainWindow.getOption1Label().setText(option1LabelValue + result1.getString(1));
@@ -122,7 +123,6 @@ public class DetailStatementBuilder {
 		for(int i = 1; i <= columnNumber2; i++){
 			columnNames[i-1] = resultmetaData2.getColumnName(i);
 		}
-		
 		DefaultTableModel tModel = new DefaultTableModel(columnNames, 0){
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -137,15 +137,14 @@ public class DetailStatementBuilder {
 		// holt sich die Daten aus dem ResultSet
 		while(result2.next()){
 			System.out.println("Next");
-			Object[] objects = new Object[columnNumber]; // stellt einen Datensatz dar.
-
+			Object[] objects = new Object[columnNumber2]; // stellt einen Datensatz dar.
 			
 			for(int i = 1; i <= columnNumber2; i++){
 				objects[i-1] = result2.getObject(i);
 			}
-			
 			tModel.addRow(objects);
 		}
+		result2.close();
 		
 	}
 	

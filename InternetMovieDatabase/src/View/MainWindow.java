@@ -38,7 +38,7 @@ public class MainWindow extends JFrame {
 
 	private JComboBox<String> modeSelector;
 	private JList<String> listViewConstraints;
-	private JScrollPane scrollPane_1;
+	private JScrollPane mainTableScrollPane;
 	private JTable table;
 	private JTextField textFieldConstraint2;
 
@@ -148,15 +148,15 @@ public class MainWindow extends JFrame {
 		listModel = new DefaultListModel<String>();
 		listViewConstraints = new JList<String>(listModel);
 		
-		JScrollPane scrollPane = new JScrollPane(listViewConstraints);
-		scrollPane.setBounds(31, 176, 605, 120);
-		contentPane.add(scrollPane);
+		JScrollPane listScrollPane = new JScrollPane(listViewConstraints);
+		listScrollPane.setBounds(31, 176, 605, 120);
+		contentPane.add(listScrollPane);
 		
 		setTable(new JTable());
 		
-		scrollPane_1 = new JScrollPane(getTable());
-		scrollPane_1.setBounds(31, 359, 891, 292);
-		contentPane.add(scrollPane_1);
+		mainTableScrollPane = new JScrollPane(getTable());
+		mainTableScrollPane.setBounds(31, 359, 891, 292);
+		contentPane.add(mainTableScrollPane);
 		
 		JLabel lblNewLabel = new JLabel("Einschr\u00E4nkung (Typ2) hinzuf\u00FCgen:");
 		lblNewLabel.setBounds(12, 103, 226, 14);
@@ -206,36 +206,36 @@ public class MainWindow extends JFrame {
 	 * mainPanel - JPanel
 	 */
 	private JPanel getDetailPanel() {
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(null);
+		JPanel detailPanel = new JPanel();
+		detailPanel.setLayout(null);
 		
 		detailTable = new JTable();
 		
-		JScrollPane scrollPane = new JScrollPane(detailTable);
-		scrollPane.setBounds(77, 252, 777, 399);
-		mainPanel.add(scrollPane);
+		JScrollPane detailScrollPane = new JScrollPane(detailTable);
+		detailScrollPane.setBounds(77, 252, 777, 399);
+		detailPanel.add(detailScrollPane);
 		
 		option1Label = new JLabel("");
 		option1Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option1Label.setBounds(77, 57, 777, 22);
-		mainPanel.add(option1Label);
+		detailPanel.add(option1Label);
 		
 		option2Label = new JLabel("");
 		option2Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option2Label.setBounds(77, 92, 777, 22);
-		mainPanel.add(option2Label);
+		detailPanel.add(option2Label);
 		
 		option3Label = new JLabel("");
 		option3Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option3Label.setBounds(77, 127, 777, 22);
-		mainPanel.add(option3Label);
+		detailPanel.add(option3Label);
 		
 		detailTableTitle = new JLabel("");
 		detailTableTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		detailTableTitle.setBounds(77, 210, 777, 29);
-		mainPanel.add(detailTableTitle);
+		detailPanel.add(detailTableTitle);
 
-		return mainPanel;
+		return detailPanel;
 	}
 	
 	/**
@@ -254,9 +254,6 @@ public class MainWindow extends JFrame {
 		scrollPane_2.setBounds(29, 30, 896, 317);
 		favouriteListPanel.add(scrollPane_2);
 		
-		detailTable = new JTable();
-		
-
 		return favouriteListPanel;
 	}
 

@@ -117,12 +117,6 @@ public class Controller {
 								}
 							};
 							table.setModel(tModel);
-
-							//Zum Testen
-							//							for(Object s : columnNames){
-							//								System.out.println(s);
-							//							}
-
 							tModel.setColumnIdentifiers(columnNames);
 
 							System.out.println("Fülle Tabelle auf.");
@@ -171,7 +165,7 @@ public class Controller {
 					constraint = consBuilder.createConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1());
 				}
 
-				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefÃ¼gt.
+				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
 				DefaultListModel<String> listModel = mainWindow.getListModel();
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
@@ -199,7 +193,7 @@ public class Controller {
 					constraint = consBuilder.createConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2());
 				}
 
-				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefÃ¼gt.
+				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
 				DefaultListModel<String> listModel = mainWindow.getListModel();
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
@@ -208,7 +202,7 @@ public class Controller {
 			}
 		});
 
-		// Entfernt das in der listView ausgewÃ¤hlte Constraint.
+		// Entfernt das in der listView ausgewählte Constraint.
 		mainWindow.getBtnEinschrnkungEntfernen().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
 				SwingUtilities.invokeLater(new Runnable() {
@@ -225,9 +219,9 @@ public class Controller {
 			}
 		});
 
-		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus auswÃ¤hlt,
+		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus auswählt,
 		 * also (Titel, Company oder Person).
-		 * Je nach Auswahl werden die AuswahlmÃ¶glichkeiten fÃ¼r das Constraint vom Typ 1 verÃ¤ndert.
+		 * Je nach Auswahl werden die Auswahlmöglichkeiten für das Constraint vom Typ 1 verändert.
 		 */
 		mainWindow.getModeSelector().addActionListener(new ActionListener() {
 			@Override
@@ -239,7 +233,7 @@ public class Controller {
 				selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
 				String[] choice;
 
-				// Auswahlmöglichkeiten fÃ¼r die erste Combobox der EinschrÃ¤nkung vom Typ 1
+				// Auswahlmöglichkeiten für die erste Combobox der Einschränkung vom Typ 1
 				switch (selectedMode){
 				case 0:
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
@@ -257,8 +251,8 @@ public class Controller {
 			}
 		});
 
-		/* Wird die Auswahl der Constraint1Combobox verÃ¤ndert, lÃ¤sst sich als Verbindungsoperator nur noch AND auswÃ¤hlen
-		 * Erst wenn eine Constraint vom Typ 1 hinzugefÃ¼gt wird, lÃ¤sst sich auch OR auswÃ¤hlen. (Siehe weiter Oben)
+		/* Wird die Auswahl der Constraint1Combobox verändert, lässt sich als Verbindungsoperator nur noch AND auswählen
+		 * Erst wenn eine Constraint vom Typ 1 hinzugefügt wird, lässt sich auch OR auswählen. (Siehe weiter Oben)
 		 */
 		mainWindow.getConstraintComboBox1().addActionListener(new ActionListener() {
 			@Override
