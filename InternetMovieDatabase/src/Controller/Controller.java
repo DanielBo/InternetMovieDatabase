@@ -92,7 +92,7 @@ public class Controller {
 
 								@Override
 								public void mouseClicked(MouseEvent e) {
-									if (e.getClickCount() >= 2){
+									if (e.getClickCount() == 2){
 										System.out.println("Doubleclick noticed on Row: " + table.getSelectedRow());
 										System.out.println("The ID for " + table.getModel().getValueAt(table.getSelectedRow(), 1) + " is " + table.getModel().getValueAt(table.getSelectedRow(), 0)); // Selected MovieID
 										mainWindow.getTabPane().setSelectedIndex(1);
