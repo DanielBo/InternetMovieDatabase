@@ -174,7 +174,7 @@ public class Controller {
 
 		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs);
+				AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,(String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0));
 			}
 		});
 

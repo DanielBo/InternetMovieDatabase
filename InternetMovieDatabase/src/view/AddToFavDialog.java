@@ -2,6 +2,9 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,9 +27,12 @@ public class AddToFavDialog extends JFrame {
 
 	private JComboBox<String> comboBox;
 	
-	public AddToFavDialog(MainWindow mainWindow, Favorites favs) {
+	private String id;
+	
+	public AddToFavDialog(MainWindow mainWindow, Favorites favs, String id) {
 		this.mainWindow = mainWindow;
 		this.favs = favs;
+		this.id = id;
 		init();
 	}
 
@@ -53,6 +59,24 @@ public class AddToFavDialog extends JFrame {
 		JButton btnErtstellen = new JButton("Ertstellen");
 		btnErtstellen.setBounds(307, 56, 117, 29);
 		getContentPane().add(btnErtstellen);
+		
+		btnErtstellen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comboBox.addItem(textField.getText());
+			}
+		});
+	
+		btnHinzufgen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					favs.addIdToFavorites(id, (String)comboBox.getSelectedItem());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		JLabel lblNeueListeHinzufgen = new JLabel("Neue Liste Hinzuf\u00FCgen");
 		lblNeueListeHinzufgen.setBounds(151, 27, 172, 16);
