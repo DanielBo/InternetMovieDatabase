@@ -44,6 +44,8 @@ public class Connector {
 		logWin.getLoginButton().addActionListener(actionListener);
 		logWin.setVisible(true);
 		
+
+
 		// ActionListener to break up loginoperation.
 		actionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
