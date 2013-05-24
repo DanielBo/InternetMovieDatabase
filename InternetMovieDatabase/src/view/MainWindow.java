@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.Connection;
 
@@ -18,9 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame {
-	
+
 	private Connection con;
 
 	private JPanel contentPane;
@@ -71,6 +74,7 @@ public class MainWindow extends JFrame {
 	private JButton btnVonListeEntfernen;
 
 	private JLabel lblEinschrnkungen_1;
+	private JButton addToFavList;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -78,127 +82,127 @@ public class MainWindow extends JFrame {
 	public MainWindow(Connection con) {
 		init();
 		this.con = con;
-		
+
 	}
 
 	private void init() {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 976, 728);
-		
+
 		tabPane = new JTabbedPane();
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+
 		tabPane.addTab("Suchansicht" , contentPane);
 		tabPane.addTab("DetailAnsicht", getDetailPanel());
 		tabPane.addTab("Merkliste", getFavouriteListPanel());
 		setContentPane(tabPane);
-		
-		
+
+
 		contentPane.setLayout(null);
-		
+
 		JLabel lblSuchfeld = new JLabel("Suchfeld:");
 		lblSuchfeld.setBounds(12, 13, 87, 16);
 		contentPane.add(lblSuchfeld);
-		
+
 		setSearchField(new JTextField());
 		getSearchField().setBounds(111, 10, 238, 22);
 		contentPane.add(getSearchField());
 		getSearchField().setColumns(10);
-		
+
 		JLabel lblIchMchteSuchen = new JLabel("Ich m\u00F6chte suchen nach:");
 		lblIchMchteSuchen.setBounds(518, 13, 196, 16);
 		contentPane.add(lblIchMchteSuchen);
-		
+
 		setModeSelector(new JComboBox<String>());
 		getModeSelector().setModel(new DefaultComboBoxModel<String>(new String[] {"Titel", "Company", "Person"}));
 		getModeSelector().setBounds(726, 10, 196, 22);
 		contentPane.add(getModeSelector());
-		
+
 		JLabel lblEinschrnkungen = new JLabel("Einschr\u00E4nkung (Typ1) hinzuf\u00FCgen: ");
 		lblEinschrnkungen.setBounds(12, 49, 212, 16);
 		contentPane.add(lblEinschrnkungen);
-		
+
 		constraintComboBox1 = new JComboBox<String>();
 		constraintComboBox1.setModel(new DefaultComboBoxModel<String>(new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"}));
 		constraintComboBox1.setBounds(229, 45, 160, 22);
 		contentPane.add(constraintComboBox1);
-		
+
 		comparisonCombobox1 = new JComboBox<String>();
 		comparisonCombobox1.setModel(new DefaultComboBoxModel(new String[] {"ist genau wie", "ist nicht wie", "enth\u00E4lt Teilstring"}));
 		comparisonCombobox1.setBounds(401, 46, 115, 22);
 		contentPane.add(comparisonCombobox1);
-		
+
 		textFieldConstraint1 = new JTextField();
 		textFieldConstraint1.setBounds(528, 46, 212, 22);
 		contentPane.add(textFieldConstraint1);
 		textFieldConstraint1.setColumns(10);
-		
+
 		btnAddConstraint1 = new JButton("Add");
 		btnAddConstraint1.setBounds(835, 45, 87, 25);
 		contentPane.add(btnAddConstraint1);
-		
+
 		btnSucheStarten = new JButton("Suche starten");
 		btnSucheStarten.setBounds(750, 271, 124, 25);
 		contentPane.add(btnSucheStarten);
-		
+
 		listModel = new DefaultListModel<String>();
 		listViewConstraints = new JList<String>(listModel);
-		
+
 		JScrollPane listScrollPane = new JScrollPane(listViewConstraints);
 		listScrollPane.setBounds(31, 176, 605, 120);
 		contentPane.add(listScrollPane);
-		
+
 		setTable(new JTable());
-		
+
 		mainTableScrollPane = new JScrollPane(getTable());
 		mainTableScrollPane.setBounds(31, 359, 891, 292);
 		contentPane.add(mainTableScrollPane);
-		
+
 		JLabel lblNewLabel = new JLabel("Einschr\u00E4nkung (Typ2) hinzuf\u00FCgen:");
 		lblNewLabel.setBounds(12, 103, 212, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		textFieldConstraint2 = new JTextField();
 		textFieldConstraint2.setBounds(229, 100, 160, 20);
 		contentPane.add(textFieldConstraint2);
 		textFieldConstraint2.setColumns(10);
-		
+
 		comparisonCombobox2 = new JComboBox<String>();
 		comparisonCombobox2.setModel(new DefaultComboBoxModel(new String[] {"ist ein", "ist kein"}));
 		comparisonCombobox2.setBounds(401, 100, 115, 20);
 		contentPane.add(comparisonCombobox2);
-		
+
 		constraintComboBox2 = new JComboBox<String>();
 		constraintComboBox2.setModel(new DefaultComboBoxModel<String>(new String[] {"Schauspieler /actor", "Schauspielerin /actress", "Produzent / producer", "Drehbuchautor / writer", "Kameramann / cinematographer", "Komponist / composer", "Kost\u00FCmdesigner / costume designer", "Regisseur / director", "Cutter / editor", "Filmcrew / miscellaneous crew", "Produktionsdesigner / production designer", "Gast / guest"}));
 		constraintComboBox2.setBounds(528, 100, 212, 20);
 		contentPane.add(constraintComboBox2);
-		
+
 		btnAddConstraint2 = new JButton("Add");
 		btnAddConstraint2.setBounds(835, 99, 87, 23);
 		contentPane.add(btnAddConstraint2);
-		
+
 		btnEinschrnkungEntfernen = new JButton("Einschr\u00E4nkung entfernen");
 		btnEinschrnkungEntfernen.setBounds(31, 309, 194, 25);
 		contentPane.add(btnEinschrnkungEntfernen);
-		
+
 		lblEinschrnkungen_1 = new JLabel("Gib mir Titel, f\u00FCr die gilt:");
 		lblEinschrnkungen_1.setBounds(31, 147, 358, 16);
 		contentPane.add(lblEinschrnkungen_1);
-		
+
 		constraint1AndOr = new JComboBox<String>();
 		constraint1AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
 		constraint1AndOr.setBounds(746, 46, 77, 22);
 		contentPane.add(constraint1AndOr);
-		
+
 		constraint2AndOr = new JComboBox<String>();
 		constraint2AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
 		constraint2AndOr.setBounds(746, 99, 77, 22);
 		contentPane.add(constraint2AndOr);
 	}
-	
+
 	/**
 	 * building the 2nd Tab for the JTabbedPane <p>
 	 * @return
@@ -207,37 +211,41 @@ public class MainWindow extends JFrame {
 	private JPanel getDetailPanel() {
 		JPanel detailPanel = new JPanel();
 		detailPanel.setLayout(null);
-		
+
 		detailTable = new JTable();
-		
+
 		JScrollPane detailScrollPane = new JScrollPane(detailTable);
 		detailScrollPane.setBounds(77, 252, 777, 399);
 		detailPanel.add(detailScrollPane);
-		
+
 		option1Label = new JLabel("Name");
 		option1Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		option1Label.setBounds(77, 57, 777, 22);
+		option1Label.setBounds(77, 58, 777, 22);
 		detailPanel.add(option1Label);
 
-		
+
 		option2Label = new JLabel("");
 		option2Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option2Label.setBounds(77, 92, 777, 22);
 		detailPanel.add(option2Label);
-		
+
 		option3Label = new JLabel("");
 		option3Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option3Label.setBounds(77, 127, 777, 22);
 		detailPanel.add(option3Label);
-		
+
 		detailTableTitle = new JLabel("");
 		detailTableTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		detailTableTitle.setBounds(77, 210, 777, 29);
 		detailPanel.add(detailTableTitle);
 
+		setAddToFavList(new JButton("Zu Merkliste hinzuf\u00FCgen"));
+		getAddToFavList().setBounds(657, 17, 197, 29);
+		detailPanel.add(getAddToFavList());
+
 		return detailPanel;
 	}
-	
+
 	/**
 	 * building the 3rd Tab for the JTabbedPane <p>
 	 * @return
@@ -246,26 +254,26 @@ public class MainWindow extends JFrame {
 	private JPanel getFavouriteListPanel() {
 		JPanel favouriteListPanel = new JPanel();
 		favouriteListPanel.setLayout(null);
-		
+
 		favouriteTablemodel = new DefaultTableModel();
 		favouriteTable = new JTable(favouriteTablemodel);
-		
+
 		scrollPane_2 = new JScrollPane(favouriteTable);
 		scrollPane_2.setBounds(24, 93, 896, 317);
 		favouriteListPanel.add(scrollPane_2);
-		
+
 		setFavListSelector(new JComboBox<String>());
 		getFavListSelector().setBounds(203, 16, 181, 18);
 		favouriteListPanel.add(getFavListSelector());
-		
+
 		JLabel lblNewLabel_2 = new JLabel("MerkListe asuw\u00E4hlen:");
 		lblNewLabel_2.setBounds(24, 16, 167, 16);
 		favouriteListPanel.add(lblNewLabel_2);
-		
+
 		setBtnVonListeEntfernen(new JButton("Von Liste entfernen"));
 		getBtnVonListeEntfernen().setBounds(753, 55, 167, 29);
 		favouriteListPanel.add(getBtnVonListeEntfernen());
-		
+
 		return favouriteListPanel;
 	}
 
@@ -275,7 +283,7 @@ public class MainWindow extends JFrame {
 
 	private void setTextFieldConstraint1(JTextField jTextField) {
 		textFieldConstraint1 = jTextField;
-		
+
 	}
 
 	public JButton getSearchButton(){
@@ -490,5 +498,13 @@ public class MainWindow extends JFrame {
 
 	public void setLblEinschrnkungen_1(JLabel lblEinschrnkungen_1) {
 		this.lblEinschrnkungen_1 = lblEinschrnkungen_1;
+	}
+
+	public JButton getAddToFavList() {
+		return addToFavList;
+	}
+
+	public void setAddToFavList(JButton addToFavList) {
+		this.addToFavList = addToFavList;
 	}
 }

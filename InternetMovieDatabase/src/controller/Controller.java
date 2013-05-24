@@ -17,16 +17,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
-import view.MainWindow;
 
 import main.Main;
 import model.Constraint;
-
+import view.AddToFavDialog;
+import view.MainWindow;
 import controller.builder.ConstraintBuilder;
 import controller.builder.DetailStatementBuilder;
 import controller.builder.QueryBuilder;
@@ -64,7 +61,7 @@ public class Controller {
 		try {
 			categories = favs.getCategories();
 			favListSelector.removeAllItems();
-			
+
 			if (categories != null)
 				for (String s : categories)
 					favListSelector.addItem(s);
@@ -172,6 +169,12 @@ public class Controller {
 						}
 					}
 				});
+			}
+		});
+
+		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs);
 			}
 		});
 
