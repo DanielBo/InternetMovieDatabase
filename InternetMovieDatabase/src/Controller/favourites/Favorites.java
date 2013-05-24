@@ -1,4 +1,4 @@
-package controller.favourites;
+package Controller.favourites;
 
 public class Favorites {
 

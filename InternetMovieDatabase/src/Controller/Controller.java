@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +18,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import controller.builder.ConstraintBuilder;
-import controller.builder.DetailStatementBuilder;
-import controller.builder.QueryBuilder;
+import Controller.builder.ConstraintBuilder;
+import Controller.builder.DetailStatementBuilder;
+import Controller.builder.QueryBuilder;
 
 import Model.Constraint;
 import View.MainWindow;

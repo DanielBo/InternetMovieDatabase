@@ -1,4 +1,4 @@
-package controller.builder;
+package Controller.builder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

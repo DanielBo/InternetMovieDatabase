@@ -3,7 +3,7 @@ package Main;
 
 import javax.swing.SwingUtilities;
 
-import controller.Connector;
+import Controller.Connector;
 
 
 public class Main{
