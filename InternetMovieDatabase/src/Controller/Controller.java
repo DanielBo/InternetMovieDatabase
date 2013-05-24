@@ -54,7 +54,7 @@ public class Controller {
 				return;
 		}
 	}
-
+	// Das ist eine Test
 	private void connectActions(){
 
 		mainWindow.getSearchButton().addActionListener(new ActionListener(){
