@@ -320,19 +320,31 @@ public class Controller {
 				case 0:
 					//Titel
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
+<<<<<<< HEAD
 					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, f�r die gilt:");
+=======
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, f�r die gilt:");
+>>>>>>> 454b9ef7cc6adfb09daecb5f74824f4bebf084c2
 					enableConstraintType2(true);
 					break;
 				case 1:
 					// Company
 					choice = new String[]{"Titel", "TitelType", "CompanyType", "ProductionYear"};
+<<<<<<< HEAD
 					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, f�r die gilt:");
+=======
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, f�r die gilt:");
+>>>>>>> 454b9ef7cc6adfb09daecb5f74824f4bebf084c2
 					enableConstraintType2(true);
 					break;
 				case 2:
 					//Person
 					choice = new String[]{"RollenName", "RollenType", "Titel", "TitelType"};
+<<<<<<< HEAD
 					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, f�r die gilt:");
+=======
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, f�r die gilt:");
+>>>>>>> 454b9ef7cc6adfb09daecb5f74824f4bebf084c2
 					enableConstraintType2(false);
 					break;
 				default:
