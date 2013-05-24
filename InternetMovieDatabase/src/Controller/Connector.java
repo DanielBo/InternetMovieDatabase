@@ -6,7 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -21,6 +23,7 @@ public class Connector {
 	private String passwort;
 	private LoginWindow logWin;
 	private ActionListener actionListener;
+	private String favouritesListName = "MERKLISTE"; // darf nur aus Groﬂbuchstaben bestehen!
 
 	public Connector(){
 		this.url = "jdbc:oracle:thin:@dbvm07.iai.uni-bonn.de:1521:lehre";
@@ -94,6 +97,7 @@ public class Connector {
 				try {
 					createConnection();
 					System.out.println("Die Verbindung wurde hergestellt.");
+					preparing();
 					Controller controller = new Controller(con);
 					logWin.dispose();
 				} catch (SQLException e) {
@@ -104,6 +108,26 @@ public class Connector {
 				}
 			}
 		});
+	}
+	
+	// Erzeugt eine Tabelle namens Merliste, falls sie noch nicht vorhanden ist.
+	private void preparing(){
+		try {
+			String existenceTest = "SELECT COUNT(*)  FROM user_tables WHERE TABLE_NAME = '" + favouritesListName + "'";
+			Statement testStmt;
+				testStmt = con.createStatement();
+			ResultSet result = testStmt.executeQuery(existenceTest);
+			result.next();
+			if(result.getInt(1) == 0){
+				String newFavoutiteListStatement = "CREATE TABLE " + favouritesListName + " (title_id Number(4) Not Null)";
+				Statement newListStmt = con.createStatement();
+				newListStmt.executeUpdate(newFavoutiteListStatement);
+			}
+			result.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Connection getConnection(){
