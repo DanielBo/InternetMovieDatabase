@@ -124,6 +124,8 @@ public class DetailStatementBuilder {
 		}
 		
 		DefaultTableModel tModel = new DefaultTableModel(columnNames, 0){
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;

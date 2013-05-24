@@ -4,13 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 import Main.Main;
-import Model.Constraint;
 
 public class StatementExecuter {
 	private Connection con;

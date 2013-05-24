@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -18,12 +17,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import Model.Constraint;
+import View.MainWindow;
 import controller.builder.ConstraintBuilder;
 import controller.builder.DetailStatementBuilder;
 import controller.builder.QueryBuilder;
-
-import Model.Constraint;
-import View.MainWindow;
 
 public class Controller {
 	private int selectedMode = 0; // currently set searchmode
@@ -32,6 +30,7 @@ public class Controller {
 	private Connection con;
 	private ArrayList<Constraint> constraints = new ArrayList<Constraint>();
 	Constraint lastConstraintType1 = null;
+	Constraint lastConstraintType2 = null;
 
 	public Controller(Connection connection){
 		this.con = connection;
@@ -151,18 +150,18 @@ public class Controller {
 			}
 		});
 
-		// ActionListener für das Hinzufügen von Constraints des Typ 2
+		// ActionListener f�r das Hinzuf�gen von Constraints des Typ 1
 		mainWindow.getBtnAddConstraint1().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
 				Constraint constraint = null;
 
-				/* Entweder wird an eine bestehendes Constraint mit oder ein weiteres angehängt ODER 
-				 * Es wird ein einzelnes Constraint erzeugt, dass später per "AND" mit weiteren Constraints verbunden wird.
+				/* Entweder wird an eine bestehendes Constraint mit oder ein weiteres angeh�ngt ODER 
+				 * Es wird ein einzelnes Constraint erzeugt, dass sp�ter per "AND" mit weiteren Constraints verbunden wird.
 				 */
 				if(mainWindow.getConstraint1AndOr().getSelectedIndex() == 1 && lastConstraintType1 != null){
 					constraint = consBuilder.createORConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1(), lastConstraintType1);
 
-					// Letztes Constraint wird gelöscht und weiter unten durch das Neue ersetzt.
+					// Letztes Constraint wird gel�scht und weiter unten durch das Neue ersetzt.
 					constraints.remove(lastConstraintType1);
 					DefaultListModel<String> listModel = mainWindow.getListModel();
 					listModel.removeElementAt(listModel.size() - 1);
@@ -175,18 +174,35 @@ public class Controller {
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
 				lastConstraintType1 = constraint;
-				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND", "OR"}));
+				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel<String>(new String[] {"AND", "OR"}));
 			}
 		});
 
-		// ActionListener für das Hinzufügen von Constraints des Typ 2
+		// ActionListener f�r das Hinzuf�gen von Constraints des Typ 2
 		mainWindow.getBtnAddConstraint2().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
-				Constraint constraint = consBuilder.createConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2());
+				Constraint constraint = null;
 
+				/* Entweder wird an eine bestehendes Constraint mit oder ein weiteres angeh�ngt ODER 
+				 * Es wird ein einzelnes Constraint erzeugt, dass sp�ter per "AND" mit weiteren Constraints verbunden wird.
+				 */
+				if(mainWindow.getConstraint2AndOr().getSelectedIndex() == 1 && lastConstraintType2 != null){
+					constraint = consBuilder.createORConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2(), lastConstraintType2);
+
+					// Letztes Constraint wird gel�scht und weiter unten durch das Neue ersetzt.
+					constraints.remove(lastConstraintType2);
+					DefaultListModel<String> listModel = mainWindow.getListModel();
+					listModel.removeElementAt(listModel.size() - 1);
+				} else {
+					constraint = consBuilder.createConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2());
+				}
+
+				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
 				DefaultListModel<String> listModel = mainWindow.getListModel();
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
+				lastConstraintType2 = constraint;
+				mainWindow.getConstraint2AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND", "OR"}));
 			}
 		});
 

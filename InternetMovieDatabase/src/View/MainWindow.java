@@ -70,6 +70,8 @@ public class MainWindow extends JFrame {
 	private JTable favouriteTable;
 
 	private DefaultTableModel favouriteTablemodel;
+
+	private JComboBox<String> constraint2AndOr;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -192,9 +194,10 @@ public class MainWindow extends JFrame {
 		constraint1AndOr.setBounds(736, 46, 77, 22);
 		contentPane.add(constraint1AndOr);
 		
-		JLabel lblAnd = new JLabel("AND");
-		lblAnd.setBounds(742, 102, 71, 16);
-		contentPane.add(lblAnd);
+		constraint2AndOr = new JComboBox<String>();
+		constraint2AndOr.setModel(new DefaultComboBoxModel(new String[] {"AND"}));
+		constraint2AndOr.setBounds(736, 99, 77, 22);
+		contentPane.add(constraint2AndOr);
 	}
 	
 	/**
@@ -203,36 +206,36 @@ public class MainWindow extends JFrame {
 	 * mainPanel - JPanel
 	 */
 	private JPanel getDetailPanel() {
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(null);
+		JPanel DetailPanel = new JPanel();
+		DetailPanel.setLayout(null);
 		
 		detailTable = new JTable();
 		
 		JScrollPane scrollPane = new JScrollPane(detailTable);
 		scrollPane.setBounds(77, 252, 777, 399);
-		mainPanel.add(scrollPane);
+		DetailPanel.add(scrollPane);
 		
-		option1Label = new JLabel("");
+		option1Label = new JLabel("Name");
 		option1Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option1Label.setBounds(77, 57, 777, 22);
-		mainPanel.add(option1Label);
+		DetailPanel.add(option1Label);
 		
 		option2Label = new JLabel("");
 		option2Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option2Label.setBounds(77, 92, 777, 22);
-		mainPanel.add(option2Label);
+		DetailPanel.add(option2Label);
 		
 		option3Label = new JLabel("");
 		option3Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		option3Label.setBounds(77, 127, 777, 22);
-		mainPanel.add(option3Label);
+		DetailPanel.add(option3Label);
 		
 		detailTableTitle = new JLabel("");
 		detailTableTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		detailTableTitle.setBounds(77, 210, 777, 29);
-		mainPanel.add(detailTableTitle);
+		DetailPanel.add(detailTableTitle);
 
-		return mainPanel;
+		return DetailPanel;
 	}
 	
 	/**
@@ -445,5 +448,13 @@ public class MainWindow extends JFrame {
 
 	public void setFavouriteTable(JTable favouriteTable) {
 		this.favouriteTable = favouriteTable;
+	}
+
+	public JComboBox<String> getConstraint2AndOr() {
+		return constraint2AndOr;
+	}
+
+	public void setConstraint2AndOr(JComboBox<String> constraint2AndOr) {
+		this.constraint2AndOr = constraint2AndOr;
 	}
 }

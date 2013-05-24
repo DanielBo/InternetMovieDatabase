@@ -8,7 +8,7 @@ import java.util.Map;
 import Model.Constraint;
 
 public class QueryBuilder {
-	private static final String PERSON_BASE = "IMDB.cast_info join IMDB.name on imdb.cast_info.person_id = imdb.name.id";
+	private static final String PERSON_BASE = "IMDB.cast_info join IMDB.name on imdb.cast_info.person_id = imdb.name.id join imdb.role_type on imdb.role_type.id = imdb.cast_info.role_id";
 	private static final String COMPANIES_BASE = "IMDB.movie_companies join IMDB.company_name on imdb.company_name.id = imdb.movie_companies.company_id join imdb.company_type on imdb.company_type.id = imdb.movie_companies.company_type_id";
 	private static final String TITLE_BASE = "IMDB.title join IMDB.kind_type on imdb.title.kind_id = imdb.kind_type.id";
 	private String basicStatement,constraintStatement, basicConstraint, basicSelectFrom;
@@ -52,10 +52,11 @@ public class QueryBuilder {
 		case 2 :
 			basicStatement = PERSON_BASE;
 			usedTables.add("PersonenName");
+			usedTables.add("RollenType");
 			
 			basicConstraint = " IMDB.name.name Like ";
-			basicSelectFrom = "Select Distinct IMDB.name.id, IMDB.name.name From ";
-			map.put(new String[]{"TitelType", "Titel", "ProductionYear", "ConstraintType2", "CompanyName", "CompanyType", "RollenType", "RollenName"}, "join (" + TITLE_BASE + ") on imdb.cast_info.movie_id = imdb.title.id");
+			basicSelectFrom = "Select Distinct IMDB.name.id, IMDB.name.name, IMDB.role_type.role Rolle From ";
+			map.put(new String[]{"TitelType", "Titel", "ProductionYear", "ConstraintType2", "CompanyName", "CompanyType"}, "join (" + TITLE_BASE + ") on imdb.cast_info.movie_id = imdb.title.id");
 			break;
 		default:
 			throw new RuntimeException("Wrong mode");
@@ -63,9 +64,8 @@ public class QueryBuilder {
 		
 		// verschiedene join statements, die das basicstatement erweitern
 		map.put(new String[]{"CompanyName","CompanyType"}, "join (" + COMPANIES_BASE + ") on imdb.movie_companies.movie_id = imdb.title.id");
-		map.put(new String[]{"PersonenName"}, "join (" + PERSON_BASE +") on imdb.cast_info.movie_id = imdb.title.id");
-		map.put(new String[]{"RollenType"}, "join (imdb.cast_info join imdb.role_type on imdb.role_type.id = imdb.cast_info.role_id ) on imdb.cast_info.movie_id = imdb.title.id");
-		map.put(new String[]{"RollenName"}, "join (imdb.cast_info join imdb.char_name on imdb.char_name.id = imdb.cast_info.person_role_id) on imdb.cast_info.movie_id = imdb.title.id");
+		map.put(new String[]{"PersonenName", "RollenType"}, "join (" + PERSON_BASE +") on imdb.cast_info.movie_id = imdb.title.id");
+		map.put(new String[]{"RollenName"}, "join imdb.char_name on imdb.char_name.id = imdb.cast_info.person_role_id");
 	}
 
 
