@@ -17,8 +17,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import Model.Constraint;
-import View.MainWindow;
+import view.MainWindow;
+
+import model.Constraint;
+
 import controller.builder.ConstraintBuilder;
 import controller.builder.DetailStatementBuilder;
 import controller.builder.QueryBuilder;
@@ -52,7 +54,7 @@ public class Controller {
 						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchField().getText()).getStatement();
 						StatementExecuter stmtExe = new StatementExecuter(con, query);
 						try {
-							System.out.println("Führe Anfrage aus.");
+							System.out.println("Fï¿½hre Anfrage aus.");
 							ResultSet result = stmtExe.executeStatement();
 							final JTable table = mainWindow.getTable();
 
@@ -98,7 +100,7 @@ public class Controller {
 								}
 							});
 
-							System.out.println("Führe Metadatenabfrage aus.");
+							System.out.println("Fï¿½hre Metadatenabfrage aus.");
 							ResultSetMetaData metaData = result.getMetaData();
 							int columnNumber = metaData.getColumnCount();
 							String[] columnNames = new String[columnNumber];
@@ -117,7 +119,7 @@ public class Controller {
 							table.setModel(tModel);
 							tModel.setColumnIdentifiers(columnNames);
 
-							System.out.println("Fülle Tabelle auf.");
+							System.out.println("Fï¿½lle Tabelle auf.");
 
 							// holt sich die Daten aus dem ResultSet
 							while(result.next()){
@@ -163,7 +165,7 @@ public class Controller {
 					constraint = consBuilder.createConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1());
 				}
 
-				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
+				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefï¿½gt.
 				DefaultListModel<String> listModel = mainWindow.getListModel();
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
@@ -191,7 +193,7 @@ public class Controller {
 					constraint = consBuilder.createConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2());
 				}
 
-				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
+				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefï¿½gt.
 				DefaultListModel<String> listModel = mainWindow.getListModel();
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
@@ -200,7 +202,7 @@ public class Controller {
 			}
 		});
 
-		// Entfernt das in der listView ausgewählte Constraint.
+		// Entfernt das in der listView ausgewï¿½hlte Constraint.
 		mainWindow.getBtnEinschrnkungEntfernen().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
 				SwingUtilities.invokeLater(new Runnable() {
@@ -217,9 +219,9 @@ public class Controller {
 			}
 		});
 
-		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus auswählt,
+		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus auswï¿½hlt,
 		 * also (Titel, Company oder Person).
-		 * Je nach Auswahl werden die Auswahlmöglichkeiten für das Constraint vom Typ 1 verändert.
+		 * Je nach Auswahl werden die Auswahlmï¿½glichkeiten fï¿½r das Constraint vom Typ 1 verï¿½ndert.
 		 */
 		mainWindow.getModeSelector().addActionListener(new ActionListener() {
 			@Override
@@ -231,7 +233,7 @@ public class Controller {
 				selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
 				String[] choice;
 
-				// Auswahlmöglichkeiten für die erste Combobox der Einschränkung vom Typ 1
+				// Auswahlmï¿½glichkeiten fï¿½r die erste Combobox der Einschrï¿½nkung vom Typ 1
 				switch (selectedMode){
 				case 0:
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
@@ -249,8 +251,8 @@ public class Controller {
 			}
 		});
 
-		/* Wird die Auswahl der Constraint1Combobox verändert, lässt sich als Verbindungsoperator nur noch AND auswählen
-		 * Erst wenn eine Constraint vom Typ 1 hinzugefügt wird, lässt sich auch OR auswählen. (Siehe weiter Oben)
+		/* Wird die Auswahl der Constraint1Combobox verï¿½ndert, lï¿½sst sich als Verbindungsoperator nur noch AND auswï¿½hlen
+		 * Erst wenn eine Constraint vom Typ 1 hinzugefï¿½gt wird, lï¿½sst sich auch OR auswï¿½hlen. (Siehe weiter Oben)
 		 */
 		mainWindow.getConstraintComboBox1().addActionListener(new ActionListener() {
 			@Override

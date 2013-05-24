@@ -12,7 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
-import View.LoginWindow;
+import view.LoginWindow;
+
 
 public class Connector {
 	private String url;

@@ -22,32 +22,28 @@ public class Favorites {
 		}
 	}
 
-	public ArrayList<String> getCategories(){
+	public ArrayList<String> getCategories() throws SQLException{
 		String getCategories ="Select Distinct Category from favourites";
 		ArrayList<String> cats = new ArrayList<String>();
 		ResultSet result;
-		try {
-			result = con.createStatement().executeQuery(getCategories);
-			while (result.next()){
-				cats.add(result.getString(1));
-			}
-		} catch (SQLException e) {
-			e.getStackTrace();
+
+		result = con.createStatement().executeQuery(getCategories);
+		while (result.next()){
+			cats.add(result.getString(1));
 		}
-
 		return cats;
-
 	}
 
-	public ResultSet getFavByCategory(String cat) {
+	public ResultSet getFavByCategory(String cat) throws SQLException {
 		ResultSet result = null;
 		String getFavByCategory = "Select id from favourites where Category = '" + cat + "'";
-		try {
-			result = con.createStatement().executeQuery(getFavByCategory);
-		} catch (SQLException e) {
-			e.getStackTrace();
-		}
+		result = con.createStatement().executeQuery(getFavByCategory);
 		return result;
+	}
+
+	public void addIdToFavorites(String id, String category) throws SQLException{
+		String inputStatement = "INSERT INTO favourites VALUES (" + id + ", '" + category + "')";
+		con.createStatement().executeQuery(inputStatement);
 	}
 
 }

@@ -5,7 +5,8 @@ import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import Model.Constraint;
+import model.Constraint;
+
 
 public class ConstraintBuilder {
 	private HashMap<String, String> map;

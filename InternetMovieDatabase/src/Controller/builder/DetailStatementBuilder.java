@@ -8,7 +8,8 @@ import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
 
-import View.MainWindow;
+import view.MainWindow;
+
 
 public class DetailStatementBuilder {
 	private int id;

@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import Model.Constraint;
+import model.Constraint;
+
 
 public class QueryBuilder {
 	private static final String PERSON_BASE = "IMDB.cast_info join IMDB.name on imdb.cast_info.person_id = imdb.name.id join imdb.role_type on imdb.role_type.id = imdb.cast_info.role_id";

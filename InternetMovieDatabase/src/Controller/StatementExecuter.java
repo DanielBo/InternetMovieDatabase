@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import Main.Main;
+import main.Main;
+
 
 public class StatementExecuter {
 	private Connection con;
