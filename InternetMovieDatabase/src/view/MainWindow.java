@@ -69,6 +69,8 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> favListSelector;
 
 	private JButton btnVonListeEntfernen;
+
+	private JLabel lblEinschrnkungen_1;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -116,26 +118,26 @@ public class MainWindow extends JFrame {
 		contentPane.add(getModeSelector());
 		
 		JLabel lblEinschrnkungen = new JLabel("Einschr\u00E4nkung (Typ1) hinzuf\u00FCgen: ");
-		lblEinschrnkungen.setBounds(12, 49, 226, 16);
+		lblEinschrnkungen.setBounds(12, 49, 212, 16);
 		contentPane.add(lblEinschrnkungen);
 		
 		constraintComboBox1 = new JComboBox<String>();
 		constraintComboBox1.setModel(new DefaultComboBoxModel<String>(new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"}));
-		constraintComboBox1.setBounds(250, 46, 160, 22);
+		constraintComboBox1.setBounds(229, 45, 160, 22);
 		contentPane.add(constraintComboBox1);
 		
 		comparisonCombobox1 = new JComboBox<String>();
-		comparisonCombobox1.setModel(new DefaultComboBoxModel<String>(new String[] {"==", "!=", "Like"}));
-		comparisonCombobox1.setBounds(422, 46, 79, 22);
+		comparisonCombobox1.setModel(new DefaultComboBoxModel(new String[] {"ist genau wie", "ist nicht wie", "enth\u00E4lt Teilstring"}));
+		comparisonCombobox1.setBounds(401, 46, 115, 22);
 		contentPane.add(comparisonCombobox1);
 		
 		textFieldConstraint1 = new JTextField();
-		textFieldConstraint1.setBounds(518, 46, 212, 22);
+		textFieldConstraint1.setBounds(528, 46, 212, 22);
 		contentPane.add(textFieldConstraint1);
 		textFieldConstraint1.setColumns(10);
 		
 		btnAddConstraint1 = new JButton("Add");
-		btnAddConstraint1.setBounds(825, 45, 97, 25);
+		btnAddConstraint1.setBounds(835, 45, 87, 25);
 		contentPane.add(btnAddConstraint1);
 		
 		btnSucheStarten = new JButton("Suche starten");
@@ -156,44 +158,44 @@ public class MainWindow extends JFrame {
 		contentPane.add(mainTableScrollPane);
 		
 		JLabel lblNewLabel = new JLabel("Einschr\u00E4nkung (Typ2) hinzuf\u00FCgen:");
-		lblNewLabel.setBounds(12, 103, 226, 14);
+		lblNewLabel.setBounds(12, 103, 212, 14);
 		contentPane.add(lblNewLabel);
 		
 		textFieldConstraint2 = new JTextField();
-		textFieldConstraint2.setBounds(250, 100, 160, 20);
+		textFieldConstraint2.setBounds(229, 100, 160, 20);
 		contentPane.add(textFieldConstraint2);
 		textFieldConstraint2.setColumns(10);
 		
 		comparisonCombobox2 = new JComboBox<String>();
-		comparisonCombobox2.setModel(new DefaultComboBoxModel<String>(new String[] {"==", "!="}));
-		comparisonCombobox2.setBounds(422, 100, 79, 20);
+		comparisonCombobox2.setModel(new DefaultComboBoxModel(new String[] {"ist ein", "ist kein"}));
+		comparisonCombobox2.setBounds(401, 100, 115, 20);
 		contentPane.add(comparisonCombobox2);
 		
 		constraintComboBox2 = new JComboBox<String>();
 		constraintComboBox2.setModel(new DefaultComboBoxModel<String>(new String[] {"Schauspieler /actor", "Schauspielerin /actress", "Produzent / producer", "Drehbuchautor / writer", "Kameramann / cinematographer", "Komponist / composer", "Kost\u00FCmdesigner / costume designer", "Regisseur / director", "Cutter / editor", "Filmcrew / miscellaneous crew", "Produktionsdesigner / production designer", "Gast / guest"}));
-		constraintComboBox2.setBounds(518, 100, 212, 20);
+		constraintComboBox2.setBounds(528, 100, 212, 20);
 		contentPane.add(constraintComboBox2);
 		
 		btnAddConstraint2 = new JButton("Add");
-		btnAddConstraint2.setBounds(825, 99, 97, 23);
+		btnAddConstraint2.setBounds(835, 99, 87, 23);
 		contentPane.add(btnAddConstraint2);
 		
 		btnEinschrnkungEntfernen = new JButton("Einschr\u00E4nkung entfernen");
 		btnEinschrnkungEntfernen.setBounds(31, 309, 194, 25);
 		contentPane.add(btnEinschrnkungEntfernen);
 		
-		JLabel lblEinschrnkungen_1 = new JLabel("Einschr\u00E4nkungen:");
-		lblEinschrnkungen_1.setBounds(31, 147, 173, 16);
+		lblEinschrnkungen_1 = new JLabel("Gib mir Titel, f\u00FCr die gilt:");
+		lblEinschrnkungen_1.setBounds(31, 147, 358, 16);
 		contentPane.add(lblEinschrnkungen_1);
 		
 		constraint1AndOr = new JComboBox<String>();
 		constraint1AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
-		constraint1AndOr.setBounds(736, 46, 77, 22);
+		constraint1AndOr.setBounds(746, 46, 77, 22);
 		contentPane.add(constraint1AndOr);
 		
 		constraint2AndOr = new JComboBox<String>();
 		constraint2AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
-		constraint2AndOr.setBounds(736, 99, 77, 22);
+		constraint2AndOr.setBounds(746, 99, 77, 22);
 		contentPane.add(constraint2AndOr);
 	}
 	
@@ -480,5 +482,13 @@ public class MainWindow extends JFrame {
 
 	public void setBtnVonListeEntfernen(JButton btnVonListeEntfernen) {
 		this.btnVonListeEntfernen = btnVonListeEntfernen;
+	}
+
+	public JLabel getLblEinschrnkungen_1() {
+		return lblEinschrnkungen_1;
+	}
+
+	public void setLblEinschrnkungen_1(JLabel lblEinschrnkungen_1) {
+		this.lblEinschrnkungen_1 = lblEinschrnkungen_1;
 	}
 }

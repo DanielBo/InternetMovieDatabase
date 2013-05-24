@@ -240,6 +240,7 @@ public class Controller {
 				constraints.add(constraint);
 				lastConstraintType1 = constraint;
 				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel<String>(new String[] {"AND", "OR"}));
+				mainWindow.getConstraint2AndOr().setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
 			}
 		});
 
@@ -305,13 +306,22 @@ public class Controller {
 				// Auswahlmï¿½glichkeiten fï¿½r die erste Combobox der Einschrï¿½nkung vom Typ 1
 				switch (selectedMode){
 				case 0:
+					//Titel
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, für die gilt:");
+					enableConstraintType2(true);
 					break;
 				case 1:
+					// Company
 					choice = new String[]{"Titel", "TitelType", "CompanyType", "ProductionYear"};
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, für die gilt:");
+					enableConstraintType2(true);
 					break;
 				case 2:
+					//Person
 					choice = new String[]{"RollenName", "RollenType", "Titel", "TitelType"};
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, für die gilt:");
+					enableConstraintType2(false);
 					break;
 				default:
 					throw new RuntimeException("Wrong mode");
@@ -329,6 +339,14 @@ public class Controller {
 				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
 			}
 		});
+	}
+	
+	private void enableConstraintType2(boolean value){
+		mainWindow.getTextFieldConstraint2().setEnabled(value);
+		mainWindow.getComparisonCombobox2().setEnabled(value);
+		mainWindow.getConstraintComboBox2().setEnabled(value);
+		mainWindow.getConstraint2AndOr().setEnabled(value);
+		mainWindow.getBtnAddConstraint2().setEnabled(value);
 	}
 
 }
