@@ -54,7 +54,7 @@ public class Controller {
 						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchField().getText()).getStatement();
 						StatementExecuter stmtExe = new StatementExecuter(con, query);
 						try {
-							System.out.println("Führe Anfrage aus.");
+							System.out.println("F�hre Anfrage aus.");
 							ResultSet result = stmtExe.executeStatement();
 							final JTable table = mainWindow.getTable();
 
@@ -100,7 +100,7 @@ public class Controller {
 								}
 							});
 
-							System.out.println("Führe Metadatenabfrage aus.");
+							System.out.println("F�hre Metadatenabfrage aus.");
 							ResultSetMetaData metaData = result.getMetaData();
 							int columnNumber = metaData.getColumnCount();
 							String[] columnNames = new String[columnNumber];
@@ -125,7 +125,7 @@ public class Controller {
 
 							tModel.setColumnIdentifiers(columnNames);
 
-							System.out.println("Fülle Tabelle auf.");
+							System.out.println("F�lle Tabelle auf.");
 
 							// holt sich die Daten aus dem ResultSet
 							while(result.next()){
@@ -239,13 +239,13 @@ public class Controller {
 				selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
 				String[] choice;
 
-				// Auswahlmöglichkeiten für die erste Combobox der Einschränkung vom Typ 1
+				// Auswahlm�glichkeiten für die erste Combobox der Einschränkung vom Typ 1
 				switch (selectedMode){
 				case 0:
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
 					break;
 				case 1:
-					choice = new String[]{"CompanyName", "CompanyType", "ProductionYear"};
+					choice = new String[]{"Titel", "TitelType", "CompanyType", "ProductionYear"};
 					break;
 				case 2:
 					choice = new String[]{"RollenName", "RollenType", "Titel", "TitelType"};
