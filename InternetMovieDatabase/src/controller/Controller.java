@@ -37,6 +37,8 @@ public class Controller {
 	private ArrayList<Constraint> constraints = new ArrayList<Constraint>();
 	Constraint lastConstraintType1 = null;
 	Constraint lastConstraintType2 = null;
+	private Favorites favs;
+	private JTable favTable;
 
 	public Controller(Connection connection){
 		this.con = connection;
@@ -45,6 +47,9 @@ public class Controller {
 
 		if(consBuilder == null)
 			this.consBuilder = new ConstraintBuilder();
+		
+		if (favs == null)
+			this.favs = new Favorites(con);
 		connectActions();
 	}
 
@@ -149,15 +154,17 @@ public class Controller {
 				});
 			}
 		});
-
-		final Favorites favs = new Favorites(con);
-		final JTable favTable = mainWindow.getFavouriteTable(); // FavTable
+		
+		favTable = mainWindow.getFavouriteTable();
 		JComboBox<String> favListSelector = mainWindow.getFavListSelector(); // Selected Favorite Category
 
 		favListSelector.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				System.out.println(e.getItem() + " " + e.getStateChange());
+				if (e.getStateChange() == ItemEvent.SELECTED){
+					System.out.println(e.getItem() + " ");
+					reloadTableContents((String)e.getItem());
+				}
 			}
 		});
 
@@ -329,6 +336,11 @@ public class Controller {
 				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
 			}
 		});
+	}
+
+	protected void reloadTableContents(String category) throws SQLException{
+		ResultSet result = favs.getFavByCategory(category);
+		
 	}
 
 }
