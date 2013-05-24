@@ -17,11 +17,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 import view.MainWindow;
 
+import main.Main;
 import model.Constraint;
 
 import controller.builder.ConstraintBuilder;
@@ -47,10 +50,27 @@ public class Controller {
 
 		if(consBuilder == null)
 			this.consBuilder = new ConstraintBuilder();
-		
+
 		if (favs == null)
 			this.favs = new Favorites(con);
 		connectActions();
+		initFavTab();
+	}
+
+	private void initFavTab() {
+		JComboBox<String> favListSelector = mainWindow.getFavListSelector();
+		ArrayList<String> categories = null;
+
+		try {
+			categories = favs.getCategories();
+			favListSelector.removeAllItems();
+			
+			if (categories != null)
+				for (String s : categories)
+					favListSelector.addItem(s);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void connectActions(){
@@ -154,7 +174,7 @@ public class Controller {
 				});
 			}
 		});
-		
+
 		favTable = mainWindow.getFavouriteTable();
 		JComboBox<String> favListSelector = mainWindow.getFavListSelector(); // Selected Favorite Category
 
@@ -163,7 +183,11 @@ public class Controller {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED){
 					System.out.println(e.getItem() + " ");
-					reloadTableContents((String)e.getItem());
+					try {
+						reloadTableContents((String)e.getItem());
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -176,9 +200,6 @@ public class Controller {
 					favs.removeIdFromFavorites((String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0));
 			}
 		});// remove selected from table
-
-
-
 
 		favTable.addMouseListener(new MouseListener() {
 
@@ -315,19 +336,19 @@ public class Controller {
 				case 0:
 					//Titel
 					choice = new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"};
-					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, für die gilt:");
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Titel, fï¿½r die gilt:");
 					enableConstraintType2(true);
 					break;
 				case 1:
 					// Company
 					choice = new String[]{"Titel", "TitelType", "CompanyType", "ProductionYear"};
-					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, für die gilt:");
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Unternehmen, fï¿½r die gilt:");
 					enableConstraintType2(true);
 					break;
 				case 2:
 					//Person
 					choice = new String[]{"RollenName", "RollenType", "Titel", "TitelType"};
-					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, für die gilt:");
+					mainWindow.getLblEinschrnkungen_1().setText("Gib mir Personen, fï¿½r die gilt:");
 					enableConstraintType2(false);
 					break;
 				default:
@@ -347,7 +368,7 @@ public class Controller {
 			}
 		});
 	}
-	
+
 	private void enableConstraintType2(boolean value){
 		mainWindow.getTextFieldConstraint2().setEnabled(value);
 		mainWindow.getComparisonCombobox2().setEnabled(value);
@@ -358,7 +379,48 @@ public class Controller {
 
 	protected void reloadTableContents(String category) throws SQLException{
 		ResultSet result = favs.getFavByCategory(category);
-		
+		ArrayList<String> results = new ArrayList<String>();
+
+		while (result.next()){
+			results.add(result.getString(1));
+		}
+
+		DefaultTableModel model = null;
+		boolean headerSet = false;
+
+		for ( String s : results ){
+			ResultSet result2 = con.createStatement().executeQuery("Select IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title Where imdb.title.id = " + s);
+			int columnCount = result2.getMetaData().getColumnCount();
+
+			if (!headerSet){
+				String[] columnNames = new String[columnCount];
+				for (int i = 1; i < columnCount; i++){
+					columnNames[i-1] = result2.getMetaData().getColumnLabel(i);
+				}
+				model = new DefaultTableModel(columnNames,0) {
+					@Override
+					public boolean isCellEditable(int rowIndex, int columnIndex) {
+						return false;
+					}
+				};
+				favTable.setModel(model);
+			}
+
+			Object[] newRow = null;
+
+			while (result2.next()){
+				newRow = new Object[columnCount];
+				for (int i = 1; i < columnCount; i++){
+					newRow[i-1] = result.getObject(i);
+				}
+			}
+
+			if (Main.isDebug())
+				System.out.println("adding new row to favTable");
+			model.addRow(newRow);
+		}
+
+
 	}
 
 }
