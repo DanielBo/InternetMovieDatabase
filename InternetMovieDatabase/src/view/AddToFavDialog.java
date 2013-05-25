@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 
 import main.Main;
 import controller.favourites.Favorites;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class AddToFavDialog extends JFrame {
 
@@ -44,24 +46,24 @@ public class AddToFavDialog extends JFrame {
 	    this.setLocation((int) ((d.getWidth() - this.getWidth()) / 2), (int) ((d.getHeight() - this.getHeight()) / 2));
 
 		JLabel lblEintragZurFavoritenliste = new JLabel("Eintrag zur Favoritenliste hinzuf\u00FCgen");
-		lblEintragZurFavoritenliste.setBounds(102, 113, 272, 16);
+		lblEintragZurFavoritenliste.setBounds(119, 29, 244, 16);
 		getContentPane().add(lblEintragZurFavoritenliste);
 
 		comboBox = new JComboBox<String>();
-		comboBox.setBounds(113, 141, 210, 16);
+		comboBox.setBounds(184, 75, 212, 28);
 		getContentPane().add(comboBox);
 
 		textField = new JTextField();
-		textField.setBounds(40, 55, 244, 28);
+		textField.setBounds(48, 236, 244, 28);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 
 		JButton btnHinzufgen = new JButton("Hinzuf\u00FCgen");
-		btnHinzufgen.setBounds(151, 169, 117, 29);
+		btnHinzufgen.setBounds(175, 125, 117, 29);
 		getContentPane().add(btnHinzufgen);
 
 		JButton btnErtstellen = new JButton("Ertstellen");
-		btnErtstellen.setBounds(307, 56, 117, 29);
+		btnErtstellen.setBounds(315, 237, 117, 29);
 		getContentPane().add(btnErtstellen);
 
 		btnErtstellen.addActionListener(new ActionListener() {
@@ -83,14 +85,20 @@ public class AddToFavDialog extends JFrame {
 			}
 		});
 
-		JLabel lblNeueListeHinzufgen = new JLabel("Neue Liste Hinzuf\u00FCgen");
-		lblNeueListeHinzufgen.setBounds(151, 27, 172, 16);
+		JLabel lblNeueListeHinzufgen = new JLabel("Neue Kategorie hinzufügen");
+		lblNeueListeHinzufgen.setBounds(159, 208, 172, 16);
 		getContentPane().add(lblNeueListeHinzufgen);
+		
+		JLabel lblKategorie = new JLabel("Kategorie:");
+		lblKategorie.setBounds(48, 78, 130, 23);
+		getContentPane().add(lblKategorie);
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		horizontalGlue.setBounds(0, 179, 482, 16);
+		getContentPane().add(horizontalGlue);
 
 		this.setVisible(true);
 		this.setSize(new Dimension(500,350));
 
 	}
-
-
 }

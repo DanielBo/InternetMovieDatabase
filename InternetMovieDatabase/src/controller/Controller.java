@@ -396,7 +396,9 @@ public class Controller {
 		boolean headerSet = false;
 
 		for ( String s : results ){
-			ResultSet result2 = con.createStatement().executeQuery("Select IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title Where imdb.title.id = " + s);
+			String query = "Select IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title" +
+								" join IMDB.kind_type on imdb.title.kind_id = imdb.kind_type.id Where imdb.title.id = " + s;
+			ResultSet result2 = con.createStatement().executeQuery(query);
 			int columnCount = result2.getMetaData().getColumnCount();
 
 			if (!headerSet){
@@ -404,13 +406,6 @@ public class Controller {
 				for (int i = 1; i < columnCount; i++){
 					columnNames[i-1] = result2.getMetaData().getColumnLabel(i);
 				}
-				model = new DefaultTableModel(columnNames,0) {
-					@Override
-					public boolean isCellEditable(int rowIndex, int columnIndex) {
-						return false;
-					}
-				};
-				favTable.setModel(model);
 			}
 
 			Object[] newRow = null;
@@ -418,7 +413,7 @@ public class Controller {
 			while (result2.next()){
 				newRow = new Object[columnCount];
 				for (int i = 1; i < columnCount; i++){
-					newRow[i-1] = result.getObject(i);
+					newRow[i-1] = result2.getObject(i);
 				}
 			}
 
