@@ -115,7 +115,9 @@ public class Controller {
 
 										selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
 
-										DetailStatementBuilder dtBuilder = new DetailStatementBuilder((selectedMode+1), Integer.valueOf(table.getModel().getValueAt(table.getSelectedRow(), 0).toString()), con, mainWindow);
+										String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+										Main.setId(id);
+										DetailStatementBuilder dtBuilder = new DetailStatementBuilder((selectedMode+1), Integer.valueOf(id), con, mainWindow);
 										try {
 											dtBuilder.executeStatement();
 										} catch (SQLException e1) {
@@ -126,7 +128,7 @@ public class Controller {
 								}
 							});
 
-							System.out.println("F�hre Metadatenabfrage aus.");
+							System.out.println("Führe Metadatenabfrage aus.");
 							ResultSetMetaData metaData = result.getMetaData();
 							int columnNumber = metaData.getColumnCount();
 							String[] columnNames = new String[columnNumber];
@@ -145,7 +147,7 @@ public class Controller {
 							table.setModel(tModel);
 							tModel.setColumnIdentifiers(columnNames);
 
-							System.out.println("F�lle Tabelle auf.");
+							System.out.println("Fülle Tabelle auf.");
 
 							// holt sich die Daten aus dem ResultSet
 							while(result.next()){
@@ -174,7 +176,7 @@ public class Controller {
 
 		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,(String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0));
+				AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,Main.getId());
 			}
 		});
 

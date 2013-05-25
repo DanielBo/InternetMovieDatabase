@@ -9,7 +9,8 @@ import controller.Connector;
 
 public class Main{
 	
-	public static final boolean isDebug = true;
+	private static final boolean isDebug = true;
+	private static String id = "";
 	
     public static void main(String[] args) {           
         SwingUtilities.invokeLater(new Runnable() {
@@ -23,5 +24,13 @@ public class Main{
 
 	public static boolean isDebug() {
 		return isDebug;
+	}
+
+	public static String getId() {
+		return id;
+	}
+
+	public static void setId(String id) {
+		Main.id = id;
 	}
 }
