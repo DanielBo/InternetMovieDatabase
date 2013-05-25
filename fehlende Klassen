@@ -1,0 +1,12 @@
+StatementExecutor - der Statement executor ist lediglich eine Klasse die dazu gentutzt wird sql Statements an den Server zu richten. Dem Konstruktor wird alles nötige übergeben um ein SQL-Statement an den Server zu richten.
+
+Controller.builder
+
+ConstraintBuilder - Diese Klasse wird dazu verwendet, die in der Gui ausgewählten Constraints in eine SQL-Syntax umzuwandeln um diese dann mittels Statement Executor an den Server richten zu können.
+
+DetailBuilder - Dieser Builder sorgt lediglich dafür, für eine title.id die gesamte Übersicht mit allen zur ID-Verfügbaren zusammenbaut und letztendlich anzeigt.
+
+QueryBuilder - In diesem Builder werden die Constraints des ConstraintBuilder verwendet um sie in ein SQL-Statement in der Form "Select From Where" zu bringen.
+
+Controller.favourites
+Favoriten - Die gesamte Verwaltung, der Favoriten läuft über diese Klasse. Hier wird der nötige Table erzeugt um sich einzelne Film ID's merken zu können. Auch das hinzufügen sowie löschen von einzelnen ID's wird von dieser Klasse gehandelt. Es ist darüber hinaus auch möglich, eine komplette Kategorie aus der Merkliste zu entfernen.
