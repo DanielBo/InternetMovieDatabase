@@ -66,7 +66,7 @@ public class ConstraintBuilder {
 			comparator = "!=";
 			break;
 		case 2 :
-			comparatorName = "enth�lt Teilstring";
+			comparatorName = "enthält Teilstring";
 			comparator = "Like";
 			value = "%" + value + "%";
 			break;

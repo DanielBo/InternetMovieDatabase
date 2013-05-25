@@ -59,6 +59,7 @@ public class DetailStatementBuilder {
 		option2LabelValue = "Produktionjahr: ";
 		option3LabelValue = "Typ: ";
 		tableTitle = "Cast:";
+		mainWindow.getAddToFavList().setVisible(true);
 	}
 	
 	private void setCompanyDetailStatement(){
@@ -77,6 +78,7 @@ public class DetailStatementBuilder {
 		option2LabelValue = "Typ: ";
 		option3LabelValue = "Countrycode: ";
 		tableTitle = "Filmproduktionen:";
+		mainWindow.getAddToFavList().setVisible(false);
 	}
 	
 	private void setPersonDetailStatement(){
@@ -93,6 +95,7 @@ public class DetailStatementBuilder {
 		option2LabelValue = "Geschlecht: ";
 		option3LabelValue = "";
 		tableTitle = "Beteiligte Filmproduktionen:";
+		mainWindow.getAddToFavList().setVisible(false);
 	}
 	
 	public void executeStatement() throws SQLException{
