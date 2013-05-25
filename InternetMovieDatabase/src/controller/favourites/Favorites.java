@@ -73,6 +73,17 @@ public class Favorites {
 		}
 		return true;
 	}
+	
+	public boolean removeCatFromFavorites(String cat){
+		try{
+			String removeIdStatement = "DELETE FROM favourites Where Category = '" + cat + "'";
+			con.createStatement().execute(removeIdStatement);
+		} catch (SQLException e){
+			e.getStackTrace();
+			return false;
+		}
+		return true;
+	}
 
 }
 

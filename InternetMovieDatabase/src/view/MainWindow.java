@@ -78,6 +78,7 @@ public class MainWindow extends JFrame {
 	private JButton addToFavList;
 
 	private JLabel infoLabel;
+	private JButton deleteCategory;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -282,6 +283,10 @@ public class MainWindow extends JFrame {
 		btnVonListeEntfernen.setBounds(753, 55, 167, 29);
 
 		favouriteListPanel.add(btnVonListeEntfernen);
+		
+		deleteCategory = new JButton("Liste Löschen");
+		deleteCategory.setBounds(753, 11, 167, 29);
+		favouriteListPanel.add(deleteCategory);
 
 		return favouriteListPanel;
 	}
@@ -403,5 +408,9 @@ public class MainWindow extends JFrame {
 
 	public JLabel getInfoLabel() {
 		return infoLabel;
+	}
+	
+	public JButton getDeleteCategoryBtn(){
+		return deleteCategory;
 	}
 }

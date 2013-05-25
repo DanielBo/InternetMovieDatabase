@@ -239,6 +239,13 @@ public class Controller {
 			}
 		});// remove selected from table
 		
+		mainWindow.getDeleteCategoryBtn().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				favs.removeCatFromFavorites((String)favListSelector.getSelectedItem());
+			}
+		});
+		
 		
 		//MouseListener für die Merklistentabelle
 		favTable.addMouseListener(new MouseListener() {
