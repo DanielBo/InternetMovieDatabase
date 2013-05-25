@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
+import main.Main;
+
 import view.LoginWindow;
 
 
@@ -94,7 +96,8 @@ public class Connector {
 				passwort = logWin.getPasswort();
 				try {
 					createConnection();
-					System.out.println("Die Verbindung wurde hergestellt.");
+					if (Main.isDebug())
+						System.out.println("Die Verbindung wurde hergestellt.");
 					Controller controller = new Controller(con);
 					logWin.dispose();
 				} catch (SQLException e) {
