@@ -201,7 +201,31 @@ public class Controller {
 
 		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,Main.getId());
+				final AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,Main.getId());
+				final String id = Main.getId();
+				
+				atfd.getBtnHinzufgen().addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (id != null)
+							try {
+								favs.addIdToFavorites(id, (String)atfd.getFavCategorieComboBox().getSelectedItem());
+								atfd.getInfoLabel().setText("Eintrag hinzugefügt!");
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+					}
+				});
+				
+				atfd.getBtnErtstellen().addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						atfd.getFavCategorieComboBox().addItem(atfd.getTextField().getText());
+						atfd.getInfoLabel().setText("Kategorie hinzugefügt!");
+					}
+				});
+				
+				
 				try {
 					ArrayList<String> listCategories = favs.getCategories();
 					String[] categories = new String[listCategories.size()];
@@ -461,8 +485,10 @@ public class Controller {
 		favTable.setModel(model);
 
 		for ( String s : results ){
-			String query = "Select IMDB.title.id IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title" +
+			String query = "Select IMDB.title.id, IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title" +
 								" join IMDB.kind_type on imdb.title.kind_id = imdb.kind_type.id Where imdb.title.id = " + s;
+			if (Main.isDebug())
+				System.out.println(query);
 			ResultSet result2 = con.createStatement().executeQuery(query);
 			int columnCount = result2.getMetaData().getColumnCount();
 
@@ -478,11 +504,10 @@ public class Controller {
 			if (Main.isDebug())
 				System.out.println("adding new row to favTable");
 			
-			TableColumn columnToRemove = favTable.getColumnModel().getColumn(0);
-			favTable.getColumnModel().removeColumn(columnToRemove);
-			
 			model.addRow(newRow);
 		}
+		TableColumn columnToRemove = favTable.getColumnModel().getColumn(0);
+		favTable.getColumnModel().removeColumn(columnToRemove);
 
 
 	}

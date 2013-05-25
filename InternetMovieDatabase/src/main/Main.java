@@ -9,7 +9,7 @@ import controller.Connector;
 
 public class Main{
 	
-	private static final boolean isDebug = false;
+	private static final boolean isDebug = true;
 	private static String id = "";
 	
     public static void main(String[] args) {           
