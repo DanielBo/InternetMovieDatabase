@@ -17,6 +17,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -39,6 +41,7 @@ public class Controller {
 	Constraint lastConstraintType2 = null;
 	private Favorites favs;
 	private JTable favTable;
+	private boolean firstInitFavTab = false;
 
 	public Controller(Connection connection){
 		this.con = connection;
@@ -51,7 +54,6 @@ public class Controller {
 		if (favs == null)
 			this.favs = new Favorites(con);
 		connectActions();
-		initFavTab();
 	}
 
 	private void initFavTab() {
@@ -176,6 +178,19 @@ public class Controller {
 		});
 		
 		//-----------------ANFANG---Aktionen für die Merkliste---ANFANG--------------------------
+		
+		// ChangeListener für die Tabs
+		mainWindow.getTabPane().addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				// Die Tabelle der Merkliste wird erst gefüllt, wenn das Merklistentab zum ersten mal aufgerufen wird.
+				if(mainWindow.getTabPane().getSelectedIndex() == 2 && !firstInitFavTab){
+					initFavTab();
+					firstInitFavTab = true;
+				}
+			}
+			
+		});
 
 		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
