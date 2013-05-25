@@ -38,14 +38,14 @@ public class Controller {
 	private ConstraintBuilder consBuilder = null;
 	private Connection con;
 	private ArrayList<Constraint> constraints = new ArrayList<Constraint>();
-	Constraint lastConstraintType1 = null;
-	Constraint lastConstraintType2 = null;
+	private Constraint lastConstraintType1 = null;
+	private Constraint lastConstraintType2 = null;
 	private Favorites favs;
 	private JTable favTable;
-	private boolean firstInitFavTab = false;
 
 	public Controller(Connection connection){
 		this.con = connection;
+		
 		if (mainWindow == null)
 			this.mainWindow = new MainWindow(con);
 
@@ -54,9 +54,12 @@ public class Controller {
 
 		if (favs == null)
 			this.favs = new Favorites(con);
+		
+		
 		connectActions();
 	}
 
+	//Initialisiert die Elemente der Merklistenansicht.
 	private void initFavTab() {
 		JComboBox<String> favListSelector = mainWindow.getFavListSelector();
 		ArrayList<String> categories = null;
@@ -65,9 +68,15 @@ public class Controller {
 			categories = favs.getCategories();
 			favListSelector.removeAllItems();
 
-			if (categories != null)
-				for (String s : categories)
+			if (categories != null){
+				if(categories.size() > 0)
+					reloadTableContents(categories.get(0));
+				for (String s : categories){
 					favListSelector.addItem(s);
+				}
+			}
+			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -191,9 +200,8 @@ public class Controller {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// Die Tabelle der Merkliste wird erst gefüllt, wenn das Merklistentab zum ersten mal aufgerufen wird.
-				if(mainWindow.getTabPane().getSelectedIndex() == 2 && !firstInitFavTab){
+				if(mainWindow.getTabPane().getSelectedIndex() == 2){
 					initFavTab();
-					firstInitFavTab = true;
 				}
 			}
 			
@@ -263,10 +271,14 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (favTable.getSelectedRow() != -1) {
-					String valueAt = (String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0);
+					String valueAt = favTable.getModel().getValueAt(favTable.getSelectedRow(), 0).toString();
+					
 					if (Main.isDebug())
 						System.out.println(valueAt);
+					
 					favs.removeIdFromFavorites(valueAt,(String)favListSelector.getSelectedItem());
+					mainWindow.getFavouriteTable().setModel(new DefaultTableModel());
+					initFavTab();
 				}
 			}
 		});// remove selected from table
@@ -275,6 +287,8 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				favs.removeCatFromFavorites((String)favListSelector.getSelectedItem());
+				mainWindow.getFavouriteTable().setModel(new DefaultTableModel());
+				initFavTab();
 			}
 		});
 		
