@@ -107,19 +107,19 @@ public class MainWindow extends JFrame {
 		lblSuchfeld.setBounds(12, 13, 87, 16);
 		contentPane.add(lblSuchfeld);
 
-		setSearchField(new JTextField());
-		getSearchField().setBounds(111, 10, 238, 22);
-		contentPane.add(getSearchField());
-		getSearchField().setColumns(10);
+		searchField = new JTextField();
+		searchField.setBounds(111, 10, 238, 22);
+		searchField.setColumns(10);
+		contentPane.add(searchField);
 
 		JLabel lblIchMchteSuchen = new JLabel("Ich m\u00F6chte suchen nach:");
 		lblIchMchteSuchen.setBounds(518, 13, 196, 16);
 		contentPane.add(lblIchMchteSuchen);
 
-		setModeSelector(new JComboBox<String>());
-		getModeSelector().setModel(new DefaultComboBoxModel<String>(new String[] {"Titel", "Company", "Person"}));
-		getModeSelector().setBounds(726, 10, 196, 22);
-		contentPane.add(getModeSelector());
+		modeSelector = new JComboBox<String>();
+		modeSelector.setModel(new DefaultComboBoxModel<String>(new String[] {"Titel", "Company", "Person"}));
+		modeSelector.setBounds(726, 10, 196, 22);
+		contentPane.add(modeSelector);
 
 		JLabel lblEinschrnkungen = new JLabel("Einschr\u00E4nkung (Typ1) hinzuf\u00FCgen: ");
 		lblEinschrnkungen.setBounds(12, 49, 212, 16);
@@ -155,7 +155,7 @@ public class MainWindow extends JFrame {
 		listScrollPane.setBounds(31, 176, 605, 120);
 		contentPane.add(listScrollPane);
 
-		setTable(new JTable());
+		table = new JTable();
 
 		mainTableScrollPane = new JScrollPane(getTable());
 		mainTableScrollPane.setBounds(31, 359, 891, 292);
@@ -238,9 +238,9 @@ public class MainWindow extends JFrame {
 		detailTableTitle.setBounds(77, 210, 777, 29);
 		detailPanel.add(detailTableTitle);
 
-		setAddToFavList(new JButton("Zu Merkliste hinzuf\u00FCgen"));
-		getAddToFavList().setBounds(657, 17, 197, 29);
-		detailPanel.add(getAddToFavList());
+		addToFavList = new JButton("Zu Merkliste hinzuf\u00FCgen");
+		addToFavList.setBounds(657, 17, 197, 29);
+		detailPanel.add(addToFavList);
 
 		return detailPanel;
 	}
@@ -261,252 +261,135 @@ public class MainWindow extends JFrame {
 		scrollPane_2.setBounds(24, 93, 896, 317);
 		favouriteListPanel.add(scrollPane_2);
 		
-		setFavListSelector(new JComboBox<String>());
-		getFavListSelector().setBounds(203, 16, 181, 18);
-		favouriteListPanel.add(getFavListSelector());
+		favListSelector = new JComboBox<String>();
+		favListSelector.setBounds(203, 16, 181, 18);
+		favouriteListPanel.add(favListSelector);
 		
 		JLabel lblNewLabel_2 = new JLabel("MerkListe asuw\u00E4hlen:");
 		lblNewLabel_2.setBounds(24, 16, 167, 16);
 		favouriteListPanel.add(lblNewLabel_2);
 		
-		setBtnVonListeEntfernen(new JButton("Von Liste entfernen"));
-		getBtnVonListeEntfernen().setBounds(753, 55, 167, 29);
+		btnVonListeEntfernen = new JButton("Von Liste entfernen");
+		btnVonListeEntfernen.setBounds(753, 55, 167, 29);
 
-		favouriteListPanel.add(getBtnVonListeEntfernen());
+		favouriteListPanel.add(btnVonListeEntfernen);
 
 		return favouriteListPanel;
+	}
+	public JButton getSearchButton(){
+		return btnSucheStarten;
 	}
 
 	public JTextField getTextFieldConstraint1() {
 		return textFieldConstraint1;
 	}
 
-	private void setTextFieldConstraint1(JTextField jTextField) {
-		textFieldConstraint1 = jTextField;
-
-	}
-
-	public JButton getSearchButton(){
-		return btnSucheStarten;
-	}
-
 	public JComboBox<String> getModeSelector() {
 		return modeSelector;
-	}
-
-	private void setModeSelector(JComboBox<String> modeSelector) {
-		this.modeSelector = modeSelector;
 	}
 
 	public JTable getTable() {
 		return table;
 	}
 
-	private void setTable(JTable table) {
-		this.table = table;
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	}
-
 	public JTextField getSearchField() {
 		return searchField;
-	}
-
-	public void setSearchField(JTextField searchField) {
-		this.searchField = searchField;
 	}
 
 	public JButton getBtnAddConstraint1() {
 		return btnAddConstraint1;
 	}
 
-	private void setBtnAddConstraint1(JButton btnAddConstraint1) {
-		this.btnAddConstraint1 = btnAddConstraint1;
-	}
-
 	public JButton getBtnAddConstraint2() {
 		return btnAddConstraint2;
-	}
-
-	private void setBtnAddConstraint2(JButton btnAddConstraint2) {
-		this.btnAddConstraint2 = btnAddConstraint2;
 	}
 
 	public JComboBox<String> getComparisonCombobox2() {
 		return comparisonCombobox2;
 	}
 
-	private void setComparisonCombobox2(JComboBox<String> comparisonCombobox2) {
-		this.comparisonCombobox2 = comparisonCombobox2;
-	}
-
 	public JComboBox<String> getConstraintComboBox2() {
 		return constraintComboBox2;
-	}
-
-	private void setConstraintComboBox2(JComboBox<String> constraintComboBox2) {
-		this.constraintComboBox2 = constraintComboBox2;
 	}
 
 	public JButton getBtnEinschrnkungEntfernen() {
 		return btnEinschrnkungEntfernen;
 	}
 
-	private void setBtnEinschrnkungEntfernen(JButton btnEinschrnkungEntfernen) {
-		this.btnEinschrnkungEntfernen = btnEinschrnkungEntfernen;
-	}
-
 	public JComboBox<String> getConstraintComboBox1() {
 		return constraintComboBox1;
-	}
-
-	private void setConstraintComboBox1(JComboBox<String> constraintComboBox1) {
-		this.constraintComboBox1 = constraintComboBox1;
 	}
 
 	public JComboBox<String> getComparisonCombobox1() {
 		return comparisonCombobox1;
 	}
 
-	public void setComparisonCombobox1(JComboBox<String> comparisonCombobox1) {
-		this.comparisonCombobox1 = comparisonCombobox1;
-	}
-
 	public DefaultListModel<String> getListModel() {
 		return listModel;
-	}
-
-	private void setListModel(DefaultListModel<String> listModel) {
-		this.listModel = listModel;
 	}
 
 	public JList<String> getListViewConstraints() {
 		return listViewConstraints;
 	}
 
-	public void setListViewConstraints(JList<String> listViewConstraints) {
-		this.listViewConstraints = listViewConstraints;
-	}
-
 	public JTextField getTextFieldConstraint2() {
 		return textFieldConstraint2;
-	}
-
-	public void setTextFieldConstraint2(JTextField textFieldConstraint2) {
-		this.textFieldConstraint2 = textFieldConstraint2;
 	}
 
 	public JComboBox<String> getConstraint1AndOr() {
 		return constraint1AndOr;
 	}
 
-	public void setConstraint1AndOr(JComboBox<String> constraint1AndOr) {
-		this.constraint1AndOr = constraint1AndOr;
-	}
-
 	public JLabel getOption1Label() {
 		return option1Label;
-	}
-
-	public void setOption1Label(JLabel option1Label) {
-		this.option1Label = option1Label;
 	}
 
 	public JLabel getOption2Label() {
 		return option2Label;
 	}
 
-	public void setOption2Label(JLabel option2Label) {
-		this.option2Label = option2Label;
-	}
-
 	public JLabel getOption3Label() {
 		return option3Label;
-	}
-
-	public void setOption3Label(JLabel option3Label) {
-		this.option3Label = option3Label;
 	}
 
 	public JTabbedPane getTabPane() {
 		return tabPane;
 	}
 
-	public void setTabPane(JTabbedPane tabPane) {
-		this.tabPane = tabPane;
-	}
-
 	public JTable getDetailTable() {
 		return detailTable;
-	}
-
-	public void setDetailTable(JTable detailTable) {
-		this.detailTable = detailTable;
 	}
 
 	public JLabel getDetailTableTitle() {
 		return detailTableTitle;
 	}
 
-	public void setDetailTableTitle(JLabel detailTableTitle) {
-		this.detailTableTitle = detailTableTitle;
-	}
-
 	public DefaultTableModel getFavouriteTablemodel() {
 		return favouriteTablemodel;
-	}
-
-	public void setFavouriteTablemodel(DefaultTableModel favouriteTablemodel) {
-		this.favouriteTablemodel = favouriteTablemodel;
 	}
 
 	public JTable getFavouriteTable() {
 		return favouriteTable;
 	}
 
-	public void setFavouriteTable(JTable favouriteTable) {
-		this.favouriteTable = favouriteTable;
-	}
-
 	public JComboBox<String> getConstraint2AndOr() {
 		return constraint2AndOr;
-	}
-
-	public void setConstraint2AndOr(JComboBox<String> constraint2AndOr) {
-		this.constraint2AndOr = constraint2AndOr;
 	}
 
 	public JComboBox<String> getFavListSelector() {
 		return favListSelector;
 	}
 
-	public void setFavListSelector(JComboBox<String> favListSelector) {
-		this.favListSelector = favListSelector;
-		favListSelector.setModel(new DefaultComboBoxModel(new String[] {"Test1", "Test2", "Test3"}));
-	}
-
 	public JButton getBtnVonListeEntfernen() {
 		return btnVonListeEntfernen;
-	}
-
-	public void setBtnVonListeEntfernen(JButton btnVonListeEntfernen) {
-		this.btnVonListeEntfernen = btnVonListeEntfernen;
 	}
 
 	public JLabel getLblEinschrnkungen_1() {
 		return lblEinschrnkungen_1;
 	}
 
-	public void setLblEinschrnkungen_1(JLabel lblEinschrnkungen_1) {
-
-		this.lblEinschrnkungen_1 = lblEinschrnkungen_1;
-	}
-
 	public JButton getAddToFavList() {
 		return addToFavList;
-	}
-
-	public void setAddToFavList(JButton addToFavList) {
-		this.addToFavList = addToFavList;
 	}
 
 }
