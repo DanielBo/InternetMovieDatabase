@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import main.Main;
 import model.Constraint;
 
 
@@ -19,7 +20,7 @@ public class ConstraintBuilder {
 	private void initMap() {
 		if (map != null)
 			return;
-		// map gibt an, für welche Spalte, die ausgewählt wird, welche Spalte in SQL verwendet wird.
+		// map gibt an, fï¿½r welche Spalte, die ausgewï¿½hlt wird, welche Spalte in SQL verwendet wird.
 		map = new HashMap<String, String>();
 		map.put("TitelType", "imdb.kind_type.kind");
 		map.put("Titel", "imdb.title.title");
@@ -31,14 +32,14 @@ public class ConstraintBuilder {
 		map.put("RollenName", "imdb.char_name.name");
 	}
 	
-	// Fügt an ein bereits bestehendes Constraint ein Weiteres, das mit OR verbunden wird, hinzu.
+	// Fï¿½gt an ein bereits bestehendes Constraint ein Weiteres, das mit OR verbunden wird, hinzu.
 	public Constraint createORConstraintType1(JComboBox<String> constraintComboBox1, JComboBox<String> comparisonCombobox1, JTextField textFieldConstraint1, Constraint lastConstraint){
 		Constraint constraint = createConstraintType1(constraintComboBox1, comparisonCombobox1, textFieldConstraint1);
 		lastConstraint.addOrConstraint(constraint);
 		return lastConstraint;
 	}
 	
-	// Fügt an ein bereits bestehendes Constraint ein Weiteres, das mit OR verbunden wird, hinzu.
+	// Fï¿½gt an ein bereits bestehendes Constraint ein Weiteres, das mit OR verbunden wird, hinzu.
 	public Constraint createORConstraintType2(JTextField textFieldConstraint2, JComboBox<String> comparisonCombobox2, JComboBox<String> constraintComboBox2, Constraint lastConstraint){
 		Constraint constraint = createConstraintType2(textFieldConstraint2, comparisonCombobox2, constraintComboBox2);
 		lastConstraint.addOrConstraint(constraint);
@@ -48,12 +49,13 @@ public class ConstraintBuilder {
 	// Erzeugt ein Constraint vom Typ 1
 	public Constraint createConstraintType1(JComboBox<String> constraintComboBox1, JComboBox<String> comparisonCombobox1, JTextField textFieldConstraint1){
 		String columnName = constraintComboBox1.getSelectedItem().toString();
-		System.out.println(columnName);
+		if (Main.isDebug())
+			System.out.println(columnName);
 		String comparator, comparatorName;
 		String value = textFieldConstraint1.getText();
 		int comparatorMode = comparisonCombobox1.getSelectedIndex();
 		
-		// Je nachdem welcher Vergleichsoperator ausgewählt wird, wird entscheiden, welcher Verbindungsstring verwendet wird.
+		// Je nachdem welcher Vergleichsoperator ausgewï¿½hlt wird, wird entscheiden, welcher Verbindungsstring verwendet wird.
 		switch (comparatorMode) {
 		case 0:
 			comparatorName = "ist genau wie";
@@ -64,7 +66,7 @@ public class ConstraintBuilder {
 			comparator = "!=";
 			break;
 		case 2 :
-			comparatorName = "enthält Teilstring";
+			comparatorName = "enthï¿½lt Teilstring";
 			comparator = "Like";
 			value = "%" + value + "%";
 			break;
@@ -86,7 +88,7 @@ public class ConstraintBuilder {
 		String comparator, comparatorName;
 		int comparatorMode = comparisonCombobox2.getSelectedIndex();
 		
-		// Je nachdem welcher Vergleichsoperator ausgewählt wird, wird entscheiden, welcher Verbindungsstring verwendet wird.
+		// Je nachdem welcher Vergleichsoperator ausgewï¿½hlt wird, wird entscheiden, welcher Verbindungsstring verwendet wird.
 		switch (comparatorMode) {
 		case 0:
 			comparatorName = "ist ein";

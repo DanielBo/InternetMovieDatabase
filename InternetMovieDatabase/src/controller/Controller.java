@@ -83,7 +83,8 @@ public class Controller {
 						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchField().getText()).getStatement();
 						StatementExecuter stmtExe = new StatementExecuter(con, query);
 						try {
-							System.out.println("Führe Anfrage aus.");
+							if (Main.isDebug())
+								System.out.println("Führe Anfrage aus.");
 							ResultSet result = stmtExe.executeStatement();
 							final JTable table = mainWindow.getTable();
 
@@ -112,8 +113,10 @@ public class Controller {
 								@Override
 								public void mouseClicked(MouseEvent e) {
 									if (e.getClickCount() == 2){
-										System.out.println("Doubleclick noticed on Row: " + table.getSelectedRow());
-										System.out.println("The ID for " + table.getModel().getValueAt(table.getSelectedRow(), 1) + " is " + table.getModel().getValueAt(table.getSelectedRow(), 0)); // Selected MovieID
+										if (Main.isDebug()){
+											System.out.println("Doubleclick noticed on Row: " + table.getSelectedRow());
+											System.out.println("The ID for " + table.getModel().getValueAt(table.getSelectedRow(), 1) + " is " + table.getModel().getValueAt(table.getSelectedRow(), 0)); // Selected MovieID
+										}
 										mainWindow.getTabPane().setEnabledAt(1, true);
 										mainWindow.getTabPane().setSelectedIndex(1);
 
@@ -131,13 +134,14 @@ public class Controller {
 									}
 								}
 							});
-
-							System.out.println("Führe Metadatenabfrage aus.");
+							if (Main.isDebug())
+								System.out.println("Führe Metadatenabfrage aus.");
 							ResultSetMetaData metaData = result.getMetaData();
 							int columnNumber = metaData.getColumnCount();
 							String[] columnNames = new String[columnNumber];
-
-							System.out.println("Frage Tabellennamen ab.");
+							
+							if (Main.isDebug())
+								System.out.println("Frage Tabellennamen ab.");
 							for(int i = 1; i <= columnNumber; i++){
 								columnNames[i-1] = metaData.getColumnName(i);
 							}
@@ -150,12 +154,14 @@ public class Controller {
 							};
 							table.setModel(tModel);
 							tModel.setColumnIdentifiers(columnNames);
-
-							System.out.println("Fülle Tabelle auf.");
+							
+							if (Main.isDebug())
+								System.out.println("Fülle Tabelle auf.");
 
 							// holt sich die Daten aus dem ResultSet
 							while(result.next()){
-								System.out.println("Next");
+								if (Main.isDebug())
+									System.out.println("Next");
 								Object[] objects = new Object[columnNumber]; // stellt einen Datensatz dar.
 
 
@@ -216,7 +222,8 @@ public class Controller {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED){
-					System.out.println(e.getItem() + " ");
+					if (Main.isDebug())
+						System.out.println(e.getItem() + " ");
 					try {
 						reloadTableContents((String)e.getItem());
 					} catch (SQLException e1) {
@@ -233,7 +240,8 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (favTable.getSelectedRow() != -1) {
 					String valueAt = (String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0);
-					System.out.println(valueAt);
+					if (Main.isDebug())
+						System.out.println(valueAt);
 					favs.removeIdFromFavorites(valueAt,(String)favListSelector.getSelectedItem());
 				}
 			}
@@ -266,8 +274,10 @@ public class Controller {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2){
-					System.out.println("Doubleclick noticed on Row: " + favTable.getSelectedRow());
-					System.out.println("The ID for " + favTable.getModel().getValueAt(favTable.getSelectedRow(), 1) + " is " + favTable.getModel().getValueAt(favTable.getSelectedRow(), 0)); // Selected MovieID
+					if (Main.isDebug()){
+						System.out.println("Doubleclick noticed on Row: " + favTable.getSelectedRow());
+						System.out.println("The ID for " + favTable.getModel().getValueAt(favTable.getSelectedRow(), 1) + " is " + favTable.getModel().getValueAt(favTable.getSelectedRow(), 0)); // Selected MovieID
+					}
 					mainWindow.getTabPane().setSelectedIndex(1);
 
 					selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
@@ -351,11 +361,13 @@ public class Controller {
 					@Override
 					public void run() {
 						int constraintId = mainWindow.getListViewConstraints().getSelectedIndex();
-						System.out.println(constraintId);
+						if (Main.isDebug())
+							System.out.println(constraintId);
 						DefaultListModel<String> listModel = mainWindow.getListModel();
 						listModel.removeElementAt(constraintId);
 						constraints.remove(constraintId);
-						System.out.println(constraints);
+						if (Main.isDebug())
+							System.out.println(constraints);
 					}
 				});
 			}

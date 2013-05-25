@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
 
+import main.Main;
+
 import view.MainWindow;
 
 
@@ -119,7 +121,9 @@ public class DetailStatementBuilder {
 		int columnNumber2 = resultmetaData2.getColumnCount();
 		String[] columnNames = new String[columnNumber2];
 		
-		System.out.println("Frage Tabellennamen ab.");
+		if (Main.isDebug())
+			System.out.println("Frage Tabellennamen ab.");
+		
 		for(int i = 1; i <= columnNumber2; i++){
 			columnNames[i-1] = resultmetaData2.getColumnName(i);
 		}
@@ -133,11 +137,14 @@ public class DetailStatementBuilder {
 		mainWindow.getDetailTable().setModel(tModel);
 		tModel.setColumnIdentifiers(columnNames);
 		
-		System.out.println("Fülle Tabelle auf.");
+		if (Main.isDebug())
+			System.out.println("FÃ¼lle Tabelle auf.");
 		
 		// holt sich die Daten aus dem ResultSet
 		while(result2.next()){
-			System.out.println("Next");
+			if (Main.isDebug())
+				System.out.println("Next");
+			
 			Object[] objects = new Object[columnNumber]; // stellt einen Datensatz dar.
 
 			
