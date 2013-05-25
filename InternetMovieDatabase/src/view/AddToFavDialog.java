@@ -15,6 +15,7 @@ import main.Main;
 import controller.favourites.Favorites;
 import java.awt.Component;
 import javax.swing.Box;
+import java.awt.Color;
 
 public class AddToFavDialog extends JFrame {
 
@@ -30,6 +31,12 @@ public class AddToFavDialog extends JFrame {
 	private JComboBox<String> favCategorieComboBox;
 
 	private String id;
+
+	private JLabel infoLabel;
+
+	private JButton btnHinzufgen;
+
+	private JButton btnErtstellen;
 
 	public AddToFavDialog(MainWindow mainWindow, Favorites favs, String id) {
 		if (Main.isDebug())
@@ -58,32 +65,15 @@ public class AddToFavDialog extends JFrame {
 		getContentPane().add(textField);
 		textField.setColumns(10);
 
-		JButton btnHinzufgen = new JButton("Hinzuf\u00FCgen");
-		btnHinzufgen.setBounds(175, 125, 117, 29);
+		btnHinzufgen = new JButton("Hinzuf\u00FCgen");
+		btnHinzufgen.setBounds(229, 122, 117, 29);
 		getContentPane().add(btnHinzufgen);
 
-		JButton btnErtstellen = new JButton("Ertstellen");
+		btnErtstellen = new JButton("Ertstellen");
 		btnErtstellen.setBounds(315, 237, 117, 29);
 		getContentPane().add(btnErtstellen);
 
-		btnErtstellen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				favCategorieComboBox.addItem(textField.getText());
-			}
-		});
 
-		btnHinzufgen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (id != null)
-					try {
-						favs.addIdToFavorites(id, (String)favCategorieComboBox.getSelectedItem());
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-			}
-		});
 
 		JLabel lblNeueListeHinzufgen = new JLabel("Neue Kategorie hinzufügen");
 		lblNeueListeHinzufgen.setBounds(159, 208, 172, 16);
@@ -93,9 +83,10 @@ public class AddToFavDialog extends JFrame {
 		lblKategorie.setBounds(48, 78, 130, 23);
 		getContentPane().add(lblKategorie);
 		
-		Component horizontalGlue = Box.createHorizontalGlue();
-		horizontalGlue.setBounds(0, 179, 482, 16);
-		getContentPane().add(horizontalGlue);
+		infoLabel = new JLabel("");
+		infoLabel.setForeground(Color.RED);
+		infoLabel.setBounds(48, 135, 169, 16);
+		getContentPane().add(infoLabel);
 
 		this.setVisible(true);
 		this.setSize(new Dimension(500,350));
@@ -105,4 +96,29 @@ public class AddToFavDialog extends JFrame {
 	public JComboBox<String> getFavCategorieComboBox() {
 		return favCategorieComboBox;
 	}
+
+	public JLabel getInfoLabel() {
+		return infoLabel;
+	}
+
+	public JButton getBtnHinzufgen() {
+		return btnHinzufgen;
+	}
+
+	public JButton getBtnErtstellen() {
+		return btnErtstellen;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public JTextField getTextField() {
+		return textField;
+	}
+
+	public void setTextField(JTextField textField) {
+		this.textField = textField;
+	}
+
 }

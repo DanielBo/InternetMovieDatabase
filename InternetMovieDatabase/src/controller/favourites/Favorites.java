@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import main.Main;
+
 public class Favorites {
 
 	private Connection con;
@@ -17,7 +19,8 @@ public class Favorites {
 	}
 
 	private void intializeTables() {
-		System.out.println("creating favourites table");
+		if (Main.isDebug())
+			System.out.println("creating favourites table");
 		String createTableFavorites = "CREATE TABLE favourites (ID number(10) NOT NULL, CATEGORY  VARCHAR(255) NOT NULL)";
 		try {
 			con.createStatement().executeQuery(createTableFavorites);
@@ -28,7 +31,8 @@ public class Favorites {
 				StringWriter sw = new StringWriter();
 				PrintWriter pw = new PrintWriter(sw);
 				e.printStackTrace(pw);
-				System.out.println(sw.toString());
+				if (Main.isDebug())
+					System.out.println(sw.toString());
 			}
 		}
 	}

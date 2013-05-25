@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import main.Main;
 import model.Constraint;
 
 
@@ -84,7 +85,7 @@ public class QueryBuilder {
 						}
 					}
 				}
-				// Hängt den Where-Teil an die Abfrage
+				// Hï¿½ngt den Where-Teil an die Abfrage
 				constraintStatement += c.getStatement() + " AND ";
 			}
 		}
@@ -101,7 +102,8 @@ public class QueryBuilder {
 		for (Map.Entry<String[], String> e : map.entrySet()) {
 			for (String s :e.getKey())
 				if (tableName.equals(s)){
-					System.out.println("Test: " + e.getValue());
+					if (Main.isDebug())
+						System.out.println("Test: " + e.getValue());
 					appendStatement += " " + e.getValue();
 				}
 		}
@@ -121,7 +123,8 @@ public class QueryBuilder {
 		appendBasicStatement();
 		
 		String string = basicSelectFrom + basicStatement + constraintStatement + basicConstraint + " '%" + searchValue + "%'";
-		System.out.println(string);
+		if (Main.isDebug())
+			System.out.println(string);
 
 		return string;
 	}

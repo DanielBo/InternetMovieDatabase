@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
 
+import main.Main;
+
 import view.MainWindow;
 
 
@@ -57,6 +59,7 @@ public class DetailStatementBuilder {
 		option2LabelValue = "Produktionjahr: ";
 		option3LabelValue = "Typ: ";
 		tableTitle = "Cast:";
+		mainWindow.getAddToFavList().setVisible(true);
 	}
 	
 	private void setCompanyDetailStatement(){
@@ -75,6 +78,7 @@ public class DetailStatementBuilder {
 		option2LabelValue = "Typ: ";
 		option3LabelValue = "Countrycode: ";
 		tableTitle = "Filmproduktionen:";
+		mainWindow.getAddToFavList().setVisible(false);
 	}
 	
 	private void setPersonDetailStatement(){
@@ -91,9 +95,10 @@ public class DetailStatementBuilder {
 		option2LabelValue = "Geschlecht: ";
 		option3LabelValue = "";
 		tableTitle = "Beteiligte Filmproduktionen:";
+		mainWindow.getAddToFavList().setVisible(false);
 	}
 	
-	// Führt die beiden notwendigen Abfragen für die Detailansicht aus.
+	// Fï¿½hrt die beiden notwendigen Abfragen fï¿½r die Detailansicht aus.
 	public void executeStatement() throws SQLException{
 		mainWindow.getDetailTableTitle().setText(tableTitle);
 		mainWindow.getOption1Label().setText("");
@@ -120,8 +125,8 @@ public class DetailStatementBuilder {
 		ResultSetMetaData resultmetaData2 = result2.getMetaData();
 		int columnNumber2 = resultmetaData2.getColumnCount();
 		String[] columnNames = new String[columnNumber2];
-		
-		System.out.println("Frage Tabellennamen ab.");
+		if (Main.isDebug())
+			System.out.println("Frage Tabellennamen ab.");
 		for(int i = 1; i <= columnNumber2; i++){
 			columnNames[i-1] = resultmetaData2.getColumnName(i);
 		}
@@ -135,12 +140,13 @@ public class DetailStatementBuilder {
 		};
 		mainWindow.getDetailTable().setModel(tModel);
 		tModel.setColumnIdentifiers(columnNames);
-		
-		System.out.println("Fülle Tabelle auf.");
+		if (Main.isDebug())
+			System.out.println("FÃ¼lle Tabelle auf.");
 		
 		// holt sich die Daten aus dem ResultSet
 		while(result2.next()){
-			System.out.println("Next");
+			if (Main.isDebug())
+				System.out.println("Next");
 			Object[] objects = new Object[columnNumber2]; // stellt einen Datensatz dar.
 			
 			for(int i = 1; i <= columnNumber2; i++){
@@ -149,7 +155,8 @@ public class DetailStatementBuilder {
 			tModel.addRow(objects);
 		}
 		result2.close();
-		System.out.println("Fertig");
+		if (Main.isDebug())
+			System.out.println("Fertig");
 		
 	}
 	
