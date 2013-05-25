@@ -80,7 +80,7 @@ public class Controller {
 						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchField().getText()).getStatement();
 						StatementExecuter stmtExe = new StatementExecuter(con, query);
 						try {
-							System.out.println("F�hre Anfrage aus.");
+							System.out.println("Führe Anfrage aus.");
 							ResultSet result = stmtExe.executeStatement();
 							final JTable table = mainWindow.getTable();
 
@@ -111,6 +111,7 @@ public class Controller {
 									if (e.getClickCount() == 2){
 										System.out.println("Doubleclick noticed on Row: " + table.getSelectedRow());
 										System.out.println("The ID for " + table.getModel().getValueAt(table.getSelectedRow(), 1) + " is " + table.getModel().getValueAt(table.getSelectedRow(), 0)); // Selected MovieID
+										mainWindow.getTabPane().setEnabledAt(1, true);
 										mainWindow.getTabPane().setSelectedIndex(1);
 
 										selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
@@ -173,6 +174,8 @@ public class Controller {
 				});
 			}
 		});
+		
+		//-----------------ANFANG---Aktionen für die Merkliste---ANFANG--------------------------
 
 		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -183,6 +186,7 @@ public class Controller {
 		favTable = mainWindow.getFavouriteTable();
 		JComboBox<String> favListSelector = mainWindow.getFavListSelector(); // Selected Favorite Category
 
+		//ItemLisenter zum Auswählen der Kategorie in der Merkliste
 		favListSelector.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -198,7 +202,7 @@ public class Controller {
 			}
 		});
 
-
+		//Aktion zum Entfernen von Titeln aus der Merkliste
 		mainWindow.getBtnVonListeEntfernen().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -206,7 +210,9 @@ public class Controller {
 					favs.removeIdFromFavorites((String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0));
 			}
 		});// remove selected from table
-
+		
+		
+		//MouseListener für die Merklistentabelle
 		favTable.addMouseListener(new MouseListener() {
 
 			@Override
@@ -248,14 +254,18 @@ public class Controller {
 				}
 			}
 		});
+		
+		//-----------------------------ENDE---Aktionen für die Merkliste---ENDE-------------------------------------
+		
+		//---------------ANFANG---Aktionen für das Hinzufügen und Entfernen von Einschränkungen---ANFANG------------
 
-		// ActionListener f�r das Hinzuf�gen von Constraints des Typ 1
+		// ActionListener für das Hinzufügen von Constraints des Typ 1
 		mainWindow.getBtnAddConstraint1().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
 				Constraint constraint = null;
 
-				/* Entweder wird an eine bestehendes Constraint mit oder ein weiteres angeh�ngt ODER 
-				 * Es wird ein einzelnes Constraint erzeugt, dass sp�ter per "AND" mit weiteren Constraints verbunden wird.
+				/* Entweder wird an eine bestehendes Constraint mit oder ein weiteres angehängt ODER 
+				 * Es wird ein einzelnes Constraint erzeugt, dass später per "AND" mit weiteren Constraints verbunden wird.
 				 */
 				if(mainWindow.getConstraint1AndOr().getSelectedIndex() == 1 && lastConstraintType1 != null){
 					constraint = consBuilder.createORConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1(), lastConstraintType1);
@@ -268,7 +278,7 @@ public class Controller {
 					constraint = consBuilder.createConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1());
 				}
 
-				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugef�gt.
+				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
 				DefaultListModel<String> listModel = mainWindow.getListModel();
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
@@ -278,7 +288,7 @@ public class Controller {
 			}
 		});
 
-		// ActionListener f�r das Hinzuf�gen von Constraints des Typ 2
+		// ActionListener für das Hinzufügen von Constraints des Typ 2
 		mainWindow.getBtnAddConstraint2().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
 				Constraint constraint = null;
@@ -322,10 +332,23 @@ public class Controller {
 				});
 			}
 		});
+		
+		/* Wird die Auswahl der Constraint1Combobox verändert, lässt sich als Verbindungsoperator nur noch AND auswählen
+		 * Erst wenn eine Constraint vom Typ 1 hinzugefügt wird, lässt sich auch OR auswählen. (Siehe weiter Oben)
+		 */
+		mainWindow.getConstraintComboBox1().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
+			}
+		});
+		
+		//-------------ENDE---Aktionen für das Hinzufügen und Entfernen von Einschränkungen---ENDE-----------------
+		
 
-		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus ausw�hlt,
+		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus auswählt,
 		 * also (Titel, Company oder Person).
-		 * Je nach Auswahl werden die Auswahlm�glichkeiten f�r das Constraint vom Typ 1 ver�ndert.
+		 * Je nach Auswahl werden die Auswahlmöglichkeiten f�r das Constraint vom Typ 1 verändert.
 		 */
 		mainWindow.getModeSelector().addActionListener(new ActionListener() {
 			@Override
@@ -337,7 +360,7 @@ public class Controller {
 				selectedMode = mainWindow.getModeSelector().getSelectedIndex();	
 				String[] choice;
 
-				// Auswahlm�glichkeiten f�r die erste Combobox der Einschr�nkung vom Typ 1
+				// Auswahlmöglichkeiten für die erste Combobox der Einschr�nkung vom Typ 1
 				switch (selectedMode){
 				case 0:
 					//Titel
@@ -365,17 +388,11 @@ public class Controller {
 			}
 		});
 
-		/* Wird die Auswahl der Constraint1Combobox ver�ndert, l�sst sich als Verbindungsoperator nur noch AND ausw�hlen
-		 * Erst wenn eine Constraint vom Typ 1 hinzugef�gt wird, l�sst sich auch OR ausw�hlen. (Siehe weiter Oben)
-		 */
-		mainWindow.getConstraintComboBox1().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
-			}
-		});
 	}
+	
+	//------------Weitere Methoden für Controller----------------
 
+	// Aktiviert und Deaktiviert die Bedienelemente für Einschränkungen vom Typ 2
 	private void enableConstraintType2(boolean value){
 		mainWindow.getTextFieldConstraint2().setEnabled(value);
 		mainWindow.getComparisonCombobox2().setEnabled(value);
@@ -383,8 +400,9 @@ public class Controller {
 		mainWindow.getConstraint2AndOr().setEnabled(value);
 		mainWindow.getBtnAddConstraint2().setEnabled(value);
 	}
-
-	protected void reloadTableContents(String category) throws SQLException{
+	
+	//Füllt die Merkliste mit Inhalt aus der Datenbank
+	private void reloadTableContents(String category) throws SQLException{
 		ResultSet result = favs.getFavByCategory(category);
 		ArrayList<String> results = new ArrayList<String>();
 
@@ -393,7 +411,14 @@ public class Controller {
 		}
 
 		DefaultTableModel model = null;
-		boolean headerSet = false;
+		
+		model = new DefaultTableModel(new String[]{"Titel", "Typ", "Produktionsjahr"},0) {
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return false;
+			}
+		};
+		favTable.setModel(model);
 
 		for ( String s : results ){
 			String query = "Select IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title" +
@@ -401,18 +426,11 @@ public class Controller {
 			ResultSet result2 = con.createStatement().executeQuery(query);
 			int columnCount = result2.getMetaData().getColumnCount();
 
-			if (!headerSet){
-				String[] columnNames = new String[columnCount];
-				for (int i = 1; i < columnCount; i++){
-					columnNames[i-1] = result2.getMetaData().getColumnLabel(i);
-				}
-			}
-
 			Object[] newRow = null;
 
 			while (result2.next()){
 				newRow = new Object[columnCount];
-				for (int i = 1; i < columnCount; i++){
+				for (int i = 1; i <= columnCount; i++){
 					newRow[i-1] = result2.getObject(i);
 				}
 			}

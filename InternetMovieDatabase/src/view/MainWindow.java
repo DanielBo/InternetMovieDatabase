@@ -98,6 +98,7 @@ public class MainWindow extends JFrame {
 		tabPane.addTab("Suchansicht" , contentPane);
 		tabPane.addTab("DetailAnsicht", getDetailPanel());
 		tabPane.addTab("Merkliste", getFavouriteListPanel());
+		tabPane.setEnabledAt(1, false);
 		setContentPane(tabPane);
 
 
