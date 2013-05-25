@@ -63,9 +63,9 @@ public class Favorites {
 		con.createStatement().executeQuery(inputStatement);
 	}
 
-	public boolean removeIdFromFavorites(String id){
+	public boolean removeIdFromFavorites(String id,String cat){
 		try{
-			String removeIdStatement = "DELETE FROM favourites Where id = '" + id + "'";
+			String removeIdStatement = "DELETE FROM favourites Where id = '" + id + "' AND Category = '" + cat + "'";
 			con.createStatement().execute(removeIdStatement);
 		} catch (SQLException e){
 			e.getStackTrace();

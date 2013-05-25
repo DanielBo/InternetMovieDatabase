@@ -209,7 +209,7 @@ public class Controller {
 		});
 
 		favTable = mainWindow.getFavouriteTable();
-		JComboBox<String> favListSelector = mainWindow.getFavListSelector(); // Selected Favorite Category
+		final JComboBox<String> favListSelector = mainWindow.getFavListSelector(); // Selected Favorite Category
 
 		//ItemLisenter zum Auswählen der Kategorie in der Merkliste
 		favListSelector.addItemListener(new ItemListener() {
@@ -234,7 +234,7 @@ public class Controller {
 				if (favTable.getSelectedRow() != -1) {
 					String valueAt = (String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0);
 					System.out.println(valueAt);
-					favs.removeIdFromFavorites(valueAt);
+					favs.removeIdFromFavorites(valueAt,(String)favListSelector.getSelectedItem());
 				}
 			}
 		});// remove selected from table
