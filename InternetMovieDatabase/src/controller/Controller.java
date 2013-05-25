@@ -449,7 +449,7 @@ public class Controller {
 		favTable.setModel(model);
 
 		for ( String s : results ){
-			String query = "Select IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title" +
+			String query = "Select IMDB.title.id IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title" +
 								" join IMDB.kind_type on imdb.title.kind_id = imdb.kind_type.id Where imdb.title.id = " + s;
 			ResultSet result2 = con.createStatement().executeQuery(query);
 			int columnCount = result2.getMetaData().getColumnCount();
@@ -465,6 +465,10 @@ public class Controller {
 
 			if (Main.isDebug())
 				System.out.println("adding new row to favTable");
+			
+			TableColumn columnToRemove = favTable.getColumnModel().getColumn(0);
+			favTable.getColumnModel().removeColumn(columnToRemove);
+			
 			model.addRow(newRow);
 		}
 
