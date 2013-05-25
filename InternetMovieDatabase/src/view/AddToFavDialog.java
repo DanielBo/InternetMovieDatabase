@@ -27,7 +27,7 @@ public class AddToFavDialog extends JFrame {
 	private JTextField textField;
 	private Favorites favs;
 
-	private JComboBox<String> comboBox;
+	private JComboBox<String> favCategorieComboBox;
 
 	private String id;
 
@@ -49,9 +49,9 @@ public class AddToFavDialog extends JFrame {
 		lblEintragZurFavoritenliste.setBounds(119, 29, 244, 16);
 		getContentPane().add(lblEintragZurFavoritenliste);
 
-		comboBox = new JComboBox<String>();
-		comboBox.setBounds(184, 75, 212, 28);
-		getContentPane().add(comboBox);
+		favCategorieComboBox = new JComboBox<String>();
+		favCategorieComboBox.setBounds(184, 75, 212, 28);
+		getContentPane().add(favCategorieComboBox);
 
 		textField = new JTextField();
 		textField.setBounds(48, 236, 244, 28);
@@ -69,7 +69,7 @@ public class AddToFavDialog extends JFrame {
 		btnErtstellen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				comboBox.addItem(textField.getText());
+				favCategorieComboBox.addItem(textField.getText());
 			}
 		});
 
@@ -78,7 +78,7 @@ public class AddToFavDialog extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (id != null)
 					try {
-						favs.addIdToFavorites(id, (String)comboBox.getSelectedItem());
+						favs.addIdToFavorites(id, (String)favCategorieComboBox.getSelectedItem());
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -100,5 +100,9 @@ public class AddToFavDialog extends JFrame {
 		this.setVisible(true);
 		this.setSize(new Dimension(500,350));
 
+	}
+
+	public JComboBox<String> getFavCategorieComboBox() {
+		return favCategorieComboBox;
 	}
 }

@@ -12,6 +12,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -195,6 +196,15 @@ public class Controller {
 		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,Main.getId());
+				try {
+					ArrayList<String> listCategories = favs.getCategories();
+					String[] categories = new String[listCategories.size()];
+					favs.getCategories().toArray(categories);
+					atfd.getFavCategorieComboBox().setModel(new DefaultComboBoxModel<String>(categories));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -221,8 +231,11 @@ public class Controller {
 		mainWindow.getBtnVonListeEntfernen().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (favTable.getSelectedRow() != -1)
-					favs.removeIdFromFavorites((String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0));
+				if (favTable.getSelectedRow() != -1) {
+					String valueAt = (String)favTable.getModel().getValueAt(favTable.getSelectedRow(), 0);
+					System.out.println(valueAt);
+					favs.removeIdFromFavorites(valueAt);
+				}
 			}
 		});// remove selected from table
 		

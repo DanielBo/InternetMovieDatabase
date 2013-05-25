@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class MainWindow extends JFrame {
 
@@ -75,6 +76,8 @@ public class MainWindow extends JFrame {
 
 	private JLabel lblEinschrnkungen_1;
 	private JButton addToFavList;
+
+	private JLabel infoLabel;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -88,7 +91,7 @@ public class MainWindow extends JFrame {
 	private void init() {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 976, 728);
+		setBounds(100, 100, 976, 746);
 
 		tabPane = new JTabbedPane();
 
@@ -109,12 +112,12 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblSuchfeld);
 
 		searchField = new JTextField();
-		searchField.setBounds(111, 10, 238, 22);
+		searchField.setBounds(111, 10, 196, 22);
 		searchField.setColumns(10);
 		contentPane.add(searchField);
 
 		JLabel lblIchMchteSuchen = new JLabel("Ich m\u00F6chte suchen nach:");
-		lblIchMchteSuchen.setBounds(518, 13, 196, 16);
+		lblIchMchteSuchen.setBounds(539, 13, 175, 16);
 		contentPane.add(lblIchMchteSuchen);
 
 		modeSelector = new JComboBox<String>();
@@ -123,85 +126,90 @@ public class MainWindow extends JFrame {
 		contentPane.add(modeSelector);
 
 		JLabel lblEinschrnkungen = new JLabel("Einschr\u00E4nkung (Typ1) hinzuf\u00FCgen: ");
-		lblEinschrnkungen.setBounds(12, 49, 212, 16);
+		lblEinschrnkungen.setBounds(12, 81, 212, 16);
 		contentPane.add(lblEinschrnkungen);
 
 		constraintComboBox1 = new JComboBox<String>();
 		constraintComboBox1.setModel(new DefaultComboBoxModel<String>(new String[]{"CompanyName", "CompanyType", "TitelType", "ProductionYear"}));
-		constraintComboBox1.setBounds(229, 45, 160, 22);
+		constraintComboBox1.setBounds(229, 77, 160, 22);
 		contentPane.add(constraintComboBox1);
 
 		comparisonCombobox1 = new JComboBox<String>();
 		comparisonCombobox1.setModel(new DefaultComboBoxModel(new String[] {"ist genau wie", "ist nicht wie", "enth\u00E4lt Teilstring"}));
-		comparisonCombobox1.setBounds(401, 46, 115, 22);
+		comparisonCombobox1.setBounds(401, 78, 115, 22);
 		contentPane.add(comparisonCombobox1);
 
 		textFieldConstraint1 = new JTextField();
-		textFieldConstraint1.setBounds(528, 46, 212, 22);
+		textFieldConstraint1.setBounds(528, 78, 212, 22);
 		contentPane.add(textFieldConstraint1);
 		textFieldConstraint1.setColumns(10);
 
 		btnAddConstraint1 = new JButton("Add");
-		btnAddConstraint1.setBounds(835, 45, 87, 25);
+		btnAddConstraint1.setBounds(835, 77, 87, 25);
 		contentPane.add(btnAddConstraint1);
 
 		btnSucheStarten = new JButton("Suche starten");
-		btnSucheStarten.setBounds(750, 271, 124, 25);
+		btnSucheStarten.setBounds(798, 291, 124, 25);
 		contentPane.add(btnSucheStarten);
 
 		listModel = new DefaultListModel<String>();
 		listViewConstraints = new JList<String>(listModel);
 
 		JScrollPane listScrollPane = new JScrollPane(listViewConstraints);
-		listScrollPane.setBounds(31, 176, 605, 120);
+		listScrollPane.setBounds(31, 214, 605, 120);
 		contentPane.add(listScrollPane);
 
 		table = new JTable();
 
 		mainTableScrollPane = new JScrollPane(getTable());
-		mainTableScrollPane.setBounds(31, 359, 891, 292);
+		mainTableScrollPane.setBounds(31, 385, 891, 284);
 		contentPane.add(mainTableScrollPane);
 
 		JLabel lblNewLabel = new JLabel("Einschr\u00E4nkung (Typ2) hinzuf\u00FCgen:");
-		lblNewLabel.setBounds(12, 103, 212, 14);
+		lblNewLabel.setBounds(12, 135, 212, 14);
 		contentPane.add(lblNewLabel);
 
 		textFieldConstraint2 = new JTextField();
-		textFieldConstraint2.setBounds(229, 100, 160, 20);
+		textFieldConstraint2.setBounds(229, 132, 160, 20);
 		contentPane.add(textFieldConstraint2);
 		textFieldConstraint2.setColumns(10);
 
 		comparisonCombobox2 = new JComboBox<String>();
 		comparisonCombobox2.setModel(new DefaultComboBoxModel(new String[] {"ist ein", "ist kein"}));
-		comparisonCombobox2.setBounds(401, 100, 115, 20);
+		comparisonCombobox2.setBounds(401, 132, 115, 20);
 		contentPane.add(comparisonCombobox2);
 
 		constraintComboBox2 = new JComboBox<String>();
 		constraintComboBox2.setModel(new DefaultComboBoxModel<String>(new String[] {"Schauspieler /actor", "Schauspielerin /actress", "Produzent / producer", "Drehbuchautor / writer", "Kameramann / cinematographer", "Komponist / composer", "Kost\u00FCmdesigner / costume designer", "Regisseur / director", "Cutter / editor", "Filmcrew / miscellaneous crew", "Produktionsdesigner / production designer", "Gast / guest"}));
-		constraintComboBox2.setBounds(528, 100, 212, 20);
+		constraintComboBox2.setBounds(528, 132, 212, 20);
 		contentPane.add(constraintComboBox2);
 
 		btnAddConstraint2 = new JButton("Add");
-		btnAddConstraint2.setBounds(835, 99, 87, 23);
+		btnAddConstraint2.setBounds(835, 131, 87, 23);
 		contentPane.add(btnAddConstraint2);
 
 		btnEinschrnkungEntfernen = new JButton("Einschr\u00E4nkung entfernen");
-		btnEinschrnkungEntfernen.setBounds(31, 309, 194, 25);
+		btnEinschrnkungEntfernen.setBounds(30, 347, 194, 25);
 		contentPane.add(btnEinschrnkungEntfernen);
 
 		lblEinschrnkungen_1 = new JLabel("Gib mir Titel, f\u00FCr die gilt:");
-		lblEinschrnkungen_1.setBounds(31, 147, 358, 16);
+		lblEinschrnkungen_1.setBounds(31, 185, 358, 16);
 		contentPane.add(lblEinschrnkungen_1);
 
 		constraint1AndOr = new JComboBox<String>();
 		constraint1AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
-		constraint1AndOr.setBounds(746, 46, 77, 22);
+		constraint1AndOr.setBounds(746, 78, 77, 22);
 		contentPane.add(constraint1AndOr);
 
 		constraint2AndOr = new JComboBox<String>();
 		constraint2AndOr.setModel(new DefaultComboBoxModel<String>(new String[] {"AND"}));
-		constraint2AndOr.setBounds(746, 99, 77, 22);
+		constraint2AndOr.setBounds(746, 131, 77, 22);
 		contentPane.add(constraint2AndOr);
+		
+		infoLabel = new JLabel("\"Personennamen bitte mit 'Nachname, Vorname' angeben.\"");
+		infoLabel.setForeground(Color.RED);
+		infoLabel.setBounds(12, 42, 494, 16);
+		contentPane.add(infoLabel);
 	}
 
 	/**
@@ -393,4 +401,7 @@ public class MainWindow extends JFrame {
 		return addToFavList;
 	}
 
+	public JLabel getInfoLabel() {
+		return infoLabel;
+	}
 }
