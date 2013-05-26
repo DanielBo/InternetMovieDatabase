@@ -71,7 +71,7 @@ public class DetailStatementBuilder {
 						" join imdb.movie_companies on imdb.movie_companies.company_id = imdb.company_name.id" +
 						" join imdb.company_type on imdb.company_type.id = imdb.movie_companies.company_type_id" +
 						" Where imdb.company_name.id = ";
-		query2 = "Select Distinct imdb.title.title Titel, imdb.kind_type.kind Typ, imdb.title.production_year From imdb.title" +
+		query2 = "Select Distinct imdb.title.title Titel, imdb.kind_type.kind Typ, imdb.title.production_year Produktionsjahr From imdb.title" +
 				" join imdb.kind_type on imdb.kind_type.id = imdb.title.kind_id" +
 				" join imdb.movie_companies on imdb.movie_companies.movie_id = imdb.title.id" +
 				" join imdb.company_name on imdb.company_name.id = imdb.movie_companies.company_id" +
