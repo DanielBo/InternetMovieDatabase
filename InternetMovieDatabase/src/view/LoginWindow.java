@@ -70,7 +70,7 @@ public class LoginWindow extends JFrame {
 		setLblIdOderPasswort(new JLabel("ID oder Passwort falsch!"));
 		getLblIdOderPasswort().setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getLblIdOderPasswort().setForeground(Color.RED);
-		getLblIdOderPasswort().setBounds(6, 162, 413, 25);
+		getLblIdOderPasswort().setBounds(6, 162, 401, 25);
 		getLblIdOderPasswort().setVisible(false);
 		contentPane.add(getLblIdOderPasswort());
 	}
