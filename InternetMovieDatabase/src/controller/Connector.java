@@ -109,7 +109,16 @@ public class Connector {
 					if (1017 == e.getErrorCode()){
 						lblIdOderPasswort.setText("ID/Password mismatch.");
 						lblIdOderPasswort.setVisible(true);    					
+					}else if (12528 == e.getErrorCode()){
+						lblIdOderPasswort.setText("Server verhindert neue Verbindungen.");
+						lblIdOderPasswort.setVisible(true);
+					}else {
+						lblIdOderPasswort.setText("Es ist ein unbekannter Fehler aufgetreten.");
+						lblIdOderPasswort.setVisible(true);
+						if (Main.isDebug())
+							e.printStackTrace();
 					}
+					
 				}
 			}
 		});

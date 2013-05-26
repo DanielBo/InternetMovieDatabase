@@ -46,7 +46,7 @@ public class Controller {
 		this.con = connection;
 		
 		if (mainWindow == null)
-			this.mainWindow = new MainWindow(con);
+			this.mainWindow = new MainWindow();
 
 		if(consBuilder == null)
 			this.consBuilder = new ConstraintBuilder();

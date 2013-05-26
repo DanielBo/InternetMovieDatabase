@@ -80,11 +80,9 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 * @param con 
 	 */
-	public MainWindow(Connection con) {
+	public MainWindow() {
 		setTitle("IMDB - Tool");
 		init();
-		this.con = con;
-
 	}
 
 	private void init() {

@@ -10,7 +10,7 @@ import controller.Connector;
 public class Main{
 	
 	// Der Debug-Modus kann ein- und ausgeschaltet werden.
-	private static final boolean isDebug = false;
+	private static final boolean isDebug = true;
 	
 	//Aktuelle ID der Detailansicht
 	private static String id = "";
