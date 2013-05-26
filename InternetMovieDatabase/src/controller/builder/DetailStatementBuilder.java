@@ -52,7 +52,7 @@ public class DetailStatementBuilder {
 						" From imdb.title join imdb.kind_type on imdb.title.kind_id = imdb.kind_type.id Where imdb.title.id = ";
 		
 		// Zum Abfragen des Casts.
-		query2 = "Select Distinct imdb.name.name, imdb.role_type.role From imdb.name " +
+		query2 = "Select Distinct imdb.name.name Name, imdb.role_type.role Typ From imdb.name " +
 						" join imdb.cast_info on imdb.name.id = imdb.cast_info.person_id" +
 						" join imdb.role_type on imdb.cast_info.role_id = imdb.role_type.id" +
 						" join imdb.title on imdb.title.id = imdb.cast_info.movie_id Where imdb.title.id = ";
@@ -71,7 +71,7 @@ public class DetailStatementBuilder {
 						" join imdb.movie_companies on imdb.movie_companies.company_id = imdb.company_name.id" +
 						" join imdb.company_type on imdb.company_type.id = imdb.movie_companies.company_type_id" +
 						" Where imdb.company_name.id = ";
-		query2 = "Select Distinct imdb.title.title, imdb.kind_type.kind Typ, imdb.title.production_year From imdb.title" +
+		query2 = "Select Distinct imdb.title.title Titel, imdb.kind_type.kind Typ, imdb.title.production_year From imdb.title" +
 				" join imdb.kind_type on imdb.kind_type.id = imdb.title.kind_id" +
 				" join imdb.movie_companies on imdb.movie_companies.movie_id = imdb.title.id" +
 				" join imdb.company_name on imdb.company_name.id = imdb.movie_companies.company_id" +
@@ -90,7 +90,7 @@ public class DetailStatementBuilder {
 		query1 = "Select Distinct imdb.name.name, imdb.name.gender From imdb.name Where imdb.name.id = ";
 		
 		// Zum Abfragen der Filme, in denen die Person mitgewirkt hat.
-		query2 = "Select Distinct imdb.title.title, imdb.role_type.role From imdb.name" +
+		query2 = "Select Distinct imdb.title.title Titel, imdb.role_type.role Rolle From imdb.name" +
 						" join imdb.cast_info on imdb.name.id = imdb.cast_info.person_id" +
 						" join imdb.role_type on imdb.role_type.id = imdb.cast_info.role_id" +
 						" join imdb.title on imdb.title.id = imdb.cast_info.movie_id Where imdb.name.id = ";
@@ -108,8 +108,8 @@ public class DetailStatementBuilder {
 		//Die Labels werden auf ihre Anfangswerte gesetzt.
 		mainWindow.getDetailTableTitle().setText(tableTitle);
 		mainWindow.getOption1Label().setText("");
-		mainWindow.getOption1Label().setText("");
-		mainWindow.getOption1Label().setText("");
+		mainWindow.getOption2Label().setText("");
+		mainWindow.getOption3Label().setText("");
 		
 		//----Abfrage 1----
 		Statement stmt1 = con.createStatement();
