@@ -103,7 +103,7 @@ public class ConstraintBuilder {
 		
 		// Der StatementName, der in der "listView" im GUI angezeigt wird und das Statement selbst, wird zusammengestellt.
 		String statementName = value + " " + comparatorName + " " + constraintComboBox2.getSelectedItem().toString();
-		String statement =  comparator + " (Select imdb.cast_info.movie_id From imdb.name join imdb.cast_info on imdb.name.id = imdb.cast_info.person_id Where imdb.name.name = '" + value + "' AND imdb.cast_info.role_id = '" + role +"' and imdb.cast_info.movie_id = imdb.title.id)";
+		String statement =  comparator + " (Select imdb.cast_info.movie_id From imdb.name join imdb.cast_info on imdb.name.id = imdb.cast_info.person_id Where lower(imdb.name.name) = '" + value + "' AND imdb.cast_info.role_id = '" + role +"' and imdb.cast_info.movie_id = imdb.title.id)";
 		
 		return new Constraint("ConstraintType2", statementName, statement);
 
