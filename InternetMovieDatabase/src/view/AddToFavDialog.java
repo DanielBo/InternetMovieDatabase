@@ -16,6 +16,7 @@ import controller.favourites.Favorites;
 import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 //Erzeugt den Dialog zum hinzufügen vom Einträgen zur Merkliste und zum anlegen von neuen Merklisten.
 public class AddToFavDialog extends JFrame {
@@ -85,8 +86,9 @@ public class AddToFavDialog extends JFrame {
 		getContentPane().add(lblKategorie);
 		
 		infoLabel = new JLabel("");
+		infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		infoLabel.setForeground(Color.RED);
-		infoLabel.setBounds(48, 135, 169, 16);
+		infoLabel.setBounds(37, 167, 457, 29);
 		getContentPane().add(infoLabel);
 
 		this.setVisible(true);
