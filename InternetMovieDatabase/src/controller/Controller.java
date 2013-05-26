@@ -12,7 +12,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -354,14 +353,14 @@ public class Controller {
 				 * Es wird ein einzelnes Constraint erzeugt, dass später per "AND" mit weiteren Constraints verbunden wird.
 				 */
 				if(mainWindow.getConstraint1AndOr().getSelectedIndex() == 1 && lastConstraintType1 != null){
-					constraint = consBuilder.createORConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1(), lastConstraintType1);
+					constraint = consBuilder.createORConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1Text(), lastConstraintType1);
 
 					// Letztes Constraint wird gelöscht und weiter unten durch das Neue ersetzt.
 					constraints.remove(lastConstraintType1);
 					DefaultListModel<String> listModel = mainWindow.getListModel();
 					listModel.removeElementAt(listModel.size() - 1);
 				} else {
-					constraint = consBuilder.createConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1());
+					constraint = consBuilder.createConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1Text());
 				}
 
 				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
@@ -383,14 +382,14 @@ public class Controller {
 				 * Es wird ein einzelnes Constraint erzeugt, dass später per "AND" mit weiteren Constraints verbunden wird.
 				 */
 				if(mainWindow.getConstraint2AndOr().getSelectedIndex() == 1 && lastConstraintType2 != null){
-					constraint = consBuilder.createORConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2(), lastConstraintType2);
+					constraint = consBuilder.createORConstraintType2(mainWindow.getTextFieldConstraint2Text(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2(), lastConstraintType2);
 
 					// Letztes Constraint wird gelöscht und weiter unten durch das Neue ersetzt.
 					constraints.remove(lastConstraintType2);
 					DefaultListModel<String> listModel = mainWindow.getListModel();
 					listModel.removeElementAt(listModel.size() - 1);
 				} else {
-					constraint = consBuilder.createConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2());
+					constraint = consBuilder.createConstraintType2(mainWindow.getTextFieldConstraint2Text(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2());
 				}
 
 				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.

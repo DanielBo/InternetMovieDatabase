@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
 
@@ -16,12 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
 
 //Erzeugt das Hauptfenster mit Suchtab, Detailansichttab und Merklistentab.
 public class MainWindow extends JFrame {
@@ -296,8 +292,12 @@ public class MainWindow extends JFrame {
 		return btnSucheStarten;
 	}
 
-	public JTextField getTextFieldConstraint1() {
-		return textFieldConstraint1;
+	public String getTextFieldConstraint1Text() {
+		return textFieldConstraint1.getText().toLowerCase(getLocale());
+	}
+	
+	public JTextField getTextFieldConstraint2(){
+		return textFieldConstraint2;
 	}
 
 	public JComboBox<String> getModeSelector() {
@@ -348,8 +348,8 @@ public class MainWindow extends JFrame {
 		return listViewConstraints;
 	}
 
-	public JTextField getTextFieldConstraint2() {
-		return textFieldConstraint2;
+	public String getTextFieldConstraint2Text() {
+		return textFieldConstraint2.getText().toLowerCase(getLocale());
 	}
 
 	public JComboBox<String> getConstraint1AndOr() {

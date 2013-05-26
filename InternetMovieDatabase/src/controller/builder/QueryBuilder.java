@@ -44,7 +44,7 @@ public class QueryBuilder {
 			usedTables.add("Titel");
 			usedTables.add("ProductionYear");
 			
-			basicConstraint = " IMDB.title.title Like ";
+			basicConstraint = " lower(IMDB.title.title) Like ";
 			basicSelectFrom = "Select Distinct IMDB.title.id, IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From ";
 			break;
 		case 1:
@@ -53,7 +53,7 @@ public class QueryBuilder {
 			usedTables.add("CompanyName");
 			usedTables.add("CompanyType");
 			
-			basicConstraint = " IMDB.company_name.name Like ";
+			basicConstraint = " lower(IMDB.company_name.name) Like ";
 			basicSelectFrom = "Select Distinct Imdb.company_name.id, imdb.company_name.name, imdb.company_type.kind Typ From ";
 			map.put(new String[]{"TitelType", "Titel", "ProductionYear", "ConstraintType2", "PersonenName"}, "join (" + TITLE_BASE + ") on imdb.movie_companies.movie_id = imdb.title.id");
 			break;
@@ -63,7 +63,7 @@ public class QueryBuilder {
 			usedTables.add("PersonenName");
 			usedTables.add("RollenType");
 			
-			basicConstraint = " IMDB.name.name Like ";
+			basicConstraint = " lower(IMDB.name.name) Like ";
 			basicSelectFrom = "Select Distinct IMDB.name.id, IMDB.name.name, IMDB.role_type.role Rolle From ";
 			map.put(new String[]{"TitelType", "Titel", "ProductionYear", "ConstraintType2", "CompanyName", "CompanyType"}, "join (" + TITLE_BASE + ") on imdb.cast_info.movie_id = imdb.title.id");
 			break;
