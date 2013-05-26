@@ -99,7 +99,7 @@ public class Connector {
 					if (Main.isDebug())
 						System.out.println("Die Verbindung wurde hergestellt.");
 					
-					//Contrsoller wird erzeugt. Damit startet auch das Hauptfenster
+					//Controller wird erzeugt. Damit startet auch das Hauptfenster
 					new Controller(con);
 						
 					//Das Loginfesnter wird geschlossen.
