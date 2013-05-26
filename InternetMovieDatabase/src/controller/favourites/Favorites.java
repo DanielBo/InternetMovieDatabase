@@ -21,7 +21,8 @@ public class Favorites {
 	private void intializeTables() {
 		if (Main.isDebug())
 			System.out.println("creating favourites table");
-		String createTableFavorites = "CREATE TABLE favourites (ID number(10) NOT NULL, CATEGORY  VARCHAR(255) NOT NULL)";
+		String createTableFavorites = "CREATE TABLE favourites (ID number(10) NOT NULL, CATEGORY  VARCHAR(255) NOT NULL, "+
+									  "Primary Key(ID, CATEGORY))";
 		try {
 			con.createStatement().executeQuery(createTableFavorites);
 		} catch (SQLException e) {

@@ -211,10 +211,17 @@ public class Controller {
 					public void actionPerformed(ActionEvent e) {
 						if (id != null)
 							try {
-								favs.addIdToFavorites(id, (String)atfd.getFavCategorieComboBox().getSelectedItem());
-								atfd.getInfoLabel().setText("Eintrag hinzugefügt!");
+								if(atfd.getFavCategorieComboBox().getSelectedItem() != null){
+									String categorie = atfd.getFavCategorieComboBox().getSelectedItem().toString();
+									favs.addIdToFavorites(id, categorie);
+									atfd.getInfoLabel().setText("Eintrag hinzugefügt!");
+								} else {
+									atfd.getInfoLabel().setText("Es wurde keine Kategorie ausgewählt.");
+								}
 							} catch (SQLException e1) {
-								e1.printStackTrace();
+								if (00001 == e1.getErrorCode()){
+									atfd.getInfoLabel().setText("Eintrag schon vorhanden!");  					
+								}
 							}
 					}
 				});
