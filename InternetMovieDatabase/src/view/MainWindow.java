@@ -308,8 +308,8 @@ public class MainWindow extends JFrame {
 		return table;
 	}
 
-	public JTextField getSearchField() {
-		return searchField;
+	public String getSearchFieldText() {
+		return searchField.getText().toLowerCase(getLocale());
 	}
 
 	public JButton getBtnAddConstraint1() {

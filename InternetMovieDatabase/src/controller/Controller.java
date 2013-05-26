@@ -70,7 +70,7 @@ public class Controller {
 					public void run() {
 						
 						// Die Query wird erzeugt und an den StatementExecuter übergeben.
-						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchField().getText()).getStatement();
+						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchFieldText()).getStatement();
 						StatementExecuter stmtExe = new StatementExecuter(con, query);
 						//----------------------------------------------------------------------
 						
