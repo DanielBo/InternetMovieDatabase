@@ -76,6 +76,8 @@ public class MainWindow extends JFrame {
 
 	private JLabel infoLabel;
 	private JButton deleteCategory;
+
+	private JLabel infoLabel2;
 	/**
 	 * Create the frame.
 	 * @param con 
@@ -207,6 +209,10 @@ public class MainWindow extends JFrame {
 		infoLabel.setForeground(Color.RED);
 		infoLabel.setBounds(12, 42, 494, 16);
 		contentPane.add(infoLabel);
+		
+		infoLabel2 = new JLabel("");
+		infoLabel2.setBounds(401, 356, 521, 16);
+		contentPane.add(infoLabel2);
 	}
 
 	/**
@@ -412,5 +418,13 @@ public class MainWindow extends JFrame {
 	
 	public JButton getDeleteCategoryBtn(){
 		return deleteCategory;
+	}
+
+	public JLabel getInfoLabel2() {
+		return infoLabel2;
+	}
+
+	public void setInfoLabel2(JLabel infoLabel2) {
+		this.infoLabel2 = infoLabel2;
 	}
 }

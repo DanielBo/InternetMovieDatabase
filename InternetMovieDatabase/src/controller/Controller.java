@@ -73,7 +73,7 @@ public class Controller {
 						String searchFieldText = mainWindow.getSearchFieldText();
 						if (searchFieldText.contains("'")){
 							JOptionPane.showMessageDialog(mainWindow,
-									"Das Zeichen ' darf nicht bestandteil der Suche sein.",
+									"Das Zeichen ' darf nicht Bestandteil der Suche sein.",
 									"ERROR!",
 									JOptionPane.ERROR_MESSAGE);
 							return;
@@ -134,7 +134,9 @@ public class Controller {
 										try {
 											dtBuilder.executeStatement();
 										} catch (SQLException e1) {
-											e1.printStackTrace();
+											mainWindow.getInfoLabel2().setText("Bei der Abfrage ist ein Fehler aufgetreten.");
+											if(Main.isDebug())
+												e1.printStackTrace();
 										}
 
 									}
@@ -184,7 +186,8 @@ public class Controller {
 							table.getColumnModel().removeColumn(columnToRemove);
 
 						} catch (SQLException e) {
-							e.printStackTrace();
+							if(Main.isDebug())
+								e.printStackTrace();
 						}
 					}
 				});
@@ -250,8 +253,8 @@ public class Controller {
 					favs.getCategories().toArray(categories);
 					atfd.getFavCategorieComboBox().setModel(new DefaultComboBoxModel<String>(categories));
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					if(Main.isDebug())
+						e1.printStackTrace();
 				}
 			}
 		});
@@ -269,7 +272,8 @@ public class Controller {
 					try {
 						reloadTableContents((String)e.getItem());
 					} catch (SQLException e1) {
-						e1.printStackTrace();
+						if(Main.isDebug())
+							e1.printStackTrace();
 					}
 
 				}
@@ -342,7 +346,8 @@ public class Controller {
 					try {
 						dtBuilder.executeStatement();
 					} catch (SQLException e1) {
-						e1.printStackTrace();
+						if(Main.isDebug())
+							e1.printStackTrace();
 					}
 
 				}
@@ -519,7 +524,8 @@ public class Controller {
 
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if(Main.isDebug())
+				e.printStackTrace();
 		}
 	}
 
