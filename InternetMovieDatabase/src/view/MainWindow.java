@@ -276,7 +276,7 @@ public class MainWindow extends JFrame {
 		favListSelector.setBounds(203, 16, 181, 18);
 		favouriteListPanel.add(favListSelector);
 		
-		JLabel lblNewLabel_2 = new JLabel("MerkListe asuw\u00E4hlen:");
+		JLabel lblNewLabel_2 = new JLabel("MerkListe auswählen:");
 		lblNewLabel_2.setBounds(24, 16, 167, 16);
 		favouriteListPanel.add(lblNewLabel_2);
 		

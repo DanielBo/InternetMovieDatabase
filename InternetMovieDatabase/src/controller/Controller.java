@@ -409,6 +409,9 @@ public class Controller {
 						constraints.remove(constraintId);
 						if (Main.isDebug())
 							System.out.println(constraints);
+						
+						mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
+						mainWindow.getConstraint2AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
 					}
 				});
 			}
