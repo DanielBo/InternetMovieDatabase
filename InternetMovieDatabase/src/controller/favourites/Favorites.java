@@ -36,7 +36,8 @@ public class Favorites {
 			}
 		}
 	}
-
+	
+	//Gibt die verschiedenen Merklisten bzw. Kategorien aus der Datenbank zurück.
 	public ArrayList<String> getCategories() throws SQLException{
 		String getCategories ="Select Distinct Category from favourites";
 		ArrayList<String> cats = new ArrayList<String>();
@@ -49,12 +50,7 @@ public class Favorites {
 		return cats;
 	}
 
-	/**
-	 * Will return all ID's associated with the Category given.
-	 * @param cat
-	 * @return
-	 * @throws SQLException
-	 */
+	//Gibt alle Titel ID's zu einer entsprechenden Merkliste/Kategorie zurück.
 	public ResultSet getFavByCategory(String cat) throws SQLException {
 		ResultSet result = null;
 		String getFavByCategory = "Select id from favourites where Category = '" + cat + "'";
@@ -62,11 +58,13 @@ public class Favorites {
 		return result;
 	}
 
+	//Fügt eine Titel-ID zu einer Merkliste/Kategorie hinzu.
 	public void addIdToFavorites(String id, String category) throws SQLException{
 		String inputStatement = "INSERT INTO favourites VALUES (" + id + ", '" + category + "')";
 		con.createStatement().executeQuery(inputStatement);
 	}
 
+	//Löscht eine Titel ID zu einer entsprechenden Merkliste/Kategorie.
 	public boolean removeIdFromFavorites(String id,String cat){
 		try{
 			String removeIdStatement = "DELETE FROM favourites Where id = '" + id + "' AND Category = '" + cat + "'";
@@ -78,6 +76,7 @@ public class Favorites {
 		return true;
 	}
 	
+	//Löscht eine komplette Merkliste/Kategorie.
 	public boolean removeCatFromFavorites(String cat){
 		try{
 			String removeIdStatement = "DELETE FROM favourites Where Category = '" + cat + "'";

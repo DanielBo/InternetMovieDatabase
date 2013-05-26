@@ -11,6 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+//Erzeugt das Loginfenster
 public class LoginWindow extends JFrame {
 
 	/**
@@ -27,6 +28,7 @@ public class LoginWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginWindow() {
+		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 425, 301);
 		contentPane = new JPanel();

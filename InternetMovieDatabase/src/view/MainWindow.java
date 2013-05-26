@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
+//Erzeugt das Hauptfenster mit Suchtab, Detailansichttab und Merklistentab.
 public class MainWindow extends JFrame {
 
 	private Connection con;

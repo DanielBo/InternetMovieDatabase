@@ -12,6 +12,7 @@ public class Main{
 	private static final boolean isDebug = true;
 	private static String id = "";
 	
+	//Startet das Programm.
     public static void main(String[] args) {           
         SwingUtilities.invokeLater(new Runnable() {
             @Override

@@ -17,6 +17,10 @@ public class QueryBuilder {
 	private String searchValue;
 	private ArrayList<Constraint> constraints;
 	private HashSet<String> usedTables = new HashSet<String>();
+	
+	/*Diese Hashmap ordnet den auf der GUIL auswählbaren Eigenschaften, wie "TitleType", die entsprechenden TeilSQL Anfragen zu.
+	 * Die Eigenschaften befinden sich dabei im key als Array, während das entsprechene SQL-Anfrage der Valuewert ist.
+	 */
 	private HashMap<String[], String> map = new HashMap<String[], String>();
 
 	/**
@@ -31,9 +35,10 @@ public class QueryBuilder {
 
 		constraintStatement = " Where ";
 
-		// 3 different searchmodes (Titel, Company, Person)
+		// Die Variablen für die drei Suchtypen (Titel, Company, Person) werden gesetzt.
 		switch (mode) {
 		case 0:
+			//Titelsuche
 			basicStatement =TITLE_BASE;
 			usedTables.add("TitelType");
 			usedTables.add("Titel");
@@ -43,6 +48,7 @@ public class QueryBuilder {
 			basicSelectFrom = "Select Distinct IMDB.title.id, IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From ";
 			break;
 		case 1:
+			//Compansuche
 			basicStatement = COMPANIES_BASE;
 			usedTables.add("CompanyName");
 			usedTables.add("CompanyType");
@@ -52,6 +58,7 @@ public class QueryBuilder {
 			map.put(new String[]{"TitelType", "Titel", "ProductionYear", "ConstraintType2", "PersonenName"}, "join (" + TITLE_BASE + ") on imdb.movie_companies.movie_id = imdb.title.id");
 			break;
 		case 2 :
+			//Personensuche
 			basicStatement = PERSON_BASE;
 			usedTables.add("PersonenName");
 			usedTables.add("RollenType");
@@ -71,9 +78,7 @@ public class QueryBuilder {
 	}
 
 
-	/**
-	 * adding constraints and necessary tables to the Statement
-	 */
+	//Fügt Einschränkungen (Where-Teil) und notwendige Tables per Join dem basicStatement hinzu.
 	private void appendBasicStatement(){
 		if(constraints.size() > 0){
 			for (Constraint c : constraints){
@@ -85,18 +90,14 @@ public class QueryBuilder {
 						}
 					}
 				}
-				// H�ngt den Where-Teil an die Abfrage
+				// Hängt den Where-Teil an die Abfrage
 				constraintStatement += c.getStatement() + " AND ";
 			}
 		}
 	}
 
 
-	/**
-	 * Adds Necessary Tables to handle the constraint
-	 * @param tableName
-	 * @return
-	 */
+	//Fügt notwendige Tabellen per Join hinzu.
 	private String getAppendStatement(String tableName) {
 		String appendStatement = "";
 		for (Map.Entry<String[], String> e : map.entrySet()) {
@@ -111,14 +112,7 @@ public class QueryBuilder {
 	}
 
 
-
-
-
-	/**
-	 * Building a valid SQL-Statement from the input the Constructor got.
-	 * @return
-	 * SQL-Statement - String
-	 */
+	//Setzt die entgültige SQL-Abfrage zusammen und gibt die als String zurück.
 	public String getStatement(){
 		appendBasicStatement();
 		

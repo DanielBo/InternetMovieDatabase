@@ -33,24 +33,23 @@ public class Connector {
 		logWin = new LoginWindow();
 	}
 
+	// Baut Verbindung mit Hilfe des Oracle Treibers auf.
 	private void createConnection() throws SQLException{
 		con = DriverManager.getConnection(url, id, passwort);
 	}
 
+	// Verbindet die Buttons des Loginfensters mit Aktionen
 	public void connect(){
-		actionListener = new ActionListener() {
+		
+		logWin.getLoginButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				startLogin();
 			}
-		};
-
-		logWin.getLoginButton().addActionListener(actionListener);
-		logWin.setVisible(true);
-		
+		});
 
 
 		// ActionListener to break up loginoperation.
-		actionListener = new ActionListener() {
+		logWin.getBtnAbbruch().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
@@ -59,12 +58,9 @@ public class Connector {
 					}
 				});
 			}
-		};                
-		logWin.getBtnAbbruch().addActionListener(actionListener);
+		});                
 
-		JPasswordField jpf = logWin.getJPasswordField();
-
-		jpf.addKeyListener(new KeyListener() {
+		logWin.getJPasswordField().addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -89,17 +85,26 @@ public class Connector {
 		final JLabel lblIdOderPasswort = logWin.getLblIdOderPasswort();
 		lblIdOderPasswort.setText("Logging In.");
 		lblIdOderPasswort.setVisible(true);
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {                                           
 				id = logWin.getID();
 				passwort = logWin.getPasswort();
 				try {
+					
+					//Stellt Verbindung her.
 					createConnection();
+					
 					if (Main.isDebug())
 						System.out.println("Die Verbindung wurde hergestellt.");
-					Controller controller = new Controller(con);
+					
+					//Contrsoller wird erzeugt. Damit startet auch das Hauptfenster
+					new Controller(con);
+						
+					//Das Loginfesnter wird geschlossen.
 					logWin.dispose();
+					
 				} catch (SQLException e) {
 					if (1017 == e.getErrorCode()){
 						lblIdOderPasswort.setText("ID/Password mismatch.");
@@ -110,6 +115,8 @@ public class Connector {
 		});
 	}
 
+	// Getter-Methoden
+	
 	public Connection getConnection(){
 		return con;
 	}

@@ -17,7 +17,7 @@ public class StatementExecuter {
 		this.statement = statement;
 		}
 		
-	// Methode, die die fertige Abfrage ausführt und das ResultSet zurückgibt.
+	// Methode, die die fertige Abfrage ausfÃ¼hrt und das ResultSet zurÃ¼ckgibt.
 	public ResultSet executeStatement()throws SQLException{
 		ResultSet result = null;
 

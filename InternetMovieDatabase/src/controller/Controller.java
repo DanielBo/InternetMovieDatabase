@@ -55,48 +55,37 @@ public class Controller {
 		if (favs == null)
 			this.favs = new Favorites(con);
 		
-		
+		//Verbindet Buttons mit Aktionen.
 		connectActions();
 	}
 
-	//Initialisiert die Elemente der Merklistenansicht.
-	private void initFavTab() {
-		JComboBox<String> favListSelector = mainWindow.getFavListSelector();
-		ArrayList<String> categories = null;
-
-		try {
-			categories = favs.getCategories();
-			favListSelector.removeAllItems();
-
-			if (categories != null){
-				if(categories.size() > 0)
-					reloadTableContents(categories.get(0));
-				for (String s : categories){
-					favListSelector.addItem(s);
-				}
-			}
-			
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	private void connectActions(){
 
+		//Dieser ActionListener startet den Suchvorgang.
 		mainWindow.getSearchButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
+						
+						// Die Query wird erzeugt und an den StatementExecuter übergeben.
 						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchField().getText()).getStatement();
 						StatementExecuter stmtExe = new StatementExecuter(con, query);
+						//----------------------------------------------------------------------
+						
+						
 						try {
 							if (Main.isDebug())
 								System.out.println("Führe Anfrage aus.");
+							
+							// Die SQL-Abfrage wird an die Datenbank geshickt.
 							ResultSet result = stmtExe.executeStatement();
+							
+							
 							final JTable table = mainWindow.getTable();
-
+							
+							//MouseListener für das öffnen der Detailansicht.
 							table.addMouseListener(new MouseListener() {
 
 								@Override
@@ -143,8 +132,10 @@ public class Controller {
 									}
 								}
 							});
+							
+							//Die Daten werden aus dem ResultSet geladen und dem Tablemodel der Ergebnistabelle übergeben
 							if (Main.isDebug())
-								System.out.println("Führe Metadatenabfrage aus.");
+							System.out.println("Führe Metadatenabfrage aus.");
 							ResultSetMetaData metaData = result.getMetaData();
 							int columnNumber = metaData.getColumnCount();
 							String[] columnNames = new String[columnNumber];
@@ -177,14 +168,13 @@ public class Controller {
 								for(int i = 1; i <= columnNumber; i++){
 									objects[i-1] = result.getObject(i); // wir schreiben die id nicht mit in das ergebnis
 								}
-
 								tModel.addRow(objects);
 							}
-
+							
+							// Die ID Spalte soll nicht angezeigt werden.
 							TableColumn columnToRemove = table.getColumnModel().getColumn(0);
 							table.getColumnModel().removeColumn(columnToRemove);
 
-							//							TableColumn column0afterRemove = table.getColumnModel().getColumn(0);
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
@@ -195,7 +185,9 @@ public class Controller {
 		
 		//-----------------ANFANG---Aktionen für die Merkliste---ANFANG--------------------------
 		
-		// ChangeListener für die Tabs
+		/* ChangeListener für die Tabs.
+		 * initialisiert die Merklistenansicht, wenn die aufgerufen wird.
+		 */
 		mainWindow.getTabPane().addChangeListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
@@ -207,11 +199,13 @@ public class Controller {
 			
 		});
 
+		//Öffnet für den aktuellen Eintrag der Detailansicht den "AddToFavDialog" zum hinzufügen zur Merkliste.
 		mainWindow.getAddToFavList().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				final AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,Main.getId());
 				final String id = Main.getId();
 				
+				//Fügt den aktuellen Eintrag zur aktuell ausgwählten Kategorie/Merkliste hinzu.
 				atfd.getBtnHinzufgen().addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -225,6 +219,7 @@ public class Controller {
 					}
 				});
 				
+				//Legt eine neue Merkliste mit angegebenem Namen an.
 				atfd.getBtnErtstellen().addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -233,7 +228,7 @@ public class Controller {
 					}
 				});
 				
-				
+				//Holt die verfügbaren Merklisten aus der Datenbank.
 				try {
 					ArrayList<String> listCategories = favs.getCategories();
 					String[] categories = new String[listCategories.size()];
@@ -266,7 +261,7 @@ public class Controller {
 			}
 		});
 
-		//Aktion zum Entfernen von Titeln aus der Merkliste
+		//Aktion zum Entfernen von Titeln aus der Merkliste.
 		mainWindow.getBtnVonListeEntfernen().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -283,6 +278,7 @@ public class Controller {
 			}
 		});// remove selected from table
 		
+		//Aktion zum Löschen der aktuellen Merkliste.
 		mainWindow.getDeleteCategoryBtn().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -353,7 +349,7 @@ public class Controller {
 				if(mainWindow.getConstraint1AndOr().getSelectedIndex() == 1 && lastConstraintType1 != null){
 					constraint = consBuilder.createORConstraintType1(mainWindow.getConstraintComboBox1(), mainWindow.getComparisonCombobox1(), mainWindow.getTextFieldConstraint1(), lastConstraintType1);
 
-					// Letztes Constraint wird gel�scht und weiter unten durch das Neue ersetzt.
+					// Letztes Constraint wird gelöscht und weiter unten durch das Neue ersetzt.
 					constraints.remove(lastConstraintType1);
 					DefaultListModel<String> listModel = mainWindow.getListModel();
 					listModel.removeElementAt(listModel.size() - 1);
@@ -376,13 +372,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent actionEvent) {
 				Constraint constraint = null;
 
-				/* Entweder wird an eine bestehendes Constraint mit oder ein weiteres angeh�ngt ODER 
-				 * Es wird ein einzelnes Constraint erzeugt, dass sp�ter per "AND" mit weiteren Constraints verbunden wird.
+				/* Entweder wird an eine bestehendes Constraint mit oder ein weiteres angehängt ODER 
+				 * Es wird ein einzelnes Constraint erzeugt, dass später per "AND" mit weiteren Constraints verbunden wird.
 				 */
 				if(mainWindow.getConstraint2AndOr().getSelectedIndex() == 1 && lastConstraintType2 != null){
 					constraint = consBuilder.createORConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2(), lastConstraintType2);
 
-					// Letztes Constraint wird gel�scht und weiter unten durch das Neue ersetzt.
+					// Letztes Constraint wird gelöscht und weiter unten durch das Neue ersetzt.
 					constraints.remove(lastConstraintType2);
 					DefaultListModel<String> listModel = mainWindow.getListModel();
 					listModel.removeElementAt(listModel.size() - 1);
@@ -390,7 +386,7 @@ public class Controller {
 					constraint = consBuilder.createConstraintType2(mainWindow.getTextFieldConstraint2(), mainWindow.getComparisonCombobox2(), mainWindow.getConstraintComboBox2());
 				}
 
-				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugef�gt.
+				//Das Constraint wird zur ArrayList "constraints" und zur listView in MainWindow hinzugefügt.
 				DefaultListModel<String> listModel = mainWindow.getListModel();
 				listModel.addElement(constraint.getStatementName());
 				constraints.add(constraint);
@@ -399,7 +395,7 @@ public class Controller {
 			}
 		});
 
-		// Entfernt das in der listView ausgew�hlte Constraint.
+		// Entfernt das in der "listView" ausgewählte Constraint.
 		mainWindow.getBtnEinschrnkungEntfernen().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
 				SwingUtilities.invokeLater(new Runnable() {
@@ -433,7 +429,7 @@ public class Controller {
 
 		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus auswählt,
 		 * also (Titel, Company oder Person).
-		 * Je nach Auswahl werden die Auswahlmöglichkeiten f�r das Constraint vom Typ 1 verändert.
+		 * Je nach Auswahl werden die Auswahlmöglichkeiten für das Constraint vom Typ 1 verändert.
 		 */
 		mainWindow.getModeSelector().addActionListener(new ActionListener() {
 			@Override
@@ -484,6 +480,29 @@ public class Controller {
 		mainWindow.getConstraintComboBox2().setEnabled(value);
 		mainWindow.getConstraint2AndOr().setEnabled(value);
 		mainWindow.getBtnAddConstraint2().setEnabled(value);
+	}
+	
+	//Initialisiert die Elemente der Merklistenansicht.
+	private void initFavTab() {
+		JComboBox<String> favListSelector = mainWindow.getFavListSelector();
+		ArrayList<String> categories = null;
+
+		try {
+			categories = favs.getCategories();
+			favListSelector.removeAllItems();
+
+			if (categories != null){
+				if(categories.size() > 0)
+					reloadTableContents(categories.get(0));
+				for (String s : categories){
+					favListSelector.addItem(s);
+				}
+			}
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//Füllt die Merkliste mit Inhalt aus der Datenbank

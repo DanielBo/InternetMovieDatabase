@@ -17,6 +17,7 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Color;
 
+//Erzeugt den Dialog zum hinzufügen vom Einträgen zur Merkliste und zum anlegen von neuen Merklisten.
 public class AddToFavDialog extends JFrame {
 
 	/**

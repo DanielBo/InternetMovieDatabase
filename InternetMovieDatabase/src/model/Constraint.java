@@ -16,13 +16,15 @@ public class Constraint {
 		this.statement = statement;
 	}
 	
-	// joins an or-Statement to the actual statement 
+	// fügt ein weiteres Statement, dass per OR verknüpft wird, dem bestehenden Statement hinzu.
 	public void addOrConstraint(Constraint orConstraint){
 		this.statementName = this.statementName + " oder " + orConstraint.getStatementName();
 		this.statement = this.statement + " OR " + orConstraint.getStatementWithoutBracket();
 		this.tableNames.addAll(orConstraint.getTableNames());
 	}
 	
+	
+	//Getter-Methoden
 	
 	public List<String> getTableNames() {
 		return tableNames;

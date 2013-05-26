@@ -27,6 +27,7 @@ public class DetailStatementBuilder {
 		this.con = con;
 		this.mainWindow = mainWindow;
 		
+		//Entscheidet welcher Suchtyp vorliegt.
 		switch(typ){
 		case 1:
 			setTitelDetailStatement();
@@ -44,6 +45,7 @@ public class DetailStatementBuilder {
 			
 	}
 	
+	//Suchtyp 1 (Titel)
 	private void setTitelDetailStatement(){
 		// Zum Abfragen der Einzelinformationen (Titel, Produktionsjahr, Typ)
 		query1 = "Select Distinct imdb.title.title, imdb.title.production_year, imdb.kind_type.kind" +
@@ -62,6 +64,7 @@ public class DetailStatementBuilder {
 		mainWindow.getAddToFavList().setVisible(true);
 	}
 	
+	//Suchtyp 2 (Company)
 	private void setCompanyDetailStatement(){
 		// Zum Abfragen der Einzelinformationen (Companyname, Typ, Countrycode)
 		query1 = "Select Distinct imdb.company_name.name, imdb.company_type.kind, imdb.company_name.country_code From imdb.company_name" +
@@ -81,6 +84,7 @@ public class DetailStatementBuilder {
 		mainWindow.getAddToFavList().setVisible(false);
 	}
 	
+	//Suchtyp 3 (Person)
 	private void setPersonDetailStatement(){
 		// Zum Abfragen der Einzelninformationen (Name, Geschlecht)
 		query1 = "Select Distinct imdb.name.name, imdb.name.gender From imdb.name Where imdb.name.id = ";
@@ -98,14 +102,17 @@ public class DetailStatementBuilder {
 		mainWindow.getAddToFavList().setVisible(false);
 	}
 	
-	// F�hrt die beiden notwendigen Abfragen f�r die Detailansicht aus.
+	// Führt die beiden notwendigen Abfragen für die Detailansicht aus.
 	public void executeStatement() throws SQLException{
+		
+		//Die Labels werden auf ihre Anfangswerte gesetzt.
 		mainWindow.getDetailTableTitle().setText(tableTitle);
 		mainWindow.getOption1Label().setText("");
 		mainWindow.getOption1Label().setText("");
 		mainWindow.getOption1Label().setText("");
-		Statement stmt1 = con.createStatement();
 		
+		//----Abfrage 1----
+		Statement stmt1 = con.createStatement();
 		ResultSet result1 = stmt1.executeQuery(query1 + " " + id);
 		ResultSetMetaData resultMetaData = result1.getMetaData();
 		int columnNumber = resultMetaData.getColumnCount();
@@ -119,6 +126,9 @@ public class DetailStatementBuilder {
 			mainWindow.getOption3Label().setText(option3LabelValue + result1.getString(3));
 		result1.close();
 		
+		//----Abfrage 1---ENDE----
+		
+		//----Abfrage 2-----
 		Statement stmt2 = con.createStatement();
 		ResultSet result2 = stmt2.executeQuery(query2 + " " + id);
 		
@@ -155,8 +165,8 @@ public class DetailStatementBuilder {
 			tModel.addRow(objects);
 		}
 		result2.close();
-		if (Main.isDebug())
-			System.out.println("Fertig");
+		
+		//-----Abfrage 2---ENDE
 		
 	}
 	
