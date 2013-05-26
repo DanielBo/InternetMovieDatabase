@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
 
 //Erzeugt das Loginfenster
 public class LoginWindow extends JFrame {
@@ -69,7 +70,7 @@ public class LoginWindow extends JFrame {
 		setLblIdOderPasswort(new JLabel("ID oder Passwort falsch!"));
 		getLblIdOderPasswort().setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getLblIdOderPasswort().setForeground(Color.RED);
-		getLblIdOderPasswort().setBounds(100, 162, 239, 25);
+		getLblIdOderPasswort().setBounds(6, 162, 413, 25);
 		getLblIdOderPasswort().setVisible(false);
 		contentPane.add(getLblIdOderPasswort());
 	}
@@ -92,6 +93,7 @@ public class LoginWindow extends JFrame {
 
 	public void setLblIdOderPasswort(JLabel lblIdOderPasswort) {
 		this.lblIdOderPasswort = lblIdOderPasswort;
+		lblIdOderPasswort.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 
 	public JButton getBtnAbbruch() {

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
@@ -44,7 +45,7 @@ public class Controller {
 
 	public Controller(Connection connection){
 		this.con = connection;
-		
+
 		if (mainWindow == null)
 			this.mainWindow = new MainWindow();
 
@@ -53,7 +54,7 @@ public class Controller {
 
 		if (favs == null)
 			this.favs = new Favorites(con);
-		
+
 		//Verbindet Buttons mit Aktionen.
 		connectActions();
 	}
@@ -67,23 +68,31 @@ public class Controller {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						
+
 						// Die Query wird erzeugt und an den StatementExecuter übergeben.
-						String query = new QueryBuilder(selectedMode, constraints, mainWindow.getSearchFieldText()).getStatement();
+						String searchFieldText = mainWindow.getSearchFieldText();
+						if (searchFieldText.contains("'")){
+							JOptionPane.showMessageDialog(mainWindow,
+									"Das Zeichen ' darf nicht bestandteil der Suche sein.",
+									"ERROR!",
+									JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						String query = new QueryBuilder(selectedMode, constraints, searchFieldText).getStatement();
 						StatementExecuter stmtExe = new StatementExecuter(con, query);
 						//----------------------------------------------------------------------
-						
-						
+
+
 						try {
 							if (Main.isDebug())
 								System.out.println("Führe Anfrage aus.");
-							
+
 							// Die SQL-Abfrage wird an die Datenbank geshickt.
 							ResultSet result = stmtExe.executeStatement();
-							
-							
+
+
 							final JTable table = mainWindow.getTable();
-							
+
 							//MouseListener für das öffnen der Detailansicht.
 							table.addMouseListener(new MouseListener() {
 
@@ -131,14 +140,14 @@ public class Controller {
 									}
 								}
 							});
-							
+
 							//Die Daten werden aus dem ResultSet geladen und dem Tablemodel der Ergebnistabelle übergeben
 							if (Main.isDebug())
-							System.out.println("Führe Metadatenabfrage aus.");
+								System.out.println("Führe Metadatenabfrage aus.");
 							ResultSetMetaData metaData = result.getMetaData();
 							int columnNumber = metaData.getColumnCount();
 							String[] columnNames = new String[columnNumber];
-							
+
 							if (Main.isDebug())
 								System.out.println("Frage Tabellennamen ab.");
 							for(int i = 1; i <= columnNumber; i++){
@@ -153,7 +162,7 @@ public class Controller {
 							};
 							table.setModel(tModel);
 							tModel.setColumnIdentifiers(columnNames);
-							
+
 							if (Main.isDebug())
 								System.out.println("Fülle Tabelle auf.");
 
@@ -169,7 +178,7 @@ public class Controller {
 								}
 								tModel.addRow(objects);
 							}
-							
+
 							// Die ID Spalte soll nicht angezeigt werden.
 							TableColumn columnToRemove = table.getColumnModel().getColumn(0);
 							table.getColumnModel().removeColumn(columnToRemove);
@@ -181,9 +190,9 @@ public class Controller {
 				});
 			}
 		});
-		
+
 		//-----------------ANFANG---Aktionen für die Merkliste---ANFANG--------------------------
-		
+
 		/* ChangeListener für die Tabs.
 		 * initialisiert die Merklistenansicht, wenn die aufgerufen wird.
 		 */
@@ -195,7 +204,7 @@ public class Controller {
 					initFavTab();
 				}
 			}
-			
+
 		});
 
 		//Öffnet für den aktuellen Eintrag der Detailansicht den "AddToFavDialog" zum hinzufügen zur Merkliste.
@@ -203,7 +212,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				final AddToFavDialog atfd = new AddToFavDialog(mainWindow,favs,Main.getId());
 				final String id = Main.getId();
-				
+
 				//Fügt den aktuellen Eintrag zur aktuell ausgwählten Kategorie/Merkliste hinzu.
 				atfd.getBtnHinzufgen().addActionListener(new ActionListener() {
 					@Override
@@ -224,7 +233,7 @@ public class Controller {
 							}
 					}
 				});
-				
+
 				//Legt eine neue Merkliste mit angegebenem Namen an.
 				atfd.getBtnErtstellen().addActionListener(new ActionListener() {
 					@Override
@@ -233,7 +242,7 @@ public class Controller {
 						atfd.getInfoLabel().setText("Kategorie hinzugefügt!");
 					}
 				});
-				
+
 				//Holt die verfügbaren Merklisten aus der Datenbank.
 				try {
 					ArrayList<String> listCategories = favs.getCategories();
@@ -273,17 +282,17 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (favTable.getSelectedRow() != -1) {
 					String valueAt = favTable.getModel().getValueAt(favTable.getSelectedRow(), 0).toString();
-					
+
 					if (Main.isDebug())
 						System.out.println(valueAt);
-					
+
 					favs.removeIdFromFavorites(valueAt,(String)favListSelector.getSelectedItem());
 					mainWindow.getFavouriteTable().setModel(new DefaultTableModel());
 					initFavTab();
 				}
 			}
 		});// remove selected from table
-		
+
 		//Aktion zum Löschen der aktuellen Merkliste.
 		mainWindow.getDeleteCategoryBtn().addActionListener(new ActionListener() {
 			@Override
@@ -293,8 +302,8 @@ public class Controller {
 				initFavTab();
 			}
 		});
-		
-		
+
+
 		//MouseListener für die Merklistentabelle
 		favTable.addMouseListener(new MouseListener() {
 
@@ -339,9 +348,9 @@ public class Controller {
 				}
 			}
 		});
-		
+
 		//-----------------------------ENDE---Aktionen für die Merkliste---ENDE-------------------------------------
-		
+
 		//---------------ANFANG---Aktionen für das Hinzufügen und Entfernen von Einschränkungen---ANFANG------------
 
 		// ActionListener für das Hinzufügen von Constraints des Typ 1
@@ -415,14 +424,14 @@ public class Controller {
 						constraints.remove(constraintId);
 						if (Main.isDebug())
 							System.out.println(constraints);
-						
+
 						mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
 						mainWindow.getConstraint2AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
 					}
 				});
 			}
 		});
-		
+
 		/* Wird die Auswahl der Constraint1Combobox verändert, lässt sich als Verbindungsoperator nur noch AND auswählen
 		 * Erst wenn eine Constraint vom Typ 1 hinzugefügt wird, lässt sich auch OR auswählen. (Siehe weiter Oben)
 		 */
@@ -432,9 +441,9 @@ public class Controller {
 				mainWindow.getConstraint1AndOr().setModel(new DefaultComboBoxModel(new String[] {"AND"}));
 			}
 		});
-		
+
 		//-------------ENDE---Aktionen für das Hinzufügen und Entfernen von Einschränkungen---ENDE-----------------
-		
+
 
 		/* ActionListener der ModeSelector Combobox, mit der man den Suchmodus auswählt,
 		 * also (Titel, Company oder Person).
@@ -479,7 +488,7 @@ public class Controller {
 		});
 
 	}
-	
+
 	//------------Weitere Methoden für Controller----------------
 
 	// Aktiviert und Deaktiviert die Bedienelemente für Einschränkungen vom Typ 2
@@ -490,7 +499,7 @@ public class Controller {
 		mainWindow.getConstraint2AndOr().setEnabled(value);
 		mainWindow.getBtnAddConstraint2().setEnabled(value);
 	}
-	
+
 	//Initialisiert die Elemente der Merklistenansicht.
 	private void initFavTab() {
 		JComboBox<String> favListSelector = mainWindow.getFavListSelector();
@@ -507,13 +516,13 @@ public class Controller {
 					favListSelector.addItem(s);
 				}
 			}
-			
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//Füllt die Merkliste mit Inhalt aus der Datenbank
 	private void reloadTableContents(String category) throws SQLException{
 		ResultSet result = favs.getFavByCategory(category);
@@ -524,7 +533,7 @@ public class Controller {
 		}
 
 		DefaultTableModel model = null;
-		
+
 		model = new DefaultTableModel(new String[]{"Titel", "Typ", "Produktionsjahr"},0) {
 			@Override
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -535,7 +544,7 @@ public class Controller {
 
 		for ( String s : results ){
 			String query = "Select IMDB.title.id, IMDB.title.title, IMDB.kind_type.kind Typ, IMDB.title.production_year From IMDB.title" +
-								" join IMDB.kind_type on imdb.title.kind_id = imdb.kind_type.id Where imdb.title.id = " + s;
+					" join IMDB.kind_type on imdb.title.kind_id = imdb.kind_type.id Where imdb.title.id = " + s;
 			if (Main.isDebug())
 				System.out.println(query);
 			ResultSet result2 = con.createStatement().executeQuery(query);
@@ -552,7 +561,7 @@ public class Controller {
 
 			if (Main.isDebug())
 				System.out.println("adding new row to favTable");
-			
+
 			model.addRow(newRow);
 		}
 		TableColumn columnToRemove = favTable.getColumnModel().getColumn(0);
